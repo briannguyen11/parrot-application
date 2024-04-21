@@ -6,6 +6,9 @@ const Feed = () => {
       <SkeletonCard />
       <SkeletonCard />
       <SkeletonCard />
+      <SkeletonCard />
+      <SkeletonCard />
+      <SkeletonCard />
     </>
   );
 };

@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Spotlight from "./components/Spotlight";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import { Login } from "./pages/Login";
 
 import {
   Route,
@@ -22,6 +23,7 @@ const router = createBrowserRouter(
       </Route>
 
       <Route path="/profile" element={<Profile />} />
+      <Route path="/login" element={<Login />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   )
