@@ -1,17 +1,33 @@
-import { Button } from "@/components/ui/button";
 import Sidebar from "./Sidebar";
+
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
   SheetTrigger,
+  SheetClose,
 } from "@/components/ui/sheet";
 
+import SidebarElement from "./SidebarElement";
+import SearchIcon from "@/assets/icons/search.svg";
+import SpotlightIcon from "@/assets/icons/spotlight.svg";
+import { useNavigate, useLocation } from "react-router-dom";
+
+import { useEffect, useState } from "react";
+
 export function SidebarPopup() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [tab, setTab] = useState("explore");
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setTab("explore");
+    } else if (location.pathname === "/spotlight") {
+      setTab("spotlight");
+    }
+  });
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -28,7 +44,26 @@ export function SidebarPopup() {
         </svg>
       </SheetTrigger>
       <SheetContent className="w-72 mt-16" side={"left"}>
-        <Sidebar />
+        {/* <Sidebar /> */}
+        <SheetClose asChild>
+          <div onClick={() => navigate("/")}>
+            <SidebarElement
+              title="Explore"
+              icon={SearchIcon}
+              selected={tab === "explore"}
+            />
+          </div>
+        </SheetClose>
+
+        <SheetClose asChild>
+          <div onClick={() => navigate("/spotlight")}>
+            <SidebarElement
+              title="Spotlight"
+              icon={SpotlightIcon}
+              selected={tab === "spotlight"}
+            />
+          </div>
+        </SheetClose>
       </SheetContent>
     </Sheet>
   );
