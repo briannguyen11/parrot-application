@@ -11,7 +11,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-export function SheetDemo() {
+export function SidebarPopup() {
   return (
     <Sheet>
       <SheetTrigger asChild>

@@ -33,7 +33,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function DropdownMenuDemo() {
+export function ProfileDropDown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
