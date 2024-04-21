@@ -2,15 +2,12 @@ import SidebarElement from "./SidebarElement";
 
 import SearchIcon from "../assets/icons/search.svg";
 import SpotlightIcon from "../assets/icons/spotlight.svg";
+import { useState } from "react";
 
-interface SidebarProps {
-  tab: string;
-  setTab: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const Sidebar: React.FC<SidebarProps> = ({ tab, setTab }) => {
+const Sidebar = () => {
+  const [tab, setTab] = useState("explore");
   return (
-    <div className="lg:block hidden fixed w-56 h-screen border-r border-gray-200 pt-5 overflow-auto">
+    <div className="fixed w-64 h-screen lg:border-r border-gray-200 pt-5 overflow-auto">
       <div onClick={() => setTab("explore")}>
         <SidebarElement
           title="Explore"

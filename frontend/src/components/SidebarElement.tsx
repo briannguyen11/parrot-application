@@ -11,7 +11,7 @@ const SidebarElement: React.FC<SidebarElementProps> = ({
 }) => {
   return (
     <div
-      className={`flex items-center gap-3 hover:bg-gray-100 hover:cursor-pointer p-3 mr-2 mb-2 rounded-md ${
+      className={`flex items-center gap-3 hover:bg-gray-100 hover:cursor-pointer p-3 mr-4 mb-2 rounded-md ${
         selected ? "bg-gray-100" : ""
       }`}
     >
