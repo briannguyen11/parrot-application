@@ -1,9 +1,7 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
-import Feed from "@/components/Feed";
-import Profile from "./Profile";
 
 export default function Home() {
   return (
@@ -16,10 +14,7 @@ export default function Home() {
             <Sidebar />
           </div>
           <div className="lg:ml-64 w-full h-full lg:pt-5 lg:pl-5 pt-5">
-            <Routes>
-              <Route path="/" element={<Feed />} />
-              <Route path="/profile" element={<Profile />} />
-            </Routes>
+            <Outlet />
           </div>
         </div>
       </div>
