@@ -5,14 +5,19 @@ import Sidebar from "@/components/Sidebar";
 
 import Feed from "@/components/Feed";
 export default function Home() {
-  return (
+  
+    const [tab, setTab] = useState("explore");
+
+
+
+    return (
     <>
       <Navbar />
 
       {/* This is the content div */}
-      <div className="lg:mx-16 md:mx-10 mx-5 mt-16 h-full">
+      <div className="md:mx-10 mx-5 mt-16 h-full">
         <div className="flex flex-row h-full">
-          <Sidebar />
+          <Sidebar tab = {tab} setTab = {setTab}/>
 
           <Feed />
         </div>
