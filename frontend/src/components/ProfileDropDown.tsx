@@ -1,8 +1,4 @@
 import {
-  Cloud,
-  CreditCard,
-  Github,
-  Keyboard,
   LifeBuoy,
   LogOut,
   Mail,
@@ -17,7 +13,6 @@ import {
 
 import ProfilePicture from "../assets/icons/noauth-avatar.svg";
 
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,7 +29,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
+import { Toaster } from "@/components/ui/sonner"
 export function ProfileDropDown() {
   const navigate = useNavigate();
 
@@ -43,12 +40,9 @@ export function ProfileDropDown() {
 
   return (
     <DropdownMenu>
+      <Toaster />
       <DropdownMenuTrigger asChild>
-        <img
-          src={ProfilePicture}
-          alt="profile"
-          className="h-8 w-8 rounded-full border-[1.5px] border-gray-800 p-1"
-        />
+        <img src={ProfilePicture} alt="profile" className="h-8 w-8" />
       </DropdownMenuTrigger>
 
       {auth ? (
@@ -56,13 +50,12 @@ export function ProfileDropDown() {
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-          <DropdownMenuItem
+            <DropdownMenuItem
               className="hover:cursor-pointer"
               onClick={() => navigate("/login")}
             >
               <User className="mr-2 h-4 w-4" />
               <span>Log In</span>
-              
             </DropdownMenuItem>
             <DropdownMenuItem
               className="hover:cursor-pointer"
@@ -122,7 +115,19 @@ export function ProfileDropDown() {
           </DropdownMenuItem>
 
           <DropdownMenuSeparator />
-          <DropdownMenuItem className="hover:cursor-pointer">
+          <DropdownMenuItem
+            className="hover:cursor-pointer"
+            onClick={() => {
+              toast("You have been logged out.", {
+                description: "See you again!",
+                action: {
+                  label: "Close",
+                  onClick: () => console.log(""),
+                }
+              });
+              navigate("/");
+            }}
+          >
             <LogOut className="mr-2 h-4 w-4" />
             <span>Log out</span>
             <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
@@ -131,24 +136,20 @@ export function ProfileDropDown() {
       ) : (
         <DropdownMenuContent className="lg:mr-10 mr-5 mt-3 w-56 ">
           <DropdownMenuItem
-              className="hover:cursor-pointer"
-              onClick={() => navigate("/login")}
-            >
-              <User className="mr-2 h-4 w-4" />
-              <span>Log In</span>
-              
-            </DropdownMenuItem>
+            className="hover:cursor-pointer"
+            onClick={() => navigate("/login")}
+          >
+            <User className="mr-2 h-4 w-4" />
+            <span>Log In</span>
+          </DropdownMenuItem>
 
-            <DropdownMenuItem
-              className="hover:cursor-pointer"
-              onClick={() => navigate("/profile")}
-            >
-              <User className="mr-2 h-4 w-4" />
-              <span>Sign Up</span>
-            
-            </DropdownMenuItem>
-
-
+          <DropdownMenuItem
+            className="hover:cursor-pointer"
+            onClick={() => navigate("/profile")}
+          >
+            <User className="mr-2 h-4 w-4" />
+            <span>Sign Up</span>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       )}
     </DropdownMenu>

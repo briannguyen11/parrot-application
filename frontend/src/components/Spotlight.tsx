@@ -1,6 +1,11 @@
+import SpotlightGrid from "./SpotlightGrid";
+
 const Spotlight = () => {
     return ( <div>
-        Spotlight
+        <h1 className="text-xl">Spotlight</h1>
+        <p className="text-sm text-gray-500">A collection of unique projects presented below.</p> 
+
+        <SpotlightGrid />
     </div> );
 }
  

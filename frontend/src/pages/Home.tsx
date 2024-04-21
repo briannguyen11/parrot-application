@@ -1,4 +1,3 @@
-import React from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
@@ -13,7 +12,7 @@ export default function Home() {
           <div className="lg:block hidden">
             <Sidebar />
           </div>
-          <div className="lg:ml-64 w-full h-full lg:pt-5 lg:pl-5 pt-5">
+          <div className="lg:ml-64 w-full h-full lg:pt-9 lg:pl-9 pt-9">
             <Outlet />
           </div>
         </div>
