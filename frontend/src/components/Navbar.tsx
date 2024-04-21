@@ -4,7 +4,6 @@ import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-
   const navigate = useNavigate();
 
   return (
@@ -12,14 +11,19 @@ const Navbar = () => {
       <div className="flex justify-center items-center gap-5  hover:cursor-pointer">
         <SidebarPopup />
 
-        <img
-          src="../../public/icon.png"
-          alt="logo"
-          className="w-5 h-10 object-cover select-none"
-        />
-        <h1 onClick={()=> navigate('/') } className="text-[23px] font-medium lg:block hidden select-none">
-          SPRINT
-        </h1>
+        <div
+          onClick={() => navigate("/")}
+          className="flex items-center justify-center gap-5"
+        >
+          <img
+            src="../../public/icon.png"
+            alt="logo"
+            className="w-5 h-10 object-cover select-none"
+          />
+          <h1 className="text-[23px] font-medium lg:block hidden select-none">
+            SPRINT
+          </h1>
+        </div>
       </div>
 
       <SearchBar />
