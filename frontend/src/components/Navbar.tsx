@@ -1,5 +1,6 @@
 import { ProfileDropDown } from "./ProfileDropDown";
 import { SidebarPopup } from "./SidebarPopup";
+import SearchBar from "./SearchBar";
 
 const Navbar = () => {
   return (
@@ -16,6 +17,9 @@ const Navbar = () => {
           SPRINT
         </h1>
       </div>
+
+      <SearchBar />
+
       <div className="flex items-center select-none hover:cursor-pointer">
         <ProfileDropDown />
       </div>
