@@ -1,6 +1,5 @@
 import { BrowserRouter as Router } from "react-router-dom";
 
-
 import BaseRoutes from "./BaseRoutes";
 
 const Routes = () => {
