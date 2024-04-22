@@ -41,6 +41,30 @@ const SpotlightGrid = () => {
           "https://cdn.myportfolio.com/6771405b-f126-49e0-9c51-62863cf81a97/e2ea8b1f-f789-4c2b-adde-85fd00506d34_rw_1920.png?h=fe8eeaae3123cb8a0795b940985ed85e",
         ]}
       />
+        <SpotlightCard
+        projectName="Project Title"
+        imageUrls={[
+          "https://cdn.myportfolio.com/6771405b-f126-49e0-9c51-62863cf81a97/e2ea8b1f-f789-4c2b-adde-85fd00506d34_rw_1920.png?h=fe8eeaae3123cb8a0795b940985ed85e",
+        ]}
+      />
+      <SpotlightCard
+        projectName="Project Title"
+        imageUrls={[
+          "https://cdn.myportfolio.com/6771405b-f126-49e0-9c51-62863cf81a97/e2ea8b1f-f789-4c2b-adde-85fd00506d34_rw_1920.png?h=fe8eeaae3123cb8a0795b940985ed85e",
+        ]}
+      />
+        <SpotlightCard
+        projectName="Project Title"
+        imageUrls={[
+          "https://cdn.myportfolio.com/6771405b-f126-49e0-9c51-62863cf81a97/e2ea8b1f-f789-4c2b-adde-85fd00506d34_rw_1920.png?h=fe8eeaae3123cb8a0795b940985ed85e",
+        ]}
+      />
+      <SpotlightCard
+        projectName="Project Title"
+        imageUrls={[
+          "https://cdn.myportfolio.com/6771405b-f126-49e0-9c51-62863cf81a97/e2ea8b1f-f789-4c2b-adde-85fd00506d34_rw_1920.png?h=fe8eeaae3123cb8a0795b940985ed85e",
+        ]}
+      />
     </div>
   );
 };
