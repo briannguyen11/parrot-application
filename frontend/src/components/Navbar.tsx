@@ -16,7 +16,7 @@ const Navbar = () => {
           className="flex items-center justify-center gap-5"
         >
           <img
-            src="../../public/icon.png"
+            src="../../icon.png"
             alt="logo"
             className="w-5 h-10 object-cover select-none"
           />

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Sidebar = () => {
-  const [tab, setTab] = useState("explore");
+  const [tab, setTab] = useState("empty");
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -16,7 +16,7 @@ const Sidebar = () => {
     } else if (location.pathname === "/spotlight") {
       setTab("spotlight");
     }
-  });
+  }, [location.pathname]);
 
   return (
     <div className="fixed w-64 h-screen lg:border-r border-gray-200 pt-5 overflow-auto">
@@ -29,7 +29,7 @@ const Sidebar = () => {
         <SidebarElement
           title="Explore"
           icon={SearchIcon}
-          selected={tab === "explore"}
+          selected={"/" === location.pathname}
         />
       </div>
 

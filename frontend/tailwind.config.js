@@ -20,6 +20,14 @@ module.exports = {
       boxShadow: {
         'light': '0px 2px 14px 0px rgba(0, 0, 0, 0.08)',
       },
+
+      height: {
+        'spotlight-img': 'calc(100% - 64px)',
+      },
+
+      aspectRatio: {
+        'spotlight': '4/3',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
