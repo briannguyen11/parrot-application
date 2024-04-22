@@ -12,7 +12,7 @@ const SpotlightCard: React.FC<SpotlightCardProps> = ({
   imageUrls,
 }) => {
   return (
-    <div className="aspect-spotlight bg-gray-50 relative rounded-3xl shadow-light hover:cursor-pointer">
+    <div className="aspect-spotlight bg-gray-50 relative rounded-3xl shadow-light hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out">
       <img
         src={imageUrls[0]}
         alt="placeholder"

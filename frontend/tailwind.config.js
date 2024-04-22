@@ -86,6 +86,11 @@ export const theme = {
       '4xl': '2200px',
     },
 
+    scale:{
+      '103': '1.03',
+    },
+
+
 
   },
 };
