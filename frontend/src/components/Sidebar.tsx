@@ -19,7 +19,7 @@ const Sidebar = () => {
   }, [location.pathname]);
 
   return (
-    <div className="fixed w-64 h-screen lg:border-r border-gray-200 pt-5 overflow-auto">
+    <div className="fixed w-56 h-screen lg:border-r border-gray-200 pt-5 overflow-auto">
       <div
         onClick={() => {
           setTab("explore");

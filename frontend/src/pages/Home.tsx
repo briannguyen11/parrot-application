@@ -7,12 +7,12 @@ export default function Home() {
     <>
       <Navbar />
 
-      <div className="md:mx-10 mx-5 mt-16 h-full">
+      <div className="md:mx-7 mx-5 mt-16 h-full">
         <div className="flex flex-row h-full">
           <div className="lg:block hidden">
             <Sidebar />
           </div>
-          <div className="lg:ml-64 w-full h-full lg:pl-9 pt-5">
+          <div className="lg:ml-52 w-full h-full lg:pl-9 pt-5">
             <Outlet />
           </div>
         </div>
