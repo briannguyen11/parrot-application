@@ -12,7 +12,7 @@ export default function Home() {
           <div className="lg:block hidden">
             <Sidebar />
           </div>
-          <div className="lg:ml-64 w-full h-full lg:pt-9 lg:pl-9 pt-9">
+          <div className="lg:ml-64 w-full h-full lg:pl-9 pt-5">
             <Outlet />
           </div>
         </div>
