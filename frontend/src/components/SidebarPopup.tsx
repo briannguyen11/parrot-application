@@ -1,6 +1,4 @@
-import Sidebar from "./Sidebar";
 
-import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -26,7 +24,7 @@ export function SidebarPopup() {
     } else if (location.pathname === "/spotlight") {
       setTab("spotlight");
     }
-  });
+  }, [location.pathname]);
 
   return (
     <Sheet>
