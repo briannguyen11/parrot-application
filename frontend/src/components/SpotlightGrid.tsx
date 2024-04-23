@@ -16,7 +16,7 @@ const SpotlightGrid = () => {
 
   if (loading) {
     return (
-      <div className="mt-5 grid 4xl:grid-cols-3 xl:grid-cols-2 grid-cols-1  gap-x-10 gap-y-16">
+      <div className="mt-5 grid 4xl:grid-cols-4 xl:grid-cols-2 grid-cols-1  gap-x-10 gap-y-16">
         <Skeleton className="aspect-spotlight rounded-3xl" />
         <Skeleton className="aspect-spotlight rounded-3xl" />
         <Skeleton className="aspect-spotlight rounded-3xl" />
@@ -28,7 +28,7 @@ const SpotlightGrid = () => {
   }
 
   return (
-    <div className="mt-5 grid 4xl:grid-cols-3 xl:grid-cols-2 grid-cols-1  gap-x-10 gap-y-16">
+    <div className="mt-5 grid 4xl:grid-cols-4 xl:grid-cols-2 grid-cols-1  gap-x-10 gap-y-16">
     
         <SpotlightCard
         projectName="Project Title"

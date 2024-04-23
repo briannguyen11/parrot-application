@@ -8,7 +8,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="fixed top-0 left-0 w-full md:px-7 px-5 py-3 flex border-b border-gray-200 z-50 justify-between  bg-white shadow-sm">
+    <div className="fixed top-0 left-0 w-full md:px-7 px-5 py-3 flex border-b border-gray-200 z-50 justify-between bg-white shadow-sm">
       <div className="flex justify-center items-center gap-5 hover:cursor-pointer">
         <SidebarPopup />
 
