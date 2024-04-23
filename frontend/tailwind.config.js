@@ -18,6 +18,7 @@ export const theme = {
   extend: {
     boxShadow: {
       'light': '0px 2px 14px 0px rgba(0, 0, 0, 0.08)',
+      'light-hover': '0px 2px 14px 0px rgba(0, 0, 0, 0.14)',
     },
 
     height: {
@@ -88,6 +89,7 @@ export const theme = {
 
     scale:{
       '103': '1.03',
+      '101': '1.005',
     },
 
 

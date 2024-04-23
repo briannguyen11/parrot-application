@@ -40,7 +40,7 @@ const Sidebar = () => {
         }}
       >
         <SidebarElement
-          title="Spotlight"
+          title="Showcase"
           icon={SpotlightIcon}
           selected={"/" + tab === location.pathname}
         />
