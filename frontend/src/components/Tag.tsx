@@ -1,8 +1,8 @@
 const Tag = ({ name }: { name: string }) => {
   const colorMap: { [key: string]: string } = {
-    python: "bg-orange-600",
+    python: "bg-card-red",
     java: "bg-blue-400",
-    javascript: "bg-purple-500",
+    javascript: "bg-card-purple",
     // Add more technology-color mappings here
   };
 

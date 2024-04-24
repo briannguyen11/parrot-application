@@ -61,7 +61,11 @@ export const theme = {
       card: {
         DEFAULT: "hsl(var(--card))",
         foreground: "hsl(var(--card-foreground))",
+        red: "hsl(var(--card-red))",
+        purple: "hsl(var(--card-purple))",
       },
+
+     
     },
     borderRadius: {
       lg: "var(--radius)",
@@ -85,6 +89,7 @@ export const theme = {
 
     screens:{
       '4xl': '2200px',
+      'xs' : '375px',
     },
 
     scale:{

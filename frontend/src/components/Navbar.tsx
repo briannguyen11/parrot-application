@@ -2,7 +2,8 @@ import { ProfileDropDown } from "./ProfileDropDown";
 import { SidebarPopup } from "./SidebarPopup";
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
-import NotificationIcon from "../assets/icons/notification.svg";
+
+import NotificationPopover from "./NotificationPopover";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -30,11 +31,9 @@ const Navbar = () => {
       <SearchBar />
 
       <div className="flex items-center justify-center select-none  gap-x-5">
-        <img
-          src={NotificationIcon}
-          alt="notification"
-          className="w-6 h-6 object-cover hover:cursor-pointer"
-        />
+        
+
+        <NotificationPopover />
         <div className="hover:cursor-pointer">
           <ProfileDropDown />
         </div>
