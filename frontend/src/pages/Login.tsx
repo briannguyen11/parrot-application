@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 export function Login() {
   const navigate = useNavigate();
   return (
-    <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
+    <div className="w-full lg:grid xl:min-h-[800px]">
       <div className="flex items-center justify-center py-12">
         <div className="mx-auto grid w-[350px] gap-6">
           <p
@@ -41,16 +41,15 @@ export function Login() {
             <Button type="submit" className="w-full">
               Login
             </Button>
-            <Button variant="outline" className="w-full">
-              Login with Google
-            </Button>
           </div>
-          <div className="mt-4 text-center text-sm">
+          <div
+            className="mt-4 text-center text-sm underline hover:cursor-pointer"
+            onClick={() => navigate("/register")}
+          >
             Don&apos;t have an account?{" "}
           </div>
         </div>
       </div>
-      <div className="hidden bg-muted lg:block"></div>
     </div>
   );
 }
