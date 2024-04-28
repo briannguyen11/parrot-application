@@ -1,4 +1,3 @@
-
 import Tag from "./Tag";
 
 const FeedCard = () => {
@@ -11,8 +10,9 @@ const FeedCard = () => {
           Join
         </h4>
       </div>
+      <p className="text-sm font-extralight text-secondary-foreground">posted 3h ago</p>
 
-      <div className="mt-4 flex items-center gap-x-3 border-b pb-4">
+      <div className="mt-6 flex items-center gap-x-3 border-b pb-4">
         <img
           src="https://media.licdn.com/dms/image/D4E03AQFzplx5eTzzyA/profile-displayphoto-shrink_100_100/0/1707245865823?e=1719446400&v=beta&t=9CUlC15B-vH1V5H4vqSy_RZZlXTKGnkM8eU4gLuHfQI"
           alt="profile"
@@ -32,8 +32,10 @@ const FeedCard = () => {
 
       <div className="mt-3">
         <p className="text-secondary">
-          Windomi will be a website to generate funny names for brands and
-          startups. It will use AI to curate responses based on user input.
+          Hi! I am looking for three other individuals to join me in a project
+          to build a new social media platform. The project will be built using
+          Python and Javascript. If you are interested, please apply to the
+          project and contact me!
         </p>
       </div>
 
