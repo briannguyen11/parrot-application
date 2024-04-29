@@ -1,6 +1,6 @@
 import "./App.css";
 import Home from "./pages/Home";
-import Spotlight from "./pages/Spotlight";
+import Spotlight from "./pages/Showcase";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import { Login } from "./pages/Login";
@@ -19,7 +19,8 @@ const router = createBrowserRouter(
     <Route>
       <Route path="/" element={<Home />}>
         <Route index element={<Feed />} />
-        <Route path="spotlight" element={<Spotlight />} />
+        <Route path="showcase" element={<Spotlight />} />
+        <Route path="settings" element={<div>settings</div>} />
       </Route>
 
       <Route path="/profile" element={<Profile />} />

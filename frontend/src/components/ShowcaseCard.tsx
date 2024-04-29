@@ -1,14 +1,14 @@
-type SpotlightCardProps = {
+type ShowcaseCardProps = {
   projectName: string;
-//   user: string;
-//   userPicture: string;
+  //   user: string;
+  //   userPicture: string;
   imageUrls: string[]; // Define a type for imageUrls prop as an array of strings
 };
 
-const SpotlightCard: React.FC<SpotlightCardProps> = ({
+const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
   projectName,
-//   user,
-//   userPicture,
+  //   user,
+  //   userPicture,
   imageUrls,
 }) => {
   return (
@@ -26,4 +26,4 @@ const SpotlightCard: React.FC<SpotlightCardProps> = ({
   );
 };
 
-export default SpotlightCard;
+export default ShowcaseCard;

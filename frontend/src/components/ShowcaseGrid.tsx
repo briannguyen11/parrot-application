@@ -1,8 +1,8 @@
-import SpotlightCard from "./SpotlightCard";
+import SpotlightCard from "./ShowcaseCard";
 import { useState, useEffect } from "react";
 import { Skeleton } from "./ui/skeleton";
 
-const SpotlightGrid = () => {
+const ShowcaseGrid = () => {
   const [loading, setLoading] = useState(true);
 
   // simulate loading time
@@ -58,4 +58,4 @@ const SpotlightGrid = () => {
   );
 };
 
-export default SpotlightGrid;
+export default ShowcaseGrid;

@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Sidebar = () => {
-  const [tab, setTab] = useState("empty");
+  const [tab, setTab] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -18,8 +18,11 @@ const Sidebar = () => {
     if (location.pathname === "/") {
       setTab("explore");
     }
-    if (location.pathname === "/spotlight") {
-      setTab("spotlight");
+    if (location.pathname === "/showcase") {
+      setTab("showcase");
+    }
+    if (location.pathname === "/settings") {
+      setTab("settings");
     }
   }, [location.pathname]);
 
@@ -39,10 +42,10 @@ const Sidebar = () => {
         <SidebarElement
           title="Showcase"
           icon={SpotlightIcon}
-          selected={"/" + tab === location.pathname}
+          selected={tab === "showcase"}
           onClick={() => {
-            setTab("spotlight");
-            navigate("/spotlight");
+            setTab("showcase");
+            navigate("/showcase");
           }}
         />
       </div>
@@ -54,6 +57,7 @@ const Sidebar = () => {
           selected={tab === "settings"}
           onClick={() => {
             setTab("settings");
+            navigate("/settings");
           }}
         />
 
@@ -74,10 +78,10 @@ const Sidebar = () => {
             setTab("report");
           }}
         />
-         <p className="ml-3 p-3 text-xs font-light text-gray-400">© 2024 Parrot, Inc</p>
+        <p className="ml-3 p-3 text-xs font-light text-gray-400">
+          © 2024 Parrot, Inc
+        </p>
       </div>
-
-     
     </div>
   );
 };
