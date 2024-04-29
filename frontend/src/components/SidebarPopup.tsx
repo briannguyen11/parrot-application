@@ -10,7 +10,7 @@ import SidebarElement from "./SidebarElement";
 import SearchIcon from "@/assets/icons/search.svg";
 import SpotlightIcon from "@/assets/icons/spotlight.svg";
 import { useNavigate, useLocation } from "react-router-dom";
-
+import Sidebar from "./Sidebar";
 import { useEffect, useState } from "react";
 
 export function SidebarPopup() {
@@ -41,9 +41,9 @@ export function SidebarPopup() {
           <path d="M19 10.625H1v-1.25h18v1.25Zm0-7.875H1V4h18V2.75ZM19 16H1v1.25h18V16Z"></path>
         </svg>
       </SheetTrigger>
-      <SheetContent className="w-72 mt-16" side={"left"}>
-        {/* <Sidebar /> */}
-        <SheetClose asChild>
+      <SheetContent className="w-72 mt-12" side={"left"}>
+        <Sidebar />
+        {/* <SheetClose asChild>
           <div onClick={() => navigate("/")}>
             <SidebarElement
               title="Explore"
@@ -61,7 +61,7 @@ export function SidebarPopup() {
               selected={tab === "spotlight"}
             />
           </div>
-        </SheetClose>
+        </SheetClose> */}
       </SheetContent>
     </Sheet>
   );

@@ -26,7 +26,9 @@ const router = createBrowserRouter(
         <Route path="messages" element={<div>messages</div>} />
       </Route>
 
+      <Route path="/create" element={<div>Create</div>} />
       <Route path="/profile" element={<Profile />} />
+
       <Route path="/login" element={<Login />} />
       <Route path="*" element={<NotFound />} />
     </Route>

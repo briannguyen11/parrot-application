@@ -3,8 +3,7 @@ import { SidebarPopup } from "./SidebarPopup";
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
 import SearchIcon from "../assets/icons/search-icon.svg";
-import CreateIcon from "../assets/icons/create.svg";
-
+import CodeIcon from "../assets/icons/code.svg";
 
 import NotificationPopover from "./NotificationPopover";
 
@@ -33,22 +32,29 @@ const Navbar = () => {
 
       <SearchBar />
 
-      <div className="flex items-center justify-center select-none  md:gap-x-5 gap-x-4">
+      <div className="flex items-center justify-center select-none gap-x-4">
         <img
           src={SearchIcon}
           alt="search"
           className="md:hidden w-7 h-7 hover:bg-gray-200 p-1 rounded-full transition duration-300 ease-in-out hover:cursor-pointer"
         />
-       
-        <div className="hover:cursor-pointer flex justify-center items-center gap-x-2">
-          <img src={CreateIcon} alt="search" className="w-7 h-7 md:hover:bg-inherit hover:bg-gray-200 p-1 rounded-full transition duration-300 ease-in-out" />
+
+        <div
+          onClick={() => navigate("create")}
+          className="hover:cursor-pointer  md:hover:bg-gray-200 flex justify-center items-center pr-3 pl-2 md:py-1 rounded-full gap-x-1"
+        >
+          <img
+            src={CodeIcon}
+            alt="search"
+            className="w-8 h-8 md:hover:bg-inherit hover:bg-gray-200 p-1 rounded-xl transition duration-300 ease-in-out"
+          />
           <h4 className="font-normal text-sm text-primary md:flex hidden">
             Create Project
           </h4>
         </div>
 
         <NotificationPopover />
-        <div className="hover:cursor-pointer">
+        <div className="hover:cursor-pointer ml-2 ">
           <ProfileDropDown />
         </div>
       </div>

@@ -16,7 +16,7 @@ const NotificationPopover = () => {
           draggable="false"
         />
       </PopoverTrigger>
-      <PopoverContent className="md:mr-20 mr-16 mt-3">Place content for the popover here.</PopoverContent>
+      <PopoverContent className="md:mr-20 mr-16 mt-3">You have 0 new notifications. Try joining a project!</PopoverContent>
     </Popover>
   );
 };
