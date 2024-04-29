@@ -15,6 +15,13 @@ export const theme = {
       "2xl": "1400px",
     },
   },
+
+  fontFamily: {
+    body: ["system-ui", "sans-serif"],
+    sidebar: ["Montserrat", "sans-serif"], 
+
+  },
+
   extend: {
     boxShadow: {
       'light': '0px 2px 14px 0px rgba(0, 0, 0, 0.08)',
