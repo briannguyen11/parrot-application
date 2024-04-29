@@ -1,6 +1,6 @@
 import "./App.css";
 import Home from "./pages/Home";
-import Spotlight from "./components/Spotlight";
+import Spotlight from "./pages/Spotlight";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import { Login } from "./pages/Login";

@@ -2,7 +2,7 @@ import SearchIcon from "../assets/icons/search-alt.svg";
 
 const SearchBar = () => {
   return (
-    <div className="flex border border-gray-300 rounded-2xl lg:w-96 md:w-96  items-center">
+    <div className="border border-gray-300 rounded-2xl lg:w-96 w-96 items-center md:flex hidden">
       <img src={SearchIcon} alt="search" className="w-5 h-5 ml-3  " />
       <input
         type="text"

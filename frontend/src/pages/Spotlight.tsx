@@ -1,4 +1,4 @@
-import SpotlightGrid from "./SpotlightGrid";
+import SpotlightGrid from "../components/SpotlightGrid";
 
 const Spotlight = () => {
   return (

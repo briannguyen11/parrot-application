@@ -2,6 +2,8 @@ import { ProfileDropDown } from "./ProfileDropDown";
 import { SidebarPopup } from "./SidebarPopup";
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
+import SearchIcon from "../assets/icons/search-icon.svg";
+import CreateIcon from "../assets/icons/create.svg";
 
 import NotificationPopover from "./NotificationPopover";
 
@@ -9,8 +11,8 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="fixed top-0 left-0 w-full md:px-7 px-5 py-3 flex border-b border-gray-200 z-50 justify-between bg-white ">
-      <div className="flex justify-center items-center gap-5 hover:cursor-pointer">
+    <div className="fixed top-0 left-0 w-full md:px-7 px-5 md:py-3 py-4 flex border-b border-gray-200 z-50 justify-between bg-white ">
+      <div className="flex justify-center items-center gap-5 hover:cursor-pointer ">
         <SidebarPopup />
 
         <div
@@ -22,7 +24,7 @@ const Navbar = () => {
             alt="logo"
             className="w-6 h-6 object-cover select-none"
           />
-          <h1 className="text-[23px] font-medium lg:block hidden select-none">
+          <h1 className="text-[23px] font-medium text-primary lg:block hidden select-none">
             PARROT
           </h1>
         </div>
@@ -30,9 +32,15 @@ const Navbar = () => {
 
       <SearchBar />
 
-      <div className="flex items-center justify-center select-none  gap-x-5">
-        <div className="hover:cursor-pointer">
-          <h4 className="font-normal text-sm">Create Project</h4>
+      <div className="flex items-center justify-center select-none  md:gap-x-5 gap-x-4">
+        <img
+          src={SearchIcon}
+          alt="search"
+          className="md:hidden w-5 h-5 ml-3 translate-x-3 scale-90 hover:cursor-pointer"
+        />
+        <div className="hover:cursor-pointer flex items-center gap-x-2">
+          <img src={CreateIcon} alt="search" className="w-5 h-5 ml-3" />
+          <h4 className="font-normal text-sm text-primary md:flex hidden">Create Project</h4>
         </div>
 
         <NotificationPopover />

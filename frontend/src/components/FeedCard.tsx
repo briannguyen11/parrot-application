@@ -4,13 +4,15 @@ const FeedCard = () => {
   return (
     <div className="shadow-light p-7 px-10 max-w-screen-sm border border-border rounded-lg hover:cursor-pointer hover:shadow-light-hover hover:border-gray-400  transition duration-300 ease-in-out">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold text-primary">Windomi</h2>
+        <h2 className="text-2xl font-semibold text-primary">Windomi</h2>
 
         <h4 className="text-secondary py-1 px-6 border rounded-full border-gray-300 hover:bg-primary hover:text-white hover:border-transparent transition duration-300 ease-in-out">
           Join
         </h4>
       </div>
-      <p className="text-sm font-extralight text-secondary-foreground">posted 3h ago</p>
+      <p className="text-sm font-extralight text-secondary-foreground">
+        posted 3h ago
+      </p>
 
       <div className="mt-6 flex items-center gap-x-3 border-b pb-4">
         <img
@@ -42,6 +44,8 @@ const FeedCard = () => {
       <div className="flex items-center gap-x-4 mt-6">
         <Tag name="Python" />
         <Tag name="Javascript" />
+        <Tag name="React" />
+        <Tag name="Django" />
       </div>
     </div>
   );

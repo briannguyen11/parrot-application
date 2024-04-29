@@ -64,6 +64,9 @@ export const theme = {
         foreground: "hsl(var(--card-foreground))",
         red: "hsl(var(--card-red))",
         purple: "hsl(var(--card-purple))",
+        yellow: "var(--card-yellow)",
+        blue : "var(--card-blue)",
+        green : "var(--card-green)",
       },
 
      
@@ -90,6 +93,7 @@ export const theme = {
 
     screens:{
       '4xl': '2200px',
+      'xl+': '1330px',
       'xs' : '375px',
     },
 

@@ -11,6 +11,9 @@
     --card-foreground: 222.2 84% 4.9%;
     --card-red: 4 67% 65%;
     --card-purple: 241 73% 74%;
+    --card-yellow: #E69215;
+    --card-blue: #2a6894;
+    --card-green: #4D6631;
 
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
