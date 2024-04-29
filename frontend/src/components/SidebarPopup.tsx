@@ -24,8 +24,21 @@ export function SidebarPopup() {
   useEffect(() => {
     if (location.pathname === "/") {
       setTab("explore");
-    } else if (location.pathname === "/spotlight") {
-      setTab("spotlight");
+    }
+    if (location.pathname === "/showcase") {
+      setTab("showcase");
+    }
+    if (location.pathname === "/settings") {
+      setTab("settings");
+    }
+    if (location.pathname === "/help") {
+      setTab("help");
+    }
+    if (location.pathname === "/report") {
+      setTab("report");
+    }
+    if (location.pathname === "/messages") {
+      setTab("messages");
     }
   }, [location.pathname]);
 
@@ -33,7 +46,7 @@ export function SidebarPopup() {
     <Sheet>
       <SheetTrigger asChild>
         <svg
-          className="lg:hidden"
+          className="lg:hidden hover:cursor-pointer"
           fill="currentColor"
           height="20"
           icon-name="menu-outline"
@@ -45,7 +58,6 @@ export function SidebarPopup() {
         </svg>
       </SheetTrigger>
       <SheetContent className="w-72 mt-12" side={"left"}>
-        {/* <Sidebar /> */}
         <SheetClose asChild>
           <div className="fixed w-60 h-sidebar lg:border-r border-gray-200 pt-5 overflow-auto flex flex-col justify-between ">
             <div>

@@ -12,12 +12,12 @@ const Navbar = () => {
 
   return (
     <div className="fixed top-0 left-0 w-full md:px-7 px-5 md:py-3 py-4 flex border-b border-gray-200 z-50 justify-between bg-white ">
-      <div className="flex justify-center items-center gap-5 hover:cursor-pointer ">
+      <div className="flex justify-center items-center gap-5">
         <SidebarPopup />
 
         <div
           onClick={() => navigate("/")}
-          className="flex items-center justify-center gap-4"
+          className="flex items-center justify-center gap-4 hover:cursor-pointer"
         >
           <img
             src="../../icon.svg"
