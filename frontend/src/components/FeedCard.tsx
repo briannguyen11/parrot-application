@@ -27,7 +27,7 @@ const FeedCard: React.FC<FeedCardProps> = ({
     }) +
     " ago";
   return (
-    <div className="shadow-light p-7 px-10 md:w-[640px] max-w-screen-sm border border-border rounded-lg hover:cursor-pointer hover:shadow-light-hover hover:border-gray-400  transition duration-300 ease-in-out">
+    <div className="shadow-light p-7 px-10  w-full  max-w-screen-sm border border-border rounded-lg hover:cursor-pointer hover:shadow-light-hover hover:border-gray-400  transition duration-300 ease-in-out">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold text-primary">{title}</h2>
 
