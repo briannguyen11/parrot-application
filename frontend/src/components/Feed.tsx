@@ -56,12 +56,9 @@ const Feed = () => {
           <FeedCard
             title="Windomi"
             name="John Smith"
-            description="Hi! I am looking for three other individuals to join me in a project
-            to build a new social media platform. The project will be built using
-            Python and Javascript. If you are interested, please apply to the
-            project and contact me!"
-            userBio="Software Engineer at Cal State Fullerton"
-            postedTime="2024-04-29 12:30:45"
+            description="Don't you think Windomi is such a good name?"
+            userBio="Unemployed at Cal Poly SLO"
+            postedTime="2024-04-19 12:30:45"
             tags={["Python", "Javascript", "React", "Django"]}
             profilePicture="https://media.licdn.com/dms/image/D4E03AQFzplx5eTzzyA/profile-displayphoto-shrink_100_100/0/1707245865823?e=1719446400&v=beta&t=9CUlC15B-vH1V5H4vqSy_RZZlXTKGnkM8eU4gLuHfQI"
           />

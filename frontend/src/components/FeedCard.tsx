@@ -20,17 +20,12 @@ const FeedCard: React.FC<FeedCardProps> = ({
   description,
   tags,
 }) => {
-  const processDateString = (str: string) => {
-    const words = str.split(" ");
-    words[0] = "posted"; // Replace the first word
-    return words.join(" ");
-  };
-
-  const timeAgo = processDateString(
+  const timeAgo =
+    "posted " +
     formatDistanceToNow(new Date(postedTime), {
       addSuffix: false,
-    }) + " ago"
-  );
+    }) +
+    " ago";
   return (
     <div className="shadow-light p-7 px-10 md:w-[640px] max-w-screen-sm border border-border rounded-lg hover:cursor-pointer hover:shadow-light-hover hover:border-gray-400  transition duration-300 ease-in-out">
       <div className="flex items-center justify-between">
