@@ -21,6 +21,9 @@ const router = createBrowserRouter(
         <Route index element={<Feed />} />
         <Route path="showcase" element={<Spotlight />} />
         <Route path="settings" element={<div>settings</div>} />
+        <Route path="help" element={<div>help</div>} />
+        <Route path="report" element={<div>report</div>} />
+        <Route path="messages" element={<div>messages</div>} />
       </Route>
 
       <Route path="/profile" element={<Profile />} />

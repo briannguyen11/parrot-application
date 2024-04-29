@@ -5,6 +5,7 @@ import SpotlightIcon from "../assets/icons/spotlight.svg";
 import ReportIcon from "../assets/icons/report.svg";
 import HelpIcon from "../assets/icons/help.svg";
 import SettingsIcon from "../assets/icons/settings.svg";
+import MessagesIcon from "../assets/icons/messages.svg";
 
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -24,6 +25,16 @@ const Sidebar = () => {
     if (location.pathname === "/settings") {
       setTab("settings");
     }
+    if (location.pathname === "/help") {
+      setTab("help");
+    }
+    if (location.pathname === "/report") {
+      setTab("report");
+    }
+    if (location.pathname === "/messages") {
+      setTab("messages");
+    }
+
   }, [location.pathname]);
 
   return (
@@ -48,6 +59,15 @@ const Sidebar = () => {
             navigate("/showcase");
           }}
         />
+        <SidebarElement
+          title="Messages"
+          icon={MessagesIcon}
+          selected={tab === "messages"}
+          onClick={() => {
+            setTab("messages");
+            navigate("/messages");
+          }}
+        />
       </div>
 
       <div className="border-t mr-4 py-4">
@@ -67,6 +87,7 @@ const Sidebar = () => {
           selected={tab === "help"}
           onClick={() => {
             setTab("help");
+            navigate("/help");
           }}
         />
 
@@ -76,6 +97,7 @@ const Sidebar = () => {
           selected={tab === "report"}
           onClick={() => {
             setTab("report");
+            navigate("/report");
           }}
         />
         <p className="ml-3 p-3 text-xs font-light text-gray-400">

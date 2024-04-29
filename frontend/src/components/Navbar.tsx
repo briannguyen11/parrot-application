@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import SearchIcon from "../assets/icons/search-icon.svg";
 import CreateIcon from "../assets/icons/create.svg";
 
+
 import NotificationPopover from "./NotificationPopover";
 
 const Navbar = () => {
@@ -36,11 +37,14 @@ const Navbar = () => {
         <img
           src={SearchIcon}
           alt="search"
-          className="md:hidden w-5 h-5 ml-3 translate-x-3 scale-90 hover:cursor-pointer"
+          className="md:hidden w-7 h-7 hover:bg-gray-200 p-1 rounded-full transition duration-300 ease-in-out hover:cursor-pointer"
         />
-        <div className="hover:cursor-pointer flex items-center gap-x-2">
-          <img src={CreateIcon} alt="search" className="w-5 h-5 ml-3" />
-          <h4 className="font-normal text-sm text-primary md:flex hidden">Create Project</h4>
+       
+        <div className="hover:cursor-pointer flex justify-center items-center gap-x-2">
+          <img src={CreateIcon} alt="search" className="w-7 h-7 md:hover:bg-inherit hover:bg-gray-200 p-1 rounded-full transition duration-300 ease-in-out" />
+          <h4 className="font-normal text-sm text-primary md:flex hidden">
+            Create Project
+          </h4>
         </div>
 
         <NotificationPopover />
