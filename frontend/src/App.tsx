@@ -13,6 +13,7 @@ import {
 } from "react-router-dom";
 
 import Feed from "./components/Feed";
+import Create from "./pages/Create";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,7 +27,7 @@ const router = createBrowserRouter(
         <Route path="messages" element={<div>messages</div>} />
       </Route>
 
-      <Route path="/create" element={<div>Create</div>} />
+      <Route path="/create" element={<Create />} />
       <Route path="/profile" element={<Profile />} />
 
       <Route path="/login" element={<Login />} />
