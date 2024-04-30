@@ -12,9 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 import pyrebase
-from decouple import config as env_config
 from pathlib import Path
-from datetime import timedelta
 from dotenv import load_dotenv
 
 

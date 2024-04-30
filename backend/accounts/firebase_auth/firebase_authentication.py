@@ -1,5 +1,6 @@
 # accounts/firebase_auth/firebase_authentication.py
 import os
+from dotenv import load_dotenv
 import firebase_admin
 from firebase_admin import auth, credentials
 from rest_framework import authentication
@@ -10,6 +11,8 @@ from .firebase_exceptions import (
     EmailVerification,
 )
 from accounts.models import User
+
+load_dotenv()
 
 # Firebase Admin SDK credentials
 try:

@@ -8,8 +8,6 @@ from rest_framework.views import APIView
 from .models import User
 from .serializers import UserSerializer
 from rest_framework.permissions import AllowAny
-from .firebase_auth.firebase_authentication import auth as firebase_admin_auth
-from .utils.email_verification_link import send_firebase_email_verification_link
 from django.contrib.auth.hashers import check_password
 import re
 from backend.settings import auth
@@ -69,16 +67,6 @@ class AuthCreateNewUserView(APIView):
             data["firebase_uid"] = uid
             data["is_active"] = True
 
-            # sending custom email verification link
-            try:
-                user_email = email
-                send_firebase_email_verification_link(user_email)
-            except Exception as e:
-                # delete user from firebase if email verification link could not be sent
-                firebase_admin_auth.delete_user(uid)
-                bad_response = {"status": "failed", "message": str(e)}
-                return Response(bad_response, status=status.HTTP_400_BAD_REQUEST)
-
             serializer = UserSerializer(data=data)
             if serializer.is_valid():
                 serializer.save()
@@ -96,6 +84,7 @@ class AuthCreateNewUserView(APIView):
                     "data": serializer.errors,
                 }
                 return Response(bad_response, status=status.HTTP_400_BAD_REQUEST)
+
         except Exception:
             bad_response = {
                 "status": "failed",
@@ -118,6 +107,7 @@ class AuthLoginExisitingUserView(APIView):
 
         try:
             user = auth.sign_in_with_email_and_password(email, password)
+
         except Exception:
             bad_response = {"status": "failed", "message": "Invalid email or password."}
             return Response(bad_response, status=status.HTTP_400_BAD_REQUEST)
@@ -128,7 +118,9 @@ class AuthLoginExisitingUserView(APIView):
             if not check_password(password, existing_user.password):
                 existing_user.set_password(password)
                 existing_user.save()
+
             serializer = UserSerializer(existing_user)
+
             extra_data = {
                 "firebase_id": user["localId"],
                 "firebase_access_token": user["idToken"],
