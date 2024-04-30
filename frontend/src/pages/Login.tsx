@@ -43,7 +43,7 @@ export function Login() {
             </Button>
           </div>
           <div
-            className="mt-4 text-center text-sm underline hover:cursor-pointer"
+            className="mt-4 text-center text-sm hover:cursor-pointer hover:underline"
             onClick={() => navigate("/register")}
           >
             Don&apos;t have an account?{" "}
