@@ -10,19 +10,18 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
+import pyrebase
+from decouple import config as env_config
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
-import os
+
 
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY")
@@ -32,20 +31,51 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+# Firebase
+
+try:
+    config = {
+        "apiKey": os.getenv("FIREBASE_API_KEY"),
+        "authDomain": os.getenv("FIREBASE_AUTH_DOMAIN"),
+        "databaseURL": os.getenv("FIREBASE_DATABASE_URL"),
+        "storageBucket": os.getenv("FIREBASE_STORAGE_BUCKET"),
+    }
+    firebase = pyrebase.initialize_app(config)
+    auth = firebase.auth()
+except Exception:
+    raise Exception(
+        "Firebase configuration credentials not found. Please add the configuration to the environment variables."
+    )
+
+# Custom user model
+
+AUTH_USER_MODEL = "accounts.User"
+
+# REST Framework
+
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-        "firebase_auth.authentication.FirebaseAuthentication",
+        "accounts.firebase_auth.firebase_authentication.FirebaseAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ],
 }
 
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-}
+# Authentication backend
+
+AUTHENTICATION_BACKENDS = [
+    "accounts.backends.model_backend.ModelBackend",
+]
+
+# Email settings
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = env_config("EMAIL_HOST")
+EMAIL_PORT = env_config("EMAIL_PORT")
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = env_config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env_config("EMAIL_HOST_PASSWORD")
 
 
 # Application definition
@@ -60,7 +90,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "api",
-    "firebase_auth",
+    "accounts",
 ]
 
 MIDDLEWARE = [
@@ -74,7 +104,7 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
 ]
 
-ROOT_URLCONF = "backend.urls"
+ROOT_URLCONF = "core.urls"
 
 TEMPLATES = [
     {
@@ -92,7 +122,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "backend.wsgi.application"
+WSGI_APPLICATION = "core.wsgi.application"
 
 
 # Database
