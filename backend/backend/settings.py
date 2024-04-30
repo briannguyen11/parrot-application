@@ -68,16 +68,6 @@ AUTHENTICATION_BACKENDS = [
     "accounts.backends.model_backend.ModelBackend",
 ]
 
-# Email settings
-
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = env_config("EMAIL_HOST")
-EMAIL_PORT = env_config("EMAIL_PORT")
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = env_config("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = env_config("EMAIL_HOST_PASSWORD")
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -104,7 +94,7 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
 ]
 
-ROOT_URLCONF = "core.urls"
+ROOT_URLCONF = "backend.urls"
 
 TEMPLATES = [
     {
@@ -122,7 +112,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "core.wsgi.application"
+WSGI_APPLICATION = "backend.wsgi.application"
 
 
 # Database

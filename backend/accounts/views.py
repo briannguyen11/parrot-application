@@ -7,13 +7,14 @@ from rest_framework import status
 from rest_framework.views import APIView
 from .models import User
 from .serializers import UserSerializer
-from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
 from rest_framework.permissions import AllowAny
 from .firebase_auth.firebase_authentication import auth as firebase_admin_auth
 from .utils.email_verification_link import send_firebase_email_verification_link
 from django.contrib.auth.hashers import check_password
-from drf_with_firebase.settings import auth
+import re
+from backend.settings import auth
+
+# Create a new user
 
 
 class AuthCreateNewUserView(APIView):

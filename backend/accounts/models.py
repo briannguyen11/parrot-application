@@ -1,7 +1,8 @@
 # accounts/models
 
 from django.db import models
-from django.contrib.auth.models import BaseUserManager
+from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.utils.translation import gettext_lazy as _
 
 
 class CustomUserManager(BaseUserManager):
@@ -28,3 +29,25 @@ class CustomUserManager(BaseUserManager):
 
     def get_by_natural_key(self, firebase_uid):
         return self.get(firebase_uid=firebase_uid)
+
+
+class User(AbstractUser):
+    firebase_uid = models.CharField(primary_key=True, max_length=255)
+    email = models.EmailField(unique=True)
+
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = []
+
+    objects = CustomUserManager()
+
+    def natural_key(self):
+        return (self.firebase_uid,)
+
+    def __str__(self):
+        return self.email
+
+    class Meta:
+        db_table = "user"
+        verbose_name = _("user")
+        verbose_name_plural = _("users")
+        ordering = ["-date_joined"]
