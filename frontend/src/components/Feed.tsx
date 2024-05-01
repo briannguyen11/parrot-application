@@ -1,10 +1,11 @@
-// import { SkeletonCard } from "@/components/SkeletonCard";
+import { Skeleton } from "./ui/skeleton";
 import FeedCard from "@/components/FeedCard";
 import { FilterPopup } from "./FilterPopup";
 import { useEffect, useState } from "react";
 
 const Feed = () => {
   const [isFixed, setIsFixed] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,9 +26,61 @@ const Feed = () => {
     };
   }, []);
 
+  // simulate loading
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, []);
+
+  // Mock Feed Card Data
+  const feedCardData = [
+    {
+      title: "Social Media Website",
+      name: "John Smith",
+      description: "Hi! I am looking for three other individuals to join me in a project to build a new social media platform. The project will be built using Python and Javascript. If you are interested, please apply to the project and contact me!",
+      userBio: "Software Engineer at Cal State Fullerton",
+      postedTime: "2024-04-29 3:14:45",
+      tags: ["Python", "Javascript", "React", "Django"],
+      profilePicture: "https://media.licdn.com/dms/image/D4E03AQFzplx5eTzzyA/profile-displayphoto-shrink_100_100/0/1707245865823?e=1719446400&v=beta&t=9CUlC15B-vH1V5H4vqSy_RZZlXTKGnkM8eU4gLuHfQI"
+    },
+    {
+      title: "Windomi",
+      name: "John Smith",
+      description: "Don't you think Windomi is such a good name?",
+      userBio: "Unemployed at Cal Poly SLO",
+      postedTime: "2024-04-19 12:30:45",
+      tags: ["Python", "Javascript", "React", "Django"],
+      profilePicture: "https://media.licdn.com/dms/image/D4E03AQFzplx5eTzzyA/profile-displayphoto-shrink_100_100/0/1707245865823?e=1719446400&v=beta&t=9CUlC15B-vH1V5H4vqSy_RZZlXTKGnkM8eU4gLuHfQI"
+    },
+    {
+      title: "Ethnicity Detection",
+      name: "John Smith",
+      description: "Hi! I am looking for three other individuals to join me in a project to build a new social media platform. The project will be built using Python and Javascript. If you are interested, please apply to the project and contact me!",
+      userBio: "Software Engineer at Cal State Fullerton",
+      postedTime: "2024-04-29 12:30:45",
+      tags: ["Python", "Javascript", "React", "Django"],
+      profilePicture: "https://media.licdn.com/dms/image/D4E03AQFzplx5eTzzyA/profile-displayphoto-shrink_100_100/0/1707245865823?e=1719446400&v=beta&t=9CUlC15B-vH1V5H4vqSy_RZZlXTKGnkM8eU4gLuHfQI"
+    }
+  ];
+
+  const renderSkeletons = () => {
+    if (loading) {
+      return (
+        <>
+        
+          <Skeleton className="w-full  max-w-screen-sm h-[300px]" />
+          <Skeleton className="h-[300px] w-full mb-5 rounded-xl" />
+          <Skeleton className="h-[300px] w-full mb-5 rounded-xl" />
+        </>
+      );
+    }
+    return null;
+  };
+
   return (
     <div className="flex w-full items-start  lg:justify-start justify-center gap-10">
-      <div className="flex flex-col gap-3 lg:ml-16">
+      <div className="flex flex-col gap-3 lg:ml-16 w-full max-w-screen-sm">
         <div className="flex items-end justify-between">
           <div>
             <h2 className="text-2xl font-semibold">Explore Projects</h2>
@@ -40,41 +93,12 @@ const Feed = () => {
         </div>
 
         <div className="flex flex-col gap-7  lg:items-start items-center  max-w-screen-sm">
-          <FeedCard
-            title="Social Media Website"
-            name="John Smith"
-            description="Hi! I am looking for three other individuals to join me in a project
-            to build a new social media platform. The project will be built using
-            Python and Javascript. If you are interested, please apply to the
-            project and contact me!"
-            userBio="Software Engineer at Cal State Fullerton"
-            postedTime="2024-04-29 12:30:45"
-            tags={["Python", "Javascript", "React", "Django"]}
-            profilePicture="https://media.licdn.com/dms/image/D4E03AQFzplx5eTzzyA/profile-displayphoto-shrink_100_100/0/1707245865823?e=1719446400&v=beta&t=9CUlC15B-vH1V5H4vqSy_RZZlXTKGnkM8eU4gLuHfQI"
-          />
+          {renderSkeletons()}
 
-          <FeedCard
-            title="Windomi"
-            name="John Smith"
-            description="Don't you think Windomi is such a good name?"
-            userBio="Unemployed at Cal Poly SLO"
-            postedTime="2024-04-19 12:30:45"
-            tags={["Python", "Javascript", "React", "Django"]}
-            profilePicture="https://media.licdn.com/dms/image/D4E03AQFzplx5eTzzyA/profile-displayphoto-shrink_100_100/0/1707245865823?e=1719446400&v=beta&t=9CUlC15B-vH1V5H4vqSy_RZZlXTKGnkM8eU4gLuHfQI"
-          />
-
-          <FeedCard
-            title="Ethnicity Detection"
-            name="John Smith"
-            description="Hi! I am looking for three other individuals to join me in a project
-            to build a new social media platform. The project will be built using
-            Python and Javascript. If you are interested, please apply to the
-            project and contact me!"
-            userBio="Software Engineer at Cal State Fullerton"
-            postedTime="2024-04-29 12:30:45"
-            tags={["Python", "Javascript", "React", "Django"]}
-            profilePicture="https://media.licdn.com/dms/image/D4E03AQFzplx5eTzzyA/profile-displayphoto-shrink_100_100/0/1707245865823?e=1719446400&v=beta&t=9CUlC15B-vH1V5H4vqSy_RZZlXTKGnkM8eU4gLuHfQI"
-          />
+          {/* Render FeedCard components dynamically */}
+          {!loading && feedCardData.map((cardData, index) => (
+            <FeedCard key={index} {...cardData} />
+          ))}
         </div>
       </div>
       <div

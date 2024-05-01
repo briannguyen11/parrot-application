@@ -40,7 +40,7 @@ const Navbar = () => {
         />
 
         <div
-          onClick={() => navigate("create")}
+          onClick={() => navigate("/create")}
           className="hover:cursor-pointer  md:hover:bg-gray-200 flex justify-center items-center pr-3 pl-2 md:py-1 rounded-full gap-x-1"
         >
           <img
