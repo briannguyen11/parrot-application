@@ -6,6 +6,7 @@ import ReportIcon from "../assets/icons/report.svg";
 import HelpIcon from "../assets/icons/help.svg";
 import SettingsIcon from "../assets/icons/settings.svg";
 import MessagesIcon from "../assets/icons/messages.svg";
+import CampusIcon from "../assets/icons/campus.svg";
 
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -34,7 +35,9 @@ const Sidebar = () => {
     if (location.pathname === "/messages") {
       setTab("messages");
     }
-
+    if (location.pathname === "/campus") {
+      setTab("campus");
+    }
   }, [location.pathname]);
 
   return (
@@ -66,6 +69,16 @@ const Sidebar = () => {
           onClick={() => {
             setTab("messages");
             navigate("/messages");
+          }}
+        />
+
+        <SidebarElement
+          title="Campus"
+          icon= {CampusIcon}
+          selected={tab === "campus"}
+          onClick={() => {
+            setTab("campus");
+            navigate("/campus");
           }}
         />
       </div>
