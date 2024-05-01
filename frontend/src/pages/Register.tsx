@@ -4,22 +4,20 @@ import { Label } from "@/components/ui/label";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import api from "../api";
+import api from "../api";
 // import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 
 interface RegisterFormData {
   email: string;
   password: string;
-  confirmPassword: string;
 }
 
 export function Register() {
   const [registerFormData, setRegisterFormData] = useState<RegisterFormData>({
     email: "",
     password: "",
-    confirmPassword: "",
   });
-  const [Loading, setLoading] = useState<boolean>(false);
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
   const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,24 +26,26 @@ export function Register() {
   };
 
   const handleRegsiter = async (e: React.FormEvent<HTMLFormElement>) => {
-    setLoading(true);
     e.preventDefault();
 
-    if (registerFormData.password === registerFormData.confirmPassword) {
+    if (registerFormData.password === confirmPassword) {
       try {
-        alert("Passwords match!");
+        const res = await api.post(
+          "/api/users/auth/register/",
+          registerFormData
+        );
+        console.log(res);
+        navigate("/login");
       } catch (error) {
         alert(error);
-      } finally {
-        setLoading(false);
       }
     } else {
       alert("Passwords do not match!");
       setRegisterFormData({
         email: "",
         password: "",
-        confirmPassword: "",
       });
+      setConfirmPassword("");
     }
   };
 
@@ -102,8 +102,10 @@ export function Register() {
                 id="confirm-password"
                 type="password"
                 name="confirmPassword"
-                value={registerFormData.confirmPassword}
-                onChange={handleInputChange}
+                value={confirmPassword}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setConfirmPassword(e.target.value)
+                }
                 required
               />
             </div>

@@ -31,12 +31,18 @@ import {
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
-import { Toaster } from "@/components/ui/sonner"
+import { Toaster } from "@/components/ui/sonner";
+
 export function ProfileDropDown() {
   const navigate = useNavigate();
 
   // hardcode for now, change when using auth wrapper
   const auth = true;
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
 
   return (
     <DropdownMenu>
@@ -123,9 +129,9 @@ export function ProfileDropDown() {
                 action: {
                   label: "Close",
                   onClick: () => console.log(""),
-                }
+                },
               });
-              navigate("/");
+              handleLogout();
             }}
           >
             <LogOut className="mr-2 h-4 w-4" />
