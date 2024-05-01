@@ -1,6 +1,5 @@
 # accounts/views
 
-from django.shortcuts import render
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework import status
@@ -8,14 +7,17 @@ from rest_framework.views import APIView
 from .models import User
 from .serializers import UserSerializer
 from rest_framework.permissions import AllowAny
+from .firebase_auth.firebase_authentication import auth as firebase_admin_auth
+
 from django.contrib.auth.hashers import check_password
 import re
 from backend.settings import auth
 
-# Create a new user
+# API endpoint for creating new user
 
 
 class AuthCreateNewUserView(APIView):
+
     permission_classes = [AllowAny]
     authentication_classes = []
 
@@ -48,7 +50,7 @@ class AuthCreateNewUserView(APIView):
             }
             return Response(bad_response, status=status.HTTP_400_BAD_REQUEST)
 
-        # Check if password contains at least one uppercase letter, one lowercase letter, one digit, and one special character
+        # Check if password meets complexity requirements
         if password and not re.match(
             r"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]).{8,}$",
             password,
@@ -60,14 +62,15 @@ class AuthCreateNewUserView(APIView):
             return Response(bad_response, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            # create user on firebase
+            # Create user on firebase
             user = auth.create_user_with_email_and_password(email, password)
-            # Set uid to the value returned from Firebase
+            print(user)
             uid = user["localId"]
             data["firebase_uid"] = uid
             data["is_active"] = True
 
             serializer = UserSerializer(data=data)
+
             if serializer.is_valid():
                 serializer.save()
                 response = {
@@ -84,7 +87,6 @@ class AuthCreateNewUserView(APIView):
                     "data": serializer.errors,
                 }
                 return Response(bad_response, status=status.HTTP_400_BAD_REQUEST)
-
         except Exception:
             bad_response = {
                 "status": "failed",
@@ -93,7 +95,7 @@ class AuthCreateNewUserView(APIView):
             return Response(bad_response, status=status.HTTP_400_BAD_REQUEST)
 
 
-# Login an existing user
+# API endpoint to login user
 
 
 class AuthLoginExisitingUserView(APIView):
@@ -107,20 +109,17 @@ class AuthLoginExisitingUserView(APIView):
 
         try:
             user = auth.sign_in_with_email_and_password(email, password)
-
         except Exception:
             bad_response = {"status": "failed", "message": "Invalid email or password."}
             return Response(bad_response, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             existing_user = User.objects.get(email=email)
-            # update password if it is not the same as the one in the database
             if not check_password(password, existing_user.password):
                 existing_user.set_password(password)
                 existing_user.save()
 
             serializer = UserSerializer(existing_user)
-
             extra_data = {
                 "firebase_id": user["localId"],
                 "firebase_access_token": user["idToken"],

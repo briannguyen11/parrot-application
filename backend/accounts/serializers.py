@@ -15,14 +15,14 @@ class UserSerializer(serializers.ModelSerializer):
         instance = self.Meta.model(**validated_data)
         if password is not None:
             instance.set_password(password)
-            instance.save()
+        instance.save()
         return instance
 
     def update(self, instance, validated_data):
         password = validated_data.pop("password", None)
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
-            if password is not None:
-                instance.set_password(password)
-                instance.save()
+        if password is not None:
+            instance.set_password(password)
+        instance.save()
         return instance

@@ -15,8 +15,8 @@ from .models import Profile
 #         return user
 
 
-class ProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Profile
-        fields = ["id", "first_name", "last_name", "bio", "school", "major"]
-        extra_kwargs = {"user": {"read_only": True}}
+# class ProfileSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Profile
+#         fields = ["id", "first_name", "last_name", "bio", "school", "major"]
+#         extra_kwargs = {"user": {"read_only": True}}
