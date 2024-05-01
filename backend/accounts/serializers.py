@@ -8,7 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["firebase_uid", "email", "password", "first_name", "last_name"]
+        fields = ["firebase_uid", "email", "password"]
 
     def create(self, validated_data):
         password = validated_data.pop("password", None)

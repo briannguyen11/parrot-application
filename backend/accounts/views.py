@@ -7,8 +7,6 @@ from rest_framework.views import APIView
 from .models import User
 from .serializers import UserSerializer
 from rest_framework.permissions import AllowAny
-from .firebase_auth.firebase_authentication import auth as firebase_admin_auth
-
 from django.contrib.auth.hashers import check_password
 import re
 from backend.settings import auth
@@ -25,9 +23,7 @@ class AuthCreateNewUserView(APIView):
         data = request.data
         email = data.get("email")
         password = data.get("password")
-        first_name = data.get("first_name")
-        last_name = data.get("last_name")
-        included_fields = [email, password, first_name, last_name]
+        included_fields = [email, password]
 
         # Check if any of the required fields are missing
         if not all(included_fields):
@@ -64,7 +60,6 @@ class AuthCreateNewUserView(APIView):
         try:
             # Create user on firebase
             user = auth.create_user_with_email_and_password(email, password)
-            print(user)
             uid = user["localId"]
             data["firebase_uid"] = uid
             data["is_active"] = True
