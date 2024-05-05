@@ -14,3 +14,4 @@ firebase-admin
 whitenoise
 drf-yasg
 sendgrid
+pillow
