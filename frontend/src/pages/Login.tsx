@@ -31,8 +31,9 @@ export function Login() {
       localStorage.setItem(ACCESS_TOKEN, res.data.data.firebase_access_token);
       localStorage.setItem(REFRESH_TOKEN, res.data.data.firebase_refresh_token);
       navigate("/");
-    } catch (error) {
-      alert(error);
+    } catch (error: any) {
+      const errorMessage: string = error.response.data.message;
+      alert(errorMessage);
     }
   };
   return (

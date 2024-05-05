@@ -29,7 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-# Firebase
+# Firebase Settings
 
 try:
     config = {
@@ -65,6 +65,11 @@ REST_FRAMEWORK = {
 AUTHENTICATION_BACKENDS = [
     "accounts.backends.model_backend.ModelBackend",
 ]
+
+# Sendgrid Settings (Email)
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
+DEFAULT_FROM_EMAIL = "support@parrotprojects.io"
+
 
 # Application definition
 

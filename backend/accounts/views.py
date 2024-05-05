@@ -6,6 +6,8 @@ from rest_framework import status
 from rest_framework.views import APIView
 from .models import User
 from .serializers import UserSerializer
+from .firebase_auth.firebase_authentication import auth as firebase_admin_auth
+from .utils.email_verification import send_verification_email
 from rest_framework.permissions import AllowAny
 from django.contrib.auth.hashers import check_password
 import re
@@ -64,8 +66,19 @@ class AuthCreateNewUserView(APIView):
             data["firebase_uid"] = uid
             data["is_active"] = True
 
-            serializer = UserSerializer(data=data)
+            # Send email verification link
+            try:
+                send_verification_email(email)
+            except Exception as e:
+                # delete user from firebase if email verification link could not be sent
+                firebase_admin_auth.delete_user(uid)
+                print(str(e))
+                bad_response = {"status": "failed", "message": str(e)}
 
+                return Response(bad_response, status=status.HTTP_400_BAD_REQUEST)
+
+            # Save to DB
+            serializer = UserSerializer(data=data)
             if serializer.is_valid():
                 serializer.save()
                 response = {

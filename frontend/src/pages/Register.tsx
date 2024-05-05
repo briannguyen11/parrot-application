@@ -35,6 +35,7 @@ export function Register() {
           registerFormData
         );
         console.log(res);
+        alert("A verification email has been sent to you!");
         navigate("/login");
       } catch (error) {
         alert(error);
