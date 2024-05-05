@@ -5,13 +5,13 @@ import Tag from "@/components/Tag";
 import FeedCard from "@/components/FeedCard";
 import { useNavigate } from "react-router-dom";
 
-
 const Create = () => {
   const [techStack, setTechStack] = useState<string[]>([]);
   const [projectName, setProjectName] = useState<string>("");
   const [projectDescription, setProjectDescription] = useState<string>("");
   const [groupSize, setGroupSize] = useState<number>(0);
   const [slide, setSlide] = useState<number>(0);
+  const [showError, setShowError] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -39,12 +39,44 @@ const Create = () => {
   const handlePost = () => {
     // Post project
     alert("Project posted");
-    
+
     // Redirect to Project Page but for now redirect to home
     navigate("/");
-  }
+  };
 
+  const handleShowError = () => {
+    setShowError(true);
+    setTimeout(() => {
+      setShowError(false);
+    }, 3000);
+  };
 
+  const renderError = () => {
+    return (
+      <>
+        {techStack.length < 1 && (
+          <p className="text-sm text-red-500 mt-5">
+            Please select at least one technology for your project
+          </p>
+        )}
+        {projectDescription.length < 10 && (
+          <p className="text-sm text-red-500 mt-5">
+            Please input a description of at least ten characters
+          </p>
+        )}
+        {projectName.length < 3 && (
+          <p className="text-sm text-red-500 mt-5">
+            Please select a longer project name
+          </p>
+        )}
+        {groupSize < 2 && (
+          <p className="text-sm text-red-500 mt-5">
+            Group size must be greater than 1
+          </p>
+        )}
+      </>
+    );
+  };
 
   const renderForm = () => {
     return (
@@ -104,12 +136,26 @@ const Create = () => {
           ))}
         </div>
 
-        <button
-          onClick={() => setSlide(1)}
-          className="mt-7 bg-primary text-white rounded-lg py-2"
-        >
-          Preview Card
-        </button>
+        {groupSize > 1 &&
+        projectName.length > 3 &&
+        projectDescription.length > 10 &&
+        techStack.length > 0 ? (
+          <button
+            onClick={() => setSlide(1)}
+            className="mt-7 bg-primary text-white rounded-lg py-2"
+          >
+            Preview Card
+          </button>
+        ) : (
+          <button
+            onClick={handleShowError}
+            className="mt-7 bg-primary text-white rounded-lg py-2 opacity-50"
+          >
+            Preview Card
+          </button>
+        )}
+
+        {showError && renderError()}
       </div>
     );
   };

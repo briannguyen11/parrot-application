@@ -92,7 +92,6 @@ function StatusList({
               key={status.value}
               value={status.value}
               onSelect={(value) => {
-                console.log(value);
                 addTechStack(value);
                 setOpen(false);
               }}

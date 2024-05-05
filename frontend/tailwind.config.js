@@ -18,7 +18,7 @@ export const theme = {
 
   fontFamily: {
     body: ["system-ui", "sans-serif"],
-    sidebar: ["Montserrat", "sans-serif"], 
+    sidebar: ["Raleway", "sans-serif"], 
 
   },
 
