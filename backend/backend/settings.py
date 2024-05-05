@@ -79,6 +79,8 @@ INSTALLED_APPS = [
     "corsheaders",
     "api",
     "accounts",
+    "open_projects",
+    "showcase_projects"
 ]
 
 MIDDLEWARE = [
