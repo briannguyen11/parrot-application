@@ -17,7 +17,7 @@ const Tag = ({ name }: { name: string }) => {
   return (
     <div>
       <h3
-        className={`text-sm text-white rounded-lg py-2 px-4 ${getColor(name)}`}
+        className={`inline-block text-sm text-white rounded-lg py-2 px-4 ${getColor(name)}`}
       >
         {name}
       </h3>

@@ -1,7 +1,7 @@
 import { ProfileDropDown } from "./ProfileDropDown";
 import { SidebarPopup } from "./SidebarPopup";
 import SearchBar from "./SearchBar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import SearchIcon from "../assets/icons/search-icon.svg";
 import CodeIcon from "../assets/icons/code.svg";
 
@@ -9,6 +9,7 @@ import NotificationPopover from "./NotificationPopover";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <div className="fixed top-0 left-0 w-full md:px-7 px-5 md:py-3 py-4 flex border-b border-gray-200 z-50 justify-between bg-white ">
@@ -39,7 +40,7 @@ const Navbar = () => {
           className="md:hidden w-7 h-7 hover:bg-gray-200 p-1 rounded-full transition duration-300 ease-in-out hover:cursor-pointer"
         />
 
-        <div
+        {(location.pathname !== "/create" || true) && <div
           onClick={() => navigate("/create")}
           className="hover:cursor-pointer  md:hover:bg-gray-200 flex justify-center items-center pr-3 pl-2 md:py-1 rounded-full gap-x-1  transition duration-300 ease-in-out"
         >
@@ -51,7 +52,7 @@ const Navbar = () => {
           <h4 className="font-normal text-sm text-primary md:flex hidden">
             Create Project
           </h4>
-        </div>
+        </div>}
 
         <NotificationPopover />
         <div className="hover:cursor-pointer ml-2 ">

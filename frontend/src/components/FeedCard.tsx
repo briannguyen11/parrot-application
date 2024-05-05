@@ -1,5 +1,6 @@
 import Tag from "./Tag";
 import { formatDistanceToNow } from "date-fns";
+import PersonIcon from "../assets/icons/person.svg";
 
 type FeedCardProps = {
   title: string;
@@ -9,6 +10,7 @@ type FeedCardProps = {
   name: string;
   description: string;
   tags: string[];
+  groupSize: number;
 };
 
 const FeedCard: React.FC<FeedCardProps> = ({
@@ -19,6 +21,7 @@ const FeedCard: React.FC<FeedCardProps> = ({
   name,
   description,
   tags,
+  groupSize,
 }) => {
   const timeAgo =
     "posted " +
@@ -29,7 +32,14 @@ const FeedCard: React.FC<FeedCardProps> = ({
   return (
     <div className="shadow-light p-7 px-10  w-full  max-w-screen-sm border border-border rounded-lg hover:cursor-pointer hover:shadow-light-hover hover:border-gray-400  transition duration-300 ease-in-out">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold text-primary">{title}</h2>
+        <div className="flex items-center gap-4">
+          <h2 className="text-xl font-semibold text-primary">{title}</h2>
+
+          <div className="flex items-center gap-1">
+            <p className="text-gray-400 text-sm">{groupSize}</p>
+            <img src={PersonIcon} alt="person" className="w-4 h-4" />
+          </div>
+        </div>
 
         <h4 className="text-secondary py-1 px-6 border rounded-full border-gray-300 hover:bg-primary hover:text-white hover:border-transparent transition duration-300 ease-in-out">
           Join
@@ -63,7 +73,7 @@ const FeedCard: React.FC<FeedCardProps> = ({
 
       <div className="flex items-center gap-x-4 mt-6">
         {tags.map((tag) => (
-          <Tag name={tag} />
+          <Tag name={tag} key={tag} />
         ))}
       </div>
     </div>

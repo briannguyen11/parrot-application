@@ -3,6 +3,7 @@ import FeedCard from "@/components/FeedCard";
 import { FilterPopup } from "./FilterPopup";
 import { useEffect, useState } from "react";
 
+
 const Feed = () => {
   const [isFixed, setIsFixed] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -42,6 +43,7 @@ const Feed = () => {
       userBio: "Software Engineer at Cal State Fullerton",
       postedTime: "2024-04-29 3:14:45",
       tags: ["Python", "Javascript", "React", "Django"],
+      groupSize: 3,
       profilePicture: "https://media.licdn.com/dms/image/D4E03AQFzplx5eTzzyA/profile-displayphoto-shrink_100_100/0/1707245865823?e=1719446400&v=beta&t=9CUlC15B-vH1V5H4vqSy_RZZlXTKGnkM8eU4gLuHfQI"
     },
     {
@@ -51,6 +53,7 @@ const Feed = () => {
       userBio: "Unemployed at Cal Poly SLO",
       postedTime: "2024-04-19 12:30:45",
       tags: ["Python", "Javascript", "React", "Django"],
+      groupSize: 3,
       profilePicture: "https://media.licdn.com/dms/image/D4E03AQFzplx5eTzzyA/profile-displayphoto-shrink_100_100/0/1707245865823?e=1719446400&v=beta&t=9CUlC15B-vH1V5H4vqSy_RZZlXTKGnkM8eU4gLuHfQI"
     },
     {
@@ -60,6 +63,7 @@ const Feed = () => {
       userBio: "Software Engineer at Cal State Fullerton",
       postedTime: "2024-04-29 12:30:45",
       tags: ["Python", "Javascript", "React", "Django"],
+      groupSize: 3,
       profilePicture: "https://media.licdn.com/dms/image/D4E03AQFzplx5eTzzyA/profile-displayphoto-shrink_100_100/0/1707245865823?e=1719446400&v=beta&t=9CUlC15B-vH1V5H4vqSy_RZZlXTKGnkM8eU4gLuHfQI"
     }
   ];
