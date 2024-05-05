@@ -22,11 +22,13 @@ function ProtectedRoute({ children }: Props): React.ReactNode {
   const refreshToken = async () => {
     const refreshToken = localStorage.getItem(REFRESH_TOKEN);
     try {
-      const res = await api.post("/api/token/refresh/", {
-        refresh: refreshToken,
+      const res = await api.post("/api/users/auth/refresh-token/", {
+        refresh_token: refreshToken,
       });
       if (res.status === 200) {
-        localStorage.setItem(ACCESS_TOKEN, res.data.access);
+        const { idToken, refreshToken } = res.data.access_token;
+        localStorage.setItem(ACCESS_TOKEN, idToken);
+        localStorage.setItem(REFRESH_TOKEN, refreshToken);
         setIsAuthorized(true);
       } else {
         setIsAuthorized(false);

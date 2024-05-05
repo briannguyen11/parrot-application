@@ -146,3 +146,30 @@ class AuthLoginExisitingUserView(APIView):
             auth.delete_user_account(user["idToken"])
             bad_response = {"status": "failed", "message": "User does not exist."}
             return Response(bad_response, status=status.HTTP_404_NOT_FOUND)
+
+
+# API endpoint to refresh access token
+
+
+class RefreshTokenView(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
+    def post(self, request):
+        refresh_token = request.data.get("refresh_token")
+
+        if not refresh_token:
+            return Response(
+                {"error": "Refresh token is required"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        try:
+            # Exchange the refresh token for a new access token
+            new_id_token = auth.refresh(refresh_token)
+            # Return the new access token to the client
+            return Response({"access_token": new_id_token}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response(
+                {"error": "Invalid refresh token"}, status=status.HTTP_400_BAD_REQUEST
+            )
