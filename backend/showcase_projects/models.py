@@ -8,7 +8,7 @@ class ShowcaseProject(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posted_projects")
     project_name = models.CharField(max_length=100)
     description = models.TextField()
-    photos = ArrayField(models.URLField(), blank=True)
+    photos = ArrayField(models.URLField(), blank=True, default=list)
     post_date = models.DateField(auto_now_add=True)
 
     def __str__(self):

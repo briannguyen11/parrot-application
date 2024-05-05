@@ -13,3 +13,4 @@ pyrebase4
 firebase-admin
 whitenoise
 drf-yasg
+sendgrid
