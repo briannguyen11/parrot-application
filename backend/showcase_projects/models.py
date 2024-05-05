@@ -60,11 +60,12 @@ class Like(models.Model):
         verbose_name_plural = _("Likes")
 
 
+# TODO: Allow multiple comments from a single user
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comments")
     project = models.OneToOneField("ShowcaseProject", on_delete=models.CASCADE, related_name="comments")
     content = models.TextField()
-    created_date = models.DateTimeField()
+    created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.content

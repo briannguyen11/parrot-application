@@ -9,13 +9,19 @@ from .models import (
 )
 
 class ShowcaseProjectViewSet(viewsets.ModelViewSet):
-    queryset = ShowcaseProject.objects.all()
     serializer_class = ShowcaseProjectSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     # Populate user field with the authenticated user
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+    
+    def get_queryset(self):
+        queryset = ShowcaseProject.objects.all()
+        user_id = self.request.query_params.get("user_id")
+        if user_id:
+            queryset = queryset.filter(user_id=user_id)
+        return queryset
 
 class ShowcaseProjectSaveViewSet(viewsets.ModelViewSet):
     serializer_class = ShowcaseProjectSaveSerializer

@@ -3,13 +3,19 @@ from .serializers import OpenProjectSerializer, OpenProjectSaveSerializer, OpenP
 from .models import OpenProject, OpenProjectSave, OpenProjectTag
 
 class OpenProjectViewSet(viewsets.ModelViewSet):
-    queryset = OpenProject.objects.all()
     serializer_class = OpenProjectSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     # Populate user field with the authenticated user
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+    def get_queryset(self):
+        queryset = OpenProject.objects.all()
+        user_id = self.request.query_params.get("user_id")
+        if user_id:
+            queryset = queryset.filter(user_id=user_id)
+        return queryset
 
 class OpenProjectSaveViewSet(viewsets.ModelViewSet):
     serializer_class = OpenProjectSaveSerializer
