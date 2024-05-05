@@ -4,12 +4,14 @@ import { useState } from "react";
 import Tag from "@/components/Tag";
 import FeedCard from "@/components/FeedCard";
 import { useNavigate } from "react-router-dom";
+import { Tooltip } from "@/components/Tooltip";
 
 const Create = () => {
   const [techStack, setTechStack] = useState<string[]>([]);
   const [projectName, setProjectName] = useState<string>("");
   const [projectDescription, setProjectDescription] = useState<string>("");
   const [groupSize, setGroupSize] = useState<number>(0);
+  const [difficultyLevel, setDifficultyLevel] = useState<string>("");
   const [slide, setSlide] = useState<number>(0);
   const [showError, setShowError] = useState<boolean>(false);
 
@@ -80,13 +82,20 @@ const Create = () => {
 
   const renderForm = () => {
     return (
-      <div className="mt-7 w-[700px] h-[600px] flex flex-col">
+      <div className="mt-9 w-[700px] h-[600px] flex flex-col">
         <h2 className="text-2xl font-semibold text-primary">Create Project</h2>
         <div className="flex items-center gap-5">
           <div className="flex-col">
-            <h3 className="mt-5 text-md font-semibold text-primary">
-              Project Name
-            </h3>
+            <div className="mt-5 flex gap-2 items-center">
+              <h3 className="text-md font-semibold text-primary">
+                Project Name
+              </h3>
+              <Tooltip
+                title="Naming your project"
+                text="Please create a name that concisely summarizes/names your project. Simple is better!"
+              />
+            </div>
+
             <input
               type="text"
               placeholder="Enter project name"
@@ -96,9 +105,13 @@ const Create = () => {
             />
           </div>
           <div className="flex-col">
-            <h3 className="mt-5 text-md font-semibold text-primary">
-              Group Size
-            </h3>
+            <div className="mt-5 flex gap-2 items-center">
+              <h3 className="text-md font-semibold text-primary">Group Size</h3>
+              <Tooltip
+                title="Group Size"
+                text="Please select the number of people you need to work on this project (2-5 recommended)."
+              />
+            </div>
             <input
               type="number"
               placeholder="0"
@@ -109,7 +122,13 @@ const Create = () => {
           </div>
         </div>
 
-        <h3 className="mt-5 text-md font-semibold text-primary">Description</h3>
+        <div className="mt-5 flex gap-2 items-center">
+          <h3 className="text-md font-semibold text-primary">Description</h3>
+          <Tooltip
+            title="Project Description"
+            text="Please provide a detailed description of your project. This will help others understand your project better."
+          />
+        </div>
         <textarea
           placeholder="Enter project description"
           className="border border-border rounded-lg p-2 w-3/3 mt-2 h-20 min-h-10 max-h-28 text-sm outline-none"
@@ -117,8 +136,65 @@ const Create = () => {
           value={projectDescription}
         />
 
+        <div className="mt-7 flex gap-2 items-center">
+          <h3 className="text-md font-semibold text-primary">
+            Difficulty Level
+          </h3>
+          <Tooltip
+            title="Difficulty Level"
+            text="Please select the difficulty level of your project. This will help others understand the complexity of your project."
+          />
+        </div>
+        <div className="mt-4 flex items-center gap-5">
+          {difficultyLevel !== "Beginner" ? (
+            <button
+              onClick={() => setDifficultyLevel("Beginner")}
+              className="p-3 border border-card-green border-dashed rounded-xl w-full  hover:bg-card-green hover:text-white transition duration-300 ease-in-out"
+            >
+              Beginnner
+            </button>
+          ) : (
+            <button className="p-3 border border-card-green border-dashed rounded-xl w-full bg-card-green text-white transition duration-300 ease-in-out">
+              Beginnner
+            </button>
+          )}
+
+          {difficultyLevel !== "Intermediate" ? (
+            <button
+              onClick={() => setDifficultyLevel("Intermediate")}
+              className="p-3 border border-card-yellow border-dashed rounded-xl w-full hover:bg-card-yellow hover:text-white transition duration-300 ease-in-out"
+            >
+              Intermediate
+            </button>
+          ) : (
+            <button className="p-3 border border-card-yellow border-dashed rounded-xl w-full bg-card-yellow text-white transition duration-300 ease-in-out">
+              Intermediate
+            </button>
+          )}
+
+          {difficultyLevel !== "Advanced" ? (
+            <button
+              onClick={() => setDifficultyLevel("Advanced")}
+              className="p-3 border border-card-red border-dashed rounded-xl w-full  hover:bg-card-red hover:text-white transition duration-300 ease-in-out"
+            >
+              Advanced
+            </button>
+          ) : (
+            <button className="p-3 border border-card-red border-dashed rounded-xl w-full bg-card-red text-white transition duration-300 ease-in-out">
+              Advanced
+            </button>
+          )}
+        </div>
+
         <div className="mt-7 mb-3 flex gap-5 items-center">
-          <h3 className=" text-md font-semibold text-primary">Tech Stack</h3>
+          <div className="flex gap-2 items-center">
+            <h3 className=" text-md font-semibold text-primary">Tech Stack</h3>
+
+            <Tooltip
+              title="Tech Stack"
+              text="Please select the technologies you will be using for your project."
+            />
+          </div>
 
           <button
             onClick={clearTechStack}

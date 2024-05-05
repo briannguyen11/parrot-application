@@ -41,7 +41,7 @@ export function ProfileDropDown() {
 
   const handleLogout = () => {
     localStorage.clear();
-    // navigate("/login");
+    navigate("/");
   };
 
   return (

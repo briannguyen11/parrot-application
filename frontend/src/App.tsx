@@ -13,7 +13,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import Feed from "./components/Feed";
+import Feed from "./pages/Feed";
 import Create from "./pages/Create";
 import ProtectedRoute from "./components/ProtectedRoute";
 

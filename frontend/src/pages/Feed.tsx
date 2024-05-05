@@ -1,8 +1,7 @@
-import { Skeleton } from "./ui/skeleton";
+import { Skeleton } from "../components/ui/skeleton";
 import FeedCard from "@/components/FeedCard";
-import { FilterPopup } from "./FilterPopup";
+import { FilterPopup } from "../components/FilterPopup";
 import { useEffect, useState } from "react";
-
 
 const Feed = () => {
   const [isFixed, setIsFixed] = useState(false);
@@ -39,12 +38,14 @@ const Feed = () => {
     {
       title: "Social Media Website",
       name: "John Smith",
-      description: "Hi! I am looking for three other individuals to join me in a project to build a new social media platform. The project will be built using Python and Javascript. If you are interested, please apply to the project and contact me!",
+      description:
+        "Hi! I am looking for three other individuals to join me in a project to build a new social media platform. The project will be built using Python and Javascript. If you are interested, please apply to the project and contact me!",
       userBio: "Software Engineer at Cal State Fullerton",
       postedTime: "2024-04-29 3:14:45",
       tags: ["Python", "Javascript", "React", "Django"],
       groupSize: 3,
-      profilePicture: "https://media.licdn.com/dms/image/D4E03AQFzplx5eTzzyA/profile-displayphoto-shrink_100_100/0/1707245865823?e=1719446400&v=beta&t=9CUlC15B-vH1V5H4vqSy_RZZlXTKGnkM8eU4gLuHfQI"
+      profilePicture:
+        "https://media.licdn.com/dms/image/D4E03AQFzplx5eTzzyA/profile-displayphoto-shrink_100_100/0/1707245865823?e=1719446400&v=beta&t=9CUlC15B-vH1V5H4vqSy_RZZlXTKGnkM8eU4gLuHfQI",
     },
     {
       title: "Windomi",
@@ -54,25 +55,27 @@ const Feed = () => {
       postedTime: "2024-04-19 12:30:45",
       tags: ["Python", "Javascript", "React", "Django"],
       groupSize: 3,
-      profilePicture: "https://media.licdn.com/dms/image/D4E03AQFzplx5eTzzyA/profile-displayphoto-shrink_100_100/0/1707245865823?e=1719446400&v=beta&t=9CUlC15B-vH1V5H4vqSy_RZZlXTKGnkM8eU4gLuHfQI"
+      profilePicture:
+        "https://media.licdn.com/dms/image/D4E03AQFzplx5eTzzyA/profile-displayphoto-shrink_100_100/0/1707245865823?e=1719446400&v=beta&t=9CUlC15B-vH1V5H4vqSy_RZZlXTKGnkM8eU4gLuHfQI",
     },
     {
       title: "Ethnicity Detection",
       name: "John Smith",
-      description: "Hi! I am looking for three other individuals to join me in a project to build a new social media platform. The project will be built using Python and Javascript. If you are interested, please apply to the project and contact me!",
+      description:
+        "Hi! I am looking for three other individuals to join me in a project to build a new social media platform. The project will be built using Python and Javascript. If you are interested, please apply to the project and contact me!",
       userBio: "Software Engineer at Cal State Fullerton",
       postedTime: "2024-04-29 12:30:45",
       tags: ["Python", "Javascript", "React", "Django"],
       groupSize: 3,
-      profilePicture: "https://media.licdn.com/dms/image/D4E03AQFzplx5eTzzyA/profile-displayphoto-shrink_100_100/0/1707245865823?e=1719446400&v=beta&t=9CUlC15B-vH1V5H4vqSy_RZZlXTKGnkM8eU4gLuHfQI"
-    }
+      profilePicture:
+        "https://media.licdn.com/dms/image/D4E03AQFzplx5eTzzyA/profile-displayphoto-shrink_100_100/0/1707245865823?e=1719446400&v=beta&t=9CUlC15B-vH1V5H4vqSy_RZZlXTKGnkM8eU4gLuHfQI",
+    },
   ];
 
   const renderSkeletons = () => {
     if (loading) {
       return (
         <>
-        
           <Skeleton className="w-full  max-w-screen-sm h-[300px]" />
           <Skeleton className="h-[300px] w-full mb-5 rounded-xl" />
           <Skeleton className="h-[300px] w-full mb-5 rounded-xl" />
@@ -100,9 +103,10 @@ const Feed = () => {
           {renderSkeletons()}
 
           {/* Render FeedCard components dynamically */}
-          {!loading && feedCardData.map((cardData, index) => (
-            <FeedCard key={index} {...cardData} />
-          ))}
+          {!loading &&
+            feedCardData.map((cardData, index) => (
+              <FeedCard key={index} {...cardData} />
+            ))}
         </div>
       </div>
       <div
