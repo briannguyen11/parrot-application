@@ -45,7 +45,14 @@ const router = createBrowserRouter(
       </Route>
 
       <Route path="/create" element={<Create />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        }
+      />
 
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<RegisterAndLogout />} />

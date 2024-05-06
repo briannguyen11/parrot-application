@@ -1,25 +1,18 @@
 import Navbar from "@/components/Navbar";
+import { useEffect, useState } from "react";
+import api from "../api";
 
-// import {
-//   ColumnDef,
-//   flexRender,
-//   getCoreRowModel,
-//   useReactTable,
-// } from "@tanstack/react-table";
-
-// import {
-//   Table,
-//   TableBody,
-//   TableCell,
-//   TableHead,
-//   TableHeader,
-//   TableRow,
-// } from "@/components/ui/table";
-
-// interface DataTableProps<TData, TValue> {
-//   columns: ColumnDef<TData, TValue>[];
-//   data: TData[];
-// }
+interface ProfileData {
+  firstName: string;
+  lastName: string;
+  school: string;
+  major: string;
+  bio: string;
+  profilePicture: string;
+  resume: string;
+  linkedin: string;
+  github: string;
+}
 
 const Profile = () => {
   const tempPerson = {
@@ -32,6 +25,21 @@ const Profile = () => {
     github: "github link",
     linkedIn: "linkedIn link",
   };
+
+  // const [profileData, setProfileData] = useState<ProfileData>();
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const res = await api.get("api/profiles/");
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   const renderAccountInfo = () => {
     return (

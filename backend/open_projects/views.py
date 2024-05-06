@@ -1,6 +1,11 @@
 from rest_framework import viewsets, permissions
-from .serializers import OpenProjectSerializer, OpenProjectSaveSerializer, OpenProjectTagSerializer
+from .serializers import (
+    OpenProjectSerializer,
+    OpenProjectSaveSerializer,
+    OpenProjectTagSerializer,
+)
 from .models import OpenProject, OpenProjectSave, OpenProjectTag
+
 
 class OpenProjectViewSet(viewsets.ModelViewSet):
     serializer_class = OpenProjectSerializer
@@ -17,6 +22,7 @@ class OpenProjectViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(user_id=user_id)
         return queryset
 
+
 class OpenProjectSaveViewSet(viewsets.ModelViewSet):
     serializer_class = OpenProjectSaveSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -30,6 +36,7 @@ class OpenProjectSaveViewSet(viewsets.ModelViewSet):
         if user_id:
             queryset = queryset.filter(user_id=user_id)
         return queryset
+
 
 class OpenProjectTagViewSet(viewsets.ModelViewSet):
     serializer_class = OpenProjectTagSerializer

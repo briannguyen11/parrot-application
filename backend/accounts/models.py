@@ -31,6 +31,8 @@ class User(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(_("email address"), unique=True)
     username = None
+    first_name = None
+    last_name = None
     firebase_uid = models.CharField(max_length=255, blank=True, null=True)
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
