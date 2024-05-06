@@ -5,6 +5,8 @@ from django.utils.translation import gettext_lazy as _
 
 class Profiles(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
     school = models.CharField(max_length=100)
     major = models.CharField(max_length=100)
     bio = models.TextField()
@@ -14,7 +16,7 @@ class Profiles(models.Model):
     github = models.CharField(max_length=250)
 
     def __str__(self):
-        return f"{self.user.email}'s profile"
+        return f"{self.first_name} {self.last_name}'s profile"
 
     class Meta:
         db_table = "user_profile"
