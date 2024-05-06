@@ -1,5 +1,9 @@
 from rest_framework.routers import DefaultRouter
-from open_projects.views import OpenProjectViewSet, OpenProjectSaveViewSet, OpenProjectTagViewSet
+from open_projects.views import (
+    OpenProjectViewSet,
+    OpenProjectSaveViewSet,
+    OpenProjectTagViewSet,
+)
 
 router = DefaultRouter()
 router.register(r"projects", OpenProjectViewSet, basename="open-projects")
