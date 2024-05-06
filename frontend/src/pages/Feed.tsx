@@ -129,8 +129,8 @@ const Feed = () => {
               <FeedCard key={index} {...project} />
             ))}
 
-            {/* Render Hardcoded FeedCard components dynamically */}
-          {!loading &&
+            {/* Hide Hardcoded Cards */}
+          {false &&
             feedCardData.map((cardData, index) => (
               <FeedCard key={index} {...cardData} />
             ))}

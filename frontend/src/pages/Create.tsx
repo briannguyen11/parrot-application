@@ -30,7 +30,7 @@ const Create = () => {
     setTechStack([]);
   };
 
-  const currentDate = new Date().toLocaleDateString();
+  const currentDate = new Date().toLocaleString();
 
   
   const handlePost = async () => {

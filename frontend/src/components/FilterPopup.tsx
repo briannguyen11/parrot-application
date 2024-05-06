@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -48,8 +47,8 @@ export function FilterPopup() {
         </div>
         <DialogFooter>
           <DialogTrigger asChild>
-            <button className="IconButton" aria-label="Close">
-              <Button type="submit">Save changes</Button>
+            <button className="border h-12 p-2 rounded-xl" aria-label="Close">
+              Save Changes
             </button>
           </DialogTrigger>
         </DialogFooter>

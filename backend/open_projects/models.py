@@ -15,7 +15,7 @@ class OpenProject(models.Model):
         ("advanced", "Advanced"),
     ]
     level = models.CharField(max_length=100, choices=LEVELS)
-    post_date = models.DateField(auto_now_add=True)
+    post_date = models.DateTimeField(auto_now_add=True)
     open = models.BooleanField(default=True)
     group_size = models.PositiveIntegerField(null=True, validators=[MinValueValidator(2), MaxValueValidator(9)])
 
