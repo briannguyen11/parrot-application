@@ -41,6 +41,7 @@ const router = createBrowserRouter(
           }
         />
         <Route path="campus" element={<div>campus</div>} />
+        <Route path="saved" element={<div>saved</div>} />
       </Route>
 
       <Route path="/create" element={<Create />} />

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Navbar from "@/components/Navbar";
 import TechStackInput from "@/components/TechStackInput";
 import { useState } from "react";
@@ -5,6 +6,8 @@ import Tag from "@/components/Tag";
 import FeedCard from "@/components/FeedCard";
 import { useNavigate } from "react-router-dom";
 import { Tooltip } from "@/components/Tooltip";
+import api from "@/api";
+
 
 const Create = () => {
   const [techStack, setTechStack] = useState<string[]>([]);
@@ -38,12 +41,31 @@ const Create = () => {
     userBio: "Software Engineer at Cal State Fullerton",
   };
 
-  const handlePost = () => {
+  const handlePost = async () => {
     // Post project
-    alert("Project posted");
 
-    // Redirect to Project Page but for now redirect to home
-    navigate("/");
+    const project = {
+      "project_name": projectName,
+      "description": projectDescription,
+      "level" : difficultyLevel,
+    };
+    
+    console.log(project)
+
+    try {
+      const res = await api.post("/api/open-projects/projects/", project);
+      
+      // Use data id to route
+      console.log(res.data.id);
+      // navigate(`/project/${res.data.id}`);
+
+      navigate("/");
+    } catch (error: any) {
+    
+      console.log(error)
+    }
+
+    alert("Project posted");
   };
 
   const handleShowError = () => {
@@ -146,9 +168,9 @@ const Create = () => {
           />
         </div>
         <div className="mt-4 flex items-center gap-5">
-          {difficultyLevel !== "Beginner" ? (
+          {difficultyLevel !== "beginner" ? (
             <button
-              onClick={() => setDifficultyLevel("Beginner")}
+              onClick={() => setDifficultyLevel("beginner")}
               className="p-3 border border-card-green border-dashed rounded-xl w-full  hover:bg-card-green hover:text-white transition duration-300 ease-in-out"
             >
               Beginnner
@@ -159,9 +181,9 @@ const Create = () => {
             </button>
           )}
 
-          {difficultyLevel !== "Intermediate" ? (
+          {difficultyLevel !== "intermediate" ? (
             <button
-              onClick={() => setDifficultyLevel("Intermediate")}
+              onClick={() => setDifficultyLevel("intermediate")}
               className="p-3 border border-card-yellow border-dashed rounded-xl w-full hover:bg-card-yellow hover:text-white transition duration-300 ease-in-out"
             >
               Intermediate
@@ -172,9 +194,9 @@ const Create = () => {
             </button>
           )}
 
-          {difficultyLevel !== "Advanced" ? (
+          {difficultyLevel !== "advanced" ? (
             <button
-              onClick={() => setDifficultyLevel("Advanced")}
+              onClick={() => setDifficultyLevel("advanced")}
               className="p-3 border border-card-red border-dashed rounded-xl w-full  hover:bg-card-red hover:text-white transition duration-300 ease-in-out"
             >
               Advanced
@@ -241,7 +263,7 @@ const Create = () => {
       <div className="mt-7 w-[700px] h-[600px] flex flex-col">
         <p
           onClick={() => setSlide(0)}
-          className="hover:cursor-pointer text-sm font-light text-secondary-foreground underline"
+          className="w-32 hover:cursor-pointer text-sm font-light text-secondary-foreground underline"
         >
           {"<- Resume Editing"}
         </p>

@@ -28,6 +28,7 @@ export function Login() {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      console.log(loginFormData)
       const res = await api.post("/api/users/auth/login/", loginFormData);
       localStorage.setItem(ACCESS_TOKEN, res.data.data.firebase_access_token);
       localStorage.setItem(REFRESH_TOKEN, res.data.data.firebase_refresh_token);
