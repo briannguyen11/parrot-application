@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { Tooltip } from "@/components/Tooltip";
 import api from "@/api";
 
-
 const Create = () => {
   const [techStack, setTechStack] = useState<string[]>([]);
   const [projectName, setProjectName] = useState<string>("");
@@ -33,36 +32,31 @@ const Create = () => {
 
   const currentDate = new Date().toLocaleDateString();
 
-  // Hardocded user data, replace when auth state is passed
-  const user = {
-    name: "Quandale Dingle",
-    profilePicture:
-      "https://media.licdn.com/dms/image/D4E03AQFzplx5eTzzyA/profile-displayphoto-shrink_100_100/0/1707245865823?e=1719446400&v=beta&t=9CUlC15B-vH1V5H4vqSy_RZZlXTKGnkM8eU4gLuHfQI",
-    userBio: "Software Engineer at Cal State Fullerton",
-  };
-
+  
   const handlePost = async () => {
     // Post project
 
     const project = {
-      "project_name": projectName,
-      "description": projectDescription,
-      "level" : difficultyLevel,
+      project_name: projectName,
+      description: projectDescription,
+      level: difficultyLevel,
+      group_size: groupSize,
     };
-    
-    console.log(project)
+
+    console.log(project);
 
     try {
       const res = await api.post("/api/open-projects/projects/", project);
-      
+      // Post tech stack to own endpoint...
+
+
       // Use data id to route
       console.log(res.data.id);
       // navigate(`/project/${res.data.id}`);
 
       navigate("/");
     } catch (error: any) {
-    
-      console.log(error)
+      console.log(error);
     }
 
     alert("Project posted");
@@ -229,8 +223,8 @@ const Create = () => {
         <TechStackInput addTechStack={addTechStack} />
 
         <div className="mt-5 flex gap-x-3 gap-y-3 flex-wrap h-10">
-          {techStack.map((tech) => (
-            <Tag name={tech} />
+          {techStack.map((tech, id) => (
+            <Tag key={id} name={tech} />
           ))}
         </div>
 
@@ -271,14 +265,13 @@ const Create = () => {
           Preview Project
         </h2>
         <FeedCard
-          title={projectName}
+          project_name={projectName}
           description={projectDescription}
+          post_date={currentDate}
+          user={"the one thats logged in rn"}
+          group_size={groupSize}
+          level={difficultyLevel}
           tags={techStack}
-          postedTime={currentDate}
-          userBio={user.userBio}
-          name={user.name}
-          groupSize={groupSize}
-          profilePicture={user.profilePicture}
         />
 
         <button

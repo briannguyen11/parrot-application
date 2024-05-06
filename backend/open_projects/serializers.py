@@ -4,7 +4,7 @@ from .models import OpenProject, OpenProjectSave, OpenProjectTag
 class OpenProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = OpenProject
-        fields = ["id", "user", "project_name", "description", "level", "post_date", "open"]
+        fields = ["id", "user", "project_name", "description", "level", "post_date","open", "group_size"]
         read_only_fields = ["user"]
 
 class OpenProjectSaveSerializer(serializers.ModelSerializer):

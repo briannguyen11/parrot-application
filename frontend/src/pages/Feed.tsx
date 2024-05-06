@@ -1,11 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Skeleton } from "../components/ui/skeleton";
 import FeedCard from "@/components/FeedCard";
 import { FilterPopup } from "../components/FilterPopup";
 import { useEffect, useState } from "react";
+import api from "@/api";
 
 const Feed = () => {
   const [isFixed, setIsFixed] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,49 +30,65 @@ const Feed = () => {
     };
   }, []);
 
-  // simulate loading
+  // fetch projects from backend
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+    const fetchProjects = async () => {
+      try {
+        const res = await api.get("/api/open-projects/projects/");
+        console.log(res.data);
+        setProjects(res.data);
+        setLoading(false);
+      } catch (error: any) {
+        console.log(error.response.data.message);
+      }
+    };
+
+    fetchProjects();
   }, []);
 
   // Mock Feed Card Data
   const feedCardData = [
     {
-      title: "Social Media Website",
+      project_name: "Social Media Website",
       name: "John Smith",
       description:
         "Hi! I am looking for three other individuals to join me in a project to build a new social media platform. The project will be built using Python and Javascript. If you are interested, please apply to the project and contact me!",
       userBio: "Software Engineer at Cal State Fullerton",
-      postedTime: "2024-04-29 3:14:45",
+      post_date: "2024-04-29",
       tags: ["Python", "Javascript", "React", "Django"],
-      groupSize: 3,
+      group_size: 3,
       profilePicture:
         "https://media.licdn.com/dms/image/D4E03AQFzplx5eTzzyA/profile-displayphoto-shrink_100_100/0/1707245865823?e=1719446400&v=beta&t=9CUlC15B-vH1V5H4vqSy_RZZlXTKGnkM8eU4gLuHfQI",
+      level: "beginner",
+      user: "1",
     },
     {
-      title: "Windomi",
+      project_name: "Windomi",
       name: "John Smith",
       description: "Don't you think Windomi is such a good name?",
       userBio: "Unemployed at Cal Poly SLO",
-      postedTime: "2024-04-19 12:30:45",
+      post_date: "2024-04-19",
       tags: ["Python", "Javascript", "React", "Django"],
-      groupSize: 3,
+      group_size: 3,
       profilePicture:
         "https://media.licdn.com/dms/image/D4E03AQFzplx5eTzzyA/profile-displayphoto-shrink_100_100/0/1707245865823?e=1719446400&v=beta&t=9CUlC15B-vH1V5H4vqSy_RZZlXTKGnkM8eU4gLuHfQI",
+      level: "intermediate",
+      user : "2",
     },
     {
-      title: "Ethnicity Detection",
+      project_name: "Ethnicity Detection",
       name: "John Smith",
       description:
         "Hi! I am looking for three other individuals to join me in a project to build a new social media platform. The project will be built using Python and Javascript. If you are interested, please apply to the project and contact me!",
       userBio: "Software Engineer at Cal State Fullerton",
-      postedTime: "2024-04-29 12:30:45",
+      post_date: "2024-04-29",
       tags: ["Python", "Javascript", "React", "Django"],
-      groupSize: 3,
+      group_size: 3,
       profilePicture:
         "https://media.licdn.com/dms/image/D4E03AQFzplx5eTzzyA/profile-displayphoto-shrink_100_100/0/1707245865823?e=1719446400&v=beta&t=9CUlC15B-vH1V5H4vqSy_RZZlXTKGnkM8eU4gLuHfQI",
+
+      level: "advanced",
+      user : "3",
     },
   ];
 
@@ -102,7 +122,14 @@ const Feed = () => {
         <div className="flex flex-col gap-7  lg:items-start items-center  max-w-screen-sm">
           {renderSkeletons()}
 
-          {/* Render FeedCard components dynamically */}
+          
+
+          {!loading &&
+            projects.map((project: any, index: number) => (
+              <FeedCard key={index} {...project} />
+            ))}
+
+            {/* Render Hardcoded FeedCard components dynamically */}
           {!loading &&
             feedCardData.map((cardData, index) => (
               <FeedCard key={index} {...cardData} />

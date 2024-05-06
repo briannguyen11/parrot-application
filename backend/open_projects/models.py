@@ -1,7 +1,7 @@
 from django.db import models
 from accounts.models import User
 from django.utils.translation import gettext_lazy as _
-
+from django.core.validators import MaxValueValidator, MinValueValidator 
 
 class OpenProject(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="created_projects")
@@ -15,6 +15,7 @@ class OpenProject(models.Model):
     level = models.CharField(max_length=100, choices=LEVELS)
     post_date = models.DateField(auto_now_add=True)
     open = models.BooleanField(default=True)
+    group_size = models.PositiveIntegerField(null=True, validators=[MinValueValidator(2), MaxValueValidator(9)])
 
     def __str__(self):
         return self.project_name
