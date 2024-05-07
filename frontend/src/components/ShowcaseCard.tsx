@@ -15,9 +15,9 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
         className="object-cover w-full h-full "
         draggable="false"
       />
-      <div className="absolute bottom-0 left-0 w-full h-full bg-card-hover flex  items-center opacity-100 hover:opacity-100 transition duration-300 ease-in-out">
+      <div className="absolute bottom-0 left-0 w-full h-full  bg-card-hover opacity-0 hover:opacity-100">
         <div className="flex items-end h-full w-full">
-          <div className="m-6 flex justify-between w-full items-center ">
+          <div className="m-6 flex justify-between w-full items-center">
             <h2 className="text-primary text-white text-sm bg-white rounded-lg p-2 backdrop-filter backdrop-blur-xl bg-opacity-30">
               {projectName}
             </h2>
