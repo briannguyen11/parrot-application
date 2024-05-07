@@ -44,7 +44,14 @@ const router = createBrowserRouter(
         <Route path="saved" element={<div>saved</div>} />
       </Route>
 
-      <Route path="/create" element={<Create />} />
+      <Route
+        path="/create"
+        element={
+          <ProtectedRoute>
+            <Create />
+          </ProtectedRoute>
+        }
+      />
       <Route
         path="/profile"
         element={

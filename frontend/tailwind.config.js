@@ -69,6 +69,7 @@ export const theme = {
       card: {
         DEFAULT: "hsl(var(--card))",
         foreground: "hsl(var(--card-foreground))",
+        hover: "var(--card-hover)",  
         red: "hsl(var(--card-red))",
         purple: "hsl(var(--card-purple))",
         yellow: "var(--card-yellow)",
@@ -101,6 +102,7 @@ export const theme = {
     screens:{
       '4xl': '2200px',
       'xl+': '1330px',
+      'showcase-xl' : '1280px',
       'xs' : '375px',
     },
 

@@ -7,6 +7,7 @@ import FeedCard from "@/components/FeedCard";
 import { useNavigate } from "react-router-dom";
 import { Tooltip } from "@/components/Tooltip";
 import api from "@/api";
+import { toast } from "sonner";
 
 const Create = () => {
   const [techStack, setTechStack] = useState<string[]>([]);
@@ -32,7 +33,6 @@ const Create = () => {
 
   const currentDate = new Date().toLocaleString();
 
-  
   const handlePost = async () => {
     // Post project
 
@@ -43,12 +43,11 @@ const Create = () => {
       group_size: groupSize,
     };
 
-    console.log(project);
+    // console.log(project);
 
     try {
       const res = await api.post("/api/open-projects/projects/", project);
       // Post tech stack to own endpoint...
-
 
       // Use data id to route
       console.log(res.data.id);
@@ -56,10 +55,14 @@ const Create = () => {
 
       navigate("/");
     } catch (error: any) {
-      console.log(error);
+      toast("Error", {
+        description: error.response.data.message,
+        action: {
+          label: "Close",
+          onClick: () => console.log(""),
+        },
+      });
     }
-
-    alert("Project posted");
   };
 
   const handleShowError = () => {
@@ -87,11 +90,12 @@ const Create = () => {
             Please select a longer project name
           </p>
         )}
-        {groupSize < 2 && (
-          <p className="text-sm text-red-500 mt-5">
-            Group size must be greater than 1
-          </p>
-        )}
+        {groupSize < 2 ||
+          (groupSize > 9 && (
+            <p className="text-sm text-red-500 mt-5">
+              Group size must be between 1 and 9
+            </p>
+          ))}
       </>
     );
   };
@@ -229,6 +233,7 @@ const Create = () => {
         </div>
 
         {groupSize > 1 &&
+        groupSize < 10 &&
         projectName.length > 3 &&
         projectDescription.length > 10 &&
         techStack.length > 0 ? (
@@ -246,8 +251,8 @@ const Create = () => {
             Preview Card
           </button>
         )}
-
         {showError && renderError()}
+        <div className="mt-20"></div>
       </div>
     );
   };
