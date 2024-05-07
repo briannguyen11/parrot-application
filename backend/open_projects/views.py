@@ -1,4 +1,5 @@
 from rest_framework import viewsets, permissions
+from backend.views import MixedPermissionsViewSet
 from .serializers import (
     OpenProjectSerializer,
     OpenProjectSaveSerializer,
@@ -7,9 +8,8 @@ from .serializers import (
 from .models import OpenProject, OpenProjectSave, OpenProjectTag
 
 
-class OpenProjectViewSet(viewsets.ModelViewSet):
+class OpenProjectViewSet(MixedPermissionsViewSet):
     serializer_class = OpenProjectSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
     # Populate user field with the authenticated user
     def perform_create(self, serializer):
@@ -38,9 +38,8 @@ class OpenProjectSaveViewSet(viewsets.ModelViewSet):
         return queryset
 
 
-class OpenProjectTagViewSet(viewsets.ModelViewSet):
+class OpenProjectTagViewSet(MixedPermissionsViewSet):
     serializer_class = OpenProjectTagSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         queryset = OpenProjectTag.objects.all()

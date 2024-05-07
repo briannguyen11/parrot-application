@@ -1,4 +1,5 @@
 from rest_framework import viewsets, permissions
+from backend.views import MixedPermissionsViewSet
 from .serializers import (
     ShowcaseProjectSerializer, ShowcaseProjectSaveSerializer,
     ShowcaseProjectTagSerializer, LikeSerializer, CommentSerializer, CommentLikeSerializer
@@ -8,9 +9,8 @@ from .models import (
     Like, Comment, CommentLike
 )
 
-class ShowcaseProjectViewSet(viewsets.ModelViewSet):
+class ShowcaseProjectViewSet(MixedPermissionsViewSet):
     serializer_class = ShowcaseProjectSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
     # Populate user field with the authenticated user
     def perform_create(self, serializer):
@@ -37,9 +37,8 @@ class ShowcaseProjectSaveViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(user_id=user_id)
         return queryset
 
-class ShowcaseProjectTagViewSet(viewsets.ModelViewSet):
+class ShowcaseProjectTagViewSet(MixedPermissionsViewSet):
     serializer_class = ShowcaseProjectTagSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         queryset = ShowcaseProjectTag.objects.all()
@@ -48,9 +47,8 @@ class ShowcaseProjectTagViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(project_id=project_id)
         return queryset
 
-class LikeViewSet(viewsets.ModelViewSet):
+class LikeViewSet(MixedPermissionsViewSet):
     serializer_class = LikeSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -65,9 +63,8 @@ class LikeViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(project_id=project_id)
         return queryset
 
-class CommentViewSet(viewsets.ModelViewSet):
+class CommentViewSet(MixedPermissionsViewSet):
     serializer_class = CommentSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -82,9 +79,8 @@ class CommentViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(project_id=project_id)
         return queryset
 
-class CommentLikeViewSet(viewsets.ModelViewSet):
+class CommentLikeViewSet(MixedPermissionsViewSet):
     serializer_class = CommentLikeSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
