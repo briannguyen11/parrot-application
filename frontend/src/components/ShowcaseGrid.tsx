@@ -1,59 +1,77 @@
 import ShowcaseCard from "./ShowcaseCard";
 import { useState, useEffect } from "react";
 import { Skeleton } from "./ui/skeleton";
+import api from "@/api";
+
+interface ShowcaseProject {
+  id: number;
+  project_name: string;
+  description: string;
+  photos: string[];
+  user_id: string;
+  post_date: string;
+}
 
 const ShowcaseGrid = () => {
   const [loading, setLoading] = useState(true);
+  const [projects, setProjects] = useState([]);
 
-  // simulate loading time
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 0);
+    const fetchProjects = async () => {
+      try {
+        const res = await api.get("/api/showcase-projects/projects/");
+        console.log(res.data);
+        setProjects(res.data);
+        setLoading(false);
+      } catch (error: unknown) {
+        console.log(error);
+      }
+    };
 
-    return () => clearTimeout(timer);
+    fetchProjects();
   }, []);
 
-  if (loading) {
-    return (
-      <div className="mt-5 grid 4xl:grid-cols-4 xl:grid-cols-2 grid-cols-1  gap-10">
-        <Skeleton className="aspect-spotlight rounded-3xl" />
-        <Skeleton className="aspect-spotlight rounded-3xl" />
-        <Skeleton className="aspect-spotlight rounded-3xl" />
-        <Skeleton className="aspect-spotlight rounded-3xl" />
-        <Skeleton className="aspect-spotlight rounded-3xl" />
-        <Skeleton className="aspect-spotlight rounded-3xl" />
-      </div>
-    );
-  }
+  const renderSkeletons = () => {
+    if (loading) {
+      return (
+        <>
+          <div className="aspect-spotlight bg-gray-50 relative rounded-sm shadow-light hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
+            <Skeleton className="w-[600px] h-[600px]" />
+          </div>
+          <div className="aspect-spotlight bg-gray-50 relative rounded-sm shadow-light hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
+            <Skeleton className="object-cover w-full h-full" />
+          </div>
+          <div className="aspect-spotlight bg-gray-50 relative rounded-sm shadow-light hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
+            <Skeleton className="object-cover w-full h-full" />
+          </div>
+          <div className="aspect-spotlight bg-gray-50 relative rounded-sm shadow-light hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
+            <Skeleton className="object-cover w-full h-full" />
+          </div>
+          <div className="aspect-spotlight bg-gray-50 relative rounded-sm shadow-light hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
+            <Skeleton className="object-cover w-full h-full" />
+          </div>
+          <div className="aspect-spotlight bg-gray-50 relative rounded-sm shadow-light hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
+            <Skeleton className="object-cover w-full h-full" />
+          </div>
+        </>
+      );
+    }
+  };
+
+  renderSkeletons();
 
   return (
     <div className="mt-5 grid 4xl:grid-cols-4 showcase-xl:grid-cols-3 md:grid-cols-2 grid-cols-1  gap-10 ">
-    
-        <ShowcaseCard
-        projectName="Project Title"
-        imageUrls={[
-          "https://cdn.dribbble.com/userupload/7760302/file/original-ab94e5567ee1b1efded651ab44ba4e18.png?resize=1024x768",
-        ]}
-      />
-      <ShowcaseCard
-        projectName="Project Title"
-        imageUrls={[
-          "https://cdn.dribbble.com/userupload/3187443/file/original-390f8668cd4f4b0a5984122f40dfc714.png?resize=1024x768&vertical=center",
-        ]}
-      />
-        <ShowcaseCard
-        projectName="Project Title"
-        imageUrls={[
-          "https://cdn.dribbble.com/userupload/2907214/file/original-1f9adc1d58956eef707e262bb55c7af5.png?resize=1024x768",
-        ]}
-      />
-      <ShowcaseCard
-        projectName="Project Title"
-        imageUrls={[
-          "https://cdn.myportfolio.com/6771405b-f126-49e0-9c51-62863cf81a97/e2ea8b1f-f789-4c2b-adde-85fd00506d34_rw_1920.png?h=fe8eeaae3123cb8a0795b940985ed85e",
-        ]}
-      />
+      {loading && renderSkeletons()}
+      {!loading &&
+        projects.length !== 0 &&
+        projects.map((project: ShowcaseProject) => (
+          <ShowcaseCard
+            key={project.id}
+            projectName={project.project_name}
+            imageUrls={project.photos}
+          />
+        ))}
     </div>
   );
 };

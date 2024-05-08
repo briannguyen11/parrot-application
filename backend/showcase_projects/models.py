@@ -9,7 +9,7 @@ class ShowcaseProject(models.Model):
     project_name = models.CharField(max_length=100)
     description = models.TextField()
     photos = ArrayField(models.URLField(), blank=True, default=list)
-    post_date = models.DateField(auto_now_add=True)
+    post_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.project_name
