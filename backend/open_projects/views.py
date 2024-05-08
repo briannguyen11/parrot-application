@@ -18,8 +18,7 @@ class OpenProjectViewSet(MixedPermissionsViewSet):
         serializer.save(user=self.request.user)
 
     def get_queryset(self):
-        queryset = OpenProject.objects.prefetch_related('tags').all()
-        # queryset = OpenProject.objects.all()
+        queryset = OpenProject.objects.all()
         user_id = self.request.query_params.get("user_id")
         if user_id:
             queryset = queryset.filter(user_id=user_id)

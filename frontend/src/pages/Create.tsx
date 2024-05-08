@@ -43,13 +43,22 @@ const Create = () => {
       group_size: groupSize,
     };
 
-    // console.log(project);
-
     try {
-      const res = await api.post("/api/open-projects/projects/", project);
-      // Post tech stack to own endpoint...
+      const res = await api
+        .post("/api/open-projects/projects/", project)
+        .then((res) => {
+          api
+            .post(`/api/open-projects/tags/`, {
+              project: res.data.id,
+              tags: techStack,
+            })
+            .catch((error) => {
+              console.log(error);
+            });
 
-      // Use data id to route
+          return res;
+        });
+
       console.log(res.data.id);
       // navigate(`/project/${res.data.id}`);
 
