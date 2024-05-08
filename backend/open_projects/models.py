@@ -9,14 +9,19 @@ class OpenProject(models.Model):
     )
     project_name = models.CharField(max_length=100)
     description = models.TextField()
-    LEVELS = [
+    level = models.CharField(max_length=100, choices=[
         ("beginner", "Beginner"),
         ("intermediate", "Intermediate"),
         ("advanced", "Advanced"),
-    ]
-    level = models.CharField(max_length=100, choices=LEVELS)
+    ])
     post_date = models.DateTimeField(auto_now_add=True)
     open = models.BooleanField(default=True)
+    status = models.CharField(max_length=100, default="pending_approval",
+    choices=[
+        ("pending_approval", "Pending_Approval"),
+        ("approved", "Approved"),
+        ("rejected", "Rejected"),
+    ])
     group_size = models.PositiveIntegerField(null=True, validators=[MinValueValidator(2), MaxValueValidator(9)])
 
     def __str__(self):

@@ -47,6 +47,22 @@ class ShowcaseProjectTag(models.Model):
         verbose_name_plural = _("Showcase Project Tags")
 
 
+class ShowcaseProjectPhoto(models.Model):
+    project = models.ForeignKey("ShowcaseProject", on_delete=models.CASCADE, related_name="showcase_photos")
+    photo = models.ImageField(upload_to="photos/")
+    caption = models.CharField(max_length=250)
+    order = models.FloatField()
+
+    def __str__(self):
+        return self.caption
+    
+    class Meta:
+        db_table = "showcase_project_photo"
+        verbose_name = _("Showcase Project Photo")
+        verbose_name_plural = _("Showcase Project Photos")
+        ordering = ["-order"]
+
+
 class Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="liked_projects")
     project = models.OneToOneField("ShowcaseProject", on_delete=models.CASCADE, related_name="liked_project")

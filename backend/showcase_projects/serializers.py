@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import ShowcaseProject, ShowcaseProjectSave, ShowcaseProjectTag, Like, Comment, CommentLike
+from .models import ShowcaseProject, ShowcaseProjectSave, ShowcaseProjectTag, ShowcaseProjectPhoto, Like, Comment, CommentLike
 
 class ShowcaseProjectSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,6 +17,11 @@ class ShowcaseProjectTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShowcaseProjectTag
         fields = ["id", "project", "tag"]
+
+class ShowcaseProjectPhotoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShowcaseProjectPhoto
+        fields = ["id", "project", "photo", "caption", "order"]
 
 class LikeSerializer(serializers.ModelSerializer):
     class Meta:

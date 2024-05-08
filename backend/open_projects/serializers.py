@@ -13,9 +13,10 @@ class OpenProjectSerializer(serializers.ModelSerializer):
             "level",
             "post_date",
             "open",
+            "status",
             "group_size",
         ]
-        read_only_fields = ["user"]
+        read_only_fields = ["user", "status"]
 
 
 class OpenProjectSaveSerializer(serializers.ModelSerializer):
