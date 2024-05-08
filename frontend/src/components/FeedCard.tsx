@@ -12,8 +12,6 @@ type FeedCardProps = {
   tags?: string[]; // make tags optional for when we create, because the tags do not exist in db yet
 };
 
-
-
 const FeedCard: React.FC<FeedCardProps> = ({
   project_name,
   description,
@@ -29,9 +27,10 @@ const FeedCard: React.FC<FeedCardProps> = ({
     }) +
     " ago";
 
-    //hardcode tags for now
+  //hardcode tags for now
+  if (!tags) {
     tags = ["Python", "Javascript", "React", "Django"];
-
+  }
 
   return (
     <div className="shadow-light p-7 px-10  w-full  max-w-screen-sm border border-border rounded-lg hover:cursor-pointer hover:shadow-light-hover hover:border-gray-400  transition duration-300 ease-in-out">
@@ -54,14 +53,12 @@ const FeedCard: React.FC<FeedCardProps> = ({
       </p>
 
       <div className="mt-6 flex items-center gap-x-3 border-b pb-4">
-        <img
-          src={PersonIcon}
-          alt="profile"
-          className="w-7 h-7 rounded-full"
-        />
+        <img src={PersonIcon} alt="profile" className="w-7 h-7 rounded-full" />
 
         <div className="flex items-center gap-3 whitespace-nowrap overflow-scroll no-scrollbar">
-          <h4 className="text-sm  font-medium text-secondary">Query Name using user_id = {user}</h4>
+          <h4 className="text-sm  font-medium text-secondary">
+            Query Name using user_id = {user}
+          </h4>
 
           <p className="text-md font-light text-secondary-foreground">|</p>
 
