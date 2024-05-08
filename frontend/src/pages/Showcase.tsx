@@ -6,7 +6,7 @@ const Showcase = () => {
       <div>
         <h2 className="text-2xl font-semibold">Project Showcase</h2>
         <p className="font-normal text-sm text-gray-500">
-          Find Inspiration
+          Find Inspiration for your next project
         </p>
       </div>
 
