@@ -6,7 +6,6 @@ import PersonalInfoCard from "@/components/PersonalInfoCard";
 import PersonalLinksCard from "@/components/PersonalLinksCard";
 import OpenProjectsTable from "@/components/OpenProjectsTable";
 import ShowcaseProjectsTable from "@/components/ShowcaseProjectsTable";
-import { profile } from "console";
 
 interface ProfileData {
   firstName: string;
