@@ -15,3 +15,5 @@ whitenoise
 drf-yasg
 sendgrid
 pillow
+boto3
+django-storages

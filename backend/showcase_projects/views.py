@@ -2,10 +2,10 @@ from rest_framework import viewsets, permissions
 from backend.views import MixedPermissionsViewSet
 from .serializers import (
     ShowcaseProjectSerializer, ShowcaseProjectSaveSerializer,
-    ShowcaseProjectTagSerializer, LikeSerializer, CommentSerializer, CommentLikeSerializer
+    ShowcaseProjectTagSerializer, ShowcaseProjectPhotoSerializer, LikeSerializer, CommentSerializer, CommentLikeSerializer
 )
 from .models import (
-    ShowcaseProject, ShowcaseProjectSave, ShowcaseProjectTag,
+    ShowcaseProject, ShowcaseProjectSave, ShowcaseProjectTag, ShowcaseProjectPhoto,
     Like, Comment, CommentLike
 )
 
@@ -42,6 +42,16 @@ class ShowcaseProjectTagViewSet(MixedPermissionsViewSet):
 
     def get_queryset(self):
         queryset = ShowcaseProjectTag.objects.all()
+        project_id = self.request.query_params.get("project_id")
+        if project_id:
+            queryset = queryset.filter(project_id=project_id)
+        return queryset
+
+class ShowcaseProjectPhotoViewSet(MixedPermissionsViewSet):
+    serializer_class = ShowcaseProjectPhotoSerializer
+
+    def get_queryset(self):
+        queryset = ShowcaseProjectPhoto.objects.all()
         project_id = self.request.query_params.get("project_id")
         if project_id:
             queryset = queryset.filter(project_id=project_id)
