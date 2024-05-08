@@ -73,7 +73,7 @@ const Feed = () => {
       profilePicture:
         "https://media.licdn.com/dms/image/D4E03AQFzplx5eTzzyA/profile-displayphoto-shrink_100_100/0/1707245865823?e=1719446400&v=beta&t=9CUlC15B-vH1V5H4vqSy_RZZlXTKGnkM8eU4gLuHfQI",
       level: "intermediate",
-      user : "2",
+      user: "2",
     },
     {
       project_name: "Ethnicity Detection",
@@ -88,7 +88,7 @@ const Feed = () => {
         "https://media.licdn.com/dms/image/D4E03AQFzplx5eTzzyA/profile-displayphoto-shrink_100_100/0/1707245865823?e=1719446400&v=beta&t=9CUlC15B-vH1V5H4vqSy_RZZlXTKGnkM8eU4gLuHfQI",
 
       level: "advanced",
-      user : "3",
+      user: "3",
     },
   ];
 
@@ -122,14 +122,12 @@ const Feed = () => {
         <div className="flex flex-col gap-7  lg:items-start items-center  max-w-screen-sm">
           {renderSkeletons()}
 
-          
-
           {!loading &&
             projects.map((project: any, index: number) => (
               <FeedCard key={index} {...project} />
             ))}
 
-            {/* Hide Hardcoded Cards */}
+          {/* Hide Hardcoded Cards */}
           {false &&
             feedCardData.map((cardData, index) => (
               <FeedCard key={index} {...cardData} />

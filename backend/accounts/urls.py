@@ -1,7 +1,11 @@
 # accounts/urls
 
 from django.urls import path
-from .views import AuthCreateNewUserView, AuthLoginExisitingUserView, RefreshTokenView
+from .views import (
+    AuthCreateNewUserView,
+    AuthLoginExisitingUserView,
+    RefreshTokenView,
+)
 
 urlpatterns = [
     path("auth/register/", AuthCreateNewUserView.as_view(), name="auth-create-user"),
