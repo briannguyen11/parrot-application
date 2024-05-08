@@ -8,6 +8,7 @@ import OpenProjectsTable from "@/components/OpenProjectsTable";
 import ShowcaseProjectsTable from "@/components/ShowcaseProjectsTable";
 
 interface ProfileData {
+  userId: string;
   firstName: string;
   lastName: string;
   school: string;
@@ -22,31 +23,59 @@ interface ProfileData {
 const Profile = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
+  const [userOpenProjects, setUserOpenProjects] = useState([]);
+
   useEffect(() => {
-    const fetchProfile = async () => {
+    const fetchUserData = async () => {
       try {
-        const res = await api.get("api/profiles/");
-        const data = res.data[0];
-        const newProfileData: ProfileData = {
-          firstName: data.first_name,
-          lastName: data.last_name,
-          school: data.school,
-          major: data.major,
-          bio: data.bio,
-          profilePicture: data.profile_picture,
-          resume: data.resume,
-          linkedin: data.linkedin,
-          github: data.github,
-        };
-        setProfileData(newProfileData);
-        setLoading(false);
+        const data: ProfileData | undefined = await fetchProfile();
+        if (data) {
+          await fetchUserOpenProjects(data.userId);
+          setLoading(false);
+        }
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
 
-    fetchProfile();
+    fetchUserData();
   }, []);
+
+  const fetchProfile = async () => {
+    try {
+      const res = await api.get("api/profiles/");
+      const data = res.data[0];
+      const newProfileData: ProfileData = {
+        userId: data.user,
+        firstName: data.first_name,
+        lastName: data.last_name,
+        school: data.school,
+        major: data.major,
+        bio: data.bio,
+        profilePicture: data.profile_picture,
+        resume: data.resume,
+        linkedin: data.linkedin,
+        github: data.github,
+      };
+      setProfileData(newProfileData);
+      return newProfileData;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const fetchUserOpenProjects = async (userId: string) => {
+    try {
+      const res = await api.get("api/open-projects/projects/", {
+        params: {
+          user_id: userId,
+        },
+      });
+      setUserOpenProjects(res.data);
+    } catch (error) {
+      throw error;
+    }
+  };
 
   const renderAccountSkeletons = () => {
     if (loading) {
@@ -95,7 +124,7 @@ const Profile = () => {
             {!loading && (
               <>
                 <div className="mt-4 mx-4">
-                  <OpenProjectsTable />
+                  <OpenProjectsTable userOpenProjects={userOpenProjects} />
                 </div>
                 <div className="mt-4 mx-4">
                   <ShowcaseProjectsTable />

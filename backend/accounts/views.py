@@ -13,8 +13,6 @@ from django.contrib.auth.hashers import check_password
 import re
 from backend.settings import auth
 
-# API endpoint for creating new user
-
 
 class AuthCreateNewUserView(APIView):
 
@@ -103,9 +101,6 @@ class AuthCreateNewUserView(APIView):
             return Response(bad_response, status=status.HTTP_400_BAD_REQUEST)
 
 
-# API endpoint to login user
-
-
 class AuthLoginExisitingUserView(APIView):
     permission_classes = [AllowAny]
     authentication_classes = []
@@ -146,9 +141,6 @@ class AuthLoginExisitingUserView(APIView):
             auth.delete_user_account(user["idToken"])
             bad_response = {"status": "failed", "message": "User does not exist."}
             return Response(bad_response, status=status.HTTP_404_NOT_FOUND)
-
-
-# API endpoint to refresh access token
 
 
 class RefreshTokenView(APIView):
