@@ -97,7 +97,7 @@ const Sidebar = () => {
         />
       </div>
 
-      <div className="border-t mr-4 py-4">
+      <div className="border-t mr-4 py-4 flex flex-col gap-y-2">
         <SidebarElement
           title="Settings"
           icon={SettingsIcon}

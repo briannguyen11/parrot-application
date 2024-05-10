@@ -2,6 +2,7 @@ import api from "@/api";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import TeamCard from "@/components/TeamCard";
 
 interface Project {
   id: number;
@@ -20,6 +21,7 @@ const Project = () => {
   const { projectId } = useParams<{ projectId: string }>();
   const [loading, setLoading] = useState(true);
   const [project, setProject] = useState<Project | null>(null);
+  const [isOwner, setIsOwner] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -44,20 +46,91 @@ const Project = () => {
     return <div>Loading...</div>;
   }
 
-  return (
-    <div className="w-full min-h-home">
-      
-      <div className="grid lg:grid-cols-5 w-full h-full">
-        <div className="col-span-4 h-full border-r">
-          <h1 className="text-2xl font-semibold text-primary">
-            {project?.project_name}
-          </h1>
-          <p className="mt-2 text-secondary font-light">
-            {project?.description}
-          </p>
+  const renderDashboard = () => {
+    return (
+      <div className="border-l min-h-home overflow-y-auto pl-5 pt-11">
+        <h1 className="text-xl font-semibold text-primary">
+          Project Dashboard
+        </h1>
+
+        <h2 className=" mt-5 mb-1 font-medium text-primary">Team Structure</h2>
+        <div className="flex flex-col gap-2">
+          <TeamCard
+            img="https://parrot-showcase-photos-test.s3.amazonaws.com/profiles/profile_pics/20191120-CampusDusk-JoeJ0110-1024x576.png?AWSAccessKeyId=AKIAXYKJWCIHIUSSO26N&Signature=O0GNfcDbtzoylMV2O3wK53TD898%3D&Expires=1715337929"
+            name={"Me"}
+          />
+          <TeamCard />
+
+          <TeamCard />
         </div>
 
-        <div>Hello</div>
+        <h2 className="mt-5 text-primary font-medium">Applicants (16)</h2>
+      </div>
+    );
+  };
+
+  return (
+    <div className="w-full h-home">
+      <div
+        className={`grid ${
+          isOwner && "lg:grid-cols-[auto_19rem] 2xl:grid-cols-[auto_25rem]"
+        }`}
+      >
+        <div className="h-home w-full overflow-y-auto p-5">
+          <button
+            onClick={() => navigate(-1)}
+            className="text-sm text-secondary-foreground underline"
+          >
+            {"<- Back"}
+          </button>
+          <div className="mt-2 flex items-center gap-4">
+            <h1 className="text-2xl font-semibold text-primary">
+              {project?.project_name}
+            </h1>
+
+            <button className="border p-1 px-4 rounded-lg text-sm hover:bg-card-red hover:text-white">
+              Edit
+            </button>
+
+            <button
+              onClick={() => setIsOwner(!isOwner)}
+              className="border p-1 px-4 rounded-lg text-sm hover:bg-card-red hover:text-white"
+            >
+              Toggle isOwner
+            </button>
+          </div>
+          <p className="text-secondary-foreground text-sm mt-1">
+            {project?.post_date}
+          </p>
+
+          <h3 className="mt-5  text-primary font-medium">Description</h3>
+          <p className="mt-1 text-secondary font-light">
+            {project?.description}
+          </p>
+
+          <h3 className="mt-10  text-primary font-medium">Interest Form</h3>
+          <h4 className="mt-1 text-secondary text-sm font-light">
+            1. What is your name?
+          </h4>
+          <input
+            type="text"
+            className="border border-gray-300 rounded-lg w-full p-2"
+          />
+
+          <h4 className="mt-5 text-secondary font-light text-sm">
+            2. What is your email?
+          </h4>
+          <input
+            type="text"
+            className="border border-gray-300 rounded-lg w-full p-2"
+          />
+
+          <button className="mt-5 bg-primary text-white text-sm p-2 rounded-lg">
+            Submit Interest
+          </button>
+        </div>
+
+        {isOwner && renderDashboard()}
       </div>
     </div>
   );
