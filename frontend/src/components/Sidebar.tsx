@@ -46,7 +46,7 @@ const Sidebar = () => {
 
   return (
     <div className="fixed left-0 lg:pl-7 pl-5 w-64 h-sidebar lg:border-r bg-white border-gray-200 pt-5 overflow-auto flex flex-col justify-between ">
-      <div>
+      <div className="flex flex-col gap-y-2">
         <SidebarElement
           title="Explore"
           icon={SearchIcon}

@@ -4,7 +4,7 @@ import PersonIcon from "../assets/icons/person.svg";
 import { useNavigate } from "react-router-dom";
 
 type FeedCardProps = {
-  id: number;
+  id?: number;
   project_name: string;
   description: string;
   level: string;

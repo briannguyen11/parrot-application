@@ -58,11 +58,9 @@ const Create = () => {
 
           return res;
         });
+      navigate(`/project/${res.data.id}`);
 
-      console.log(res.data.id);
-      // navigate(`/project/${res.data.id}`);
 
-      navigate("/");
     } catch (error: any) {
       toast("Error", {
         description: error.response.data.message,
