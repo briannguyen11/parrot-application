@@ -5,6 +5,7 @@ import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
+import Project from "./pages/Project";
 
 import {
   Route,
@@ -29,6 +30,7 @@ const router = createBrowserRouter(
       <Route path="/" element={<Home />}>
         <Route index element={<Feed />} />
         <Route path="showcase" element={<Spotlight />} />
+        <Route path="/project/:projectId" element={<Project />} />
         <Route path="settings" element={<div>settings</div>} />
         <Route path="help" element={<div>help</div>} />
         <Route path="report" element={<div>report</div>} />
@@ -63,6 +65,7 @@ const router = createBrowserRouter(
 
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<RegisterAndLogout />} />
+      
       <Route path="*" element={<NotFound />} />
     </Route>
   )

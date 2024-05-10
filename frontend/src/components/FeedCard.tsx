@@ -1,8 +1,10 @@
 import Tag from "./Tag";
 import { formatDistanceToNow } from "date-fns";
 import PersonIcon from "../assets/icons/person.svg";
+import { useNavigate } from "react-router-dom";
 
 type FeedCardProps = {
+  id: number;
   project_name: string;
   description: string;
   level: string;
@@ -13,6 +15,7 @@ type FeedCardProps = {
 };
 
 const FeedCard: React.FC<FeedCardProps> = ({
+  id,
   project_name,
   description,
   post_date,
@@ -32,11 +35,16 @@ const FeedCard: React.FC<FeedCardProps> = ({
     tags = ["Python", "Javascript", "React", "Django"];
   }
 
+  const navigate = useNavigate();
+
   return (
-    <div className="shadow-light p-7 px-10  w-full bg-white max-w-screen-sm border border-border rounded-lg hover:cursor-pointer hover:shadow-light-hover hover:border-gray-400  transition duration-300 ease-in-out">
-      <div className="flex items-center justify-between">
+    <div
+      onClick={() => navigate("/project/" + id)}
+      className="shadow-light p-7 px-10  w-full bg-white max-w-screen-sm border border-border rounded-lg hover:cursor-pointer hover:shadow-light-hover hover:border-gray-400  transition duration-300 ease-in-out"
+    >
+      <div className="flex items-center gap-x-5 justify-between">
         <div className="flex items-center gap-4">
-          <h2 className="text-xl font-semibold text-primary">{project_name}</h2>
+          <h2 className="text-xl font-semibold text-primary sm:max-w-full xs:max-w-64 whitespace-nowrap overflow-scroll">{project_name}</h2>
 
           <div className="flex items-center gap-1">
             <p className="text-gray-400 text-sm">{group_size}</p>

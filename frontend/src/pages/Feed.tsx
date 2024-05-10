@@ -62,7 +62,7 @@ const Feed = () => {
   };
 
   return (
-    <div className="flex w-full items-start  lg:justify-start justify-center gap-10">
+    <div className="flex w-full items-start  lg:justify-start lg:pl-8 pt-5 justify-center gap-10">
       <div className="flex flex-col gap-3 lg:ml-16 w-full max-w-screen-sm">
         <div className="flex items-end justify-between">
           <div>

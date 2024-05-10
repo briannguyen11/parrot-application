@@ -36,6 +36,11 @@ export const theme = {
     height: {
       "spotlight-img": "calc(100% - 64px)",
       sidebar: "calc(100vh - 64px)",
+      
+    },
+
+    minHeight: {
+      home: "calc(100vh - 64px)",
     },
 
     aspectRatio: {
