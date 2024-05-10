@@ -45,7 +45,7 @@ const Sidebar = () => {
   }, [location.pathname]);
 
   return (
-    <div className="fixed w-60 h-sidebar lg:border-r border-gray-200 pt-5 overflow-auto flex flex-col justify-between ">
+    <div className="fixed left-0 lg:pl-7 pl-5 w-64 h-sidebar lg:border-r bg-white border-gray-200 pt-5 overflow-auto flex flex-col justify-between ">
       <div>
         <SidebarElement
           title="Explore"
@@ -127,9 +127,6 @@ const Sidebar = () => {
             navigate("/report");
           }}
         />
-        <p className="ml-3 p-3 text-xs font-light text-gray-400">
-          © 2024 Parrot, Inc
-        </p>
       </div>
     </div>
   );

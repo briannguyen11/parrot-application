@@ -1,10 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 export const darkMode = ["class"];
 export const content = [
-  './pages/**/*.{ts,tsx}',
-  './components/**/*.{ts,tsx}',
-  './app/**/*.{ts,tsx}',
-  './src/**/*.{ts,tsx}',
+  "./pages/**/*.{ts,tsx}",
+  "./components/**/*.{ts,tsx}",
+  "./app/**/*.{ts,tsx}",
+  "./src/**/*.{ts,tsx}",
 ];
 export const prefix = "";
 export const theme = {
@@ -18,23 +18,28 @@ export const theme = {
 
   fontFamily: {
     body: ["system-ui", "sans-serif"],
-    sidebar: ["Raleway", "sans-serif"], 
-
+    sidebar: ["system-ui", "sans-serif"],
   },
 
   extend: {
     boxShadow: {
-      'light': '0px 2px 14px 0px rgba(0, 0, 0, 0.08)',
-      'light-hover': '0px 2px 14px 0px rgba(0, 0, 0, 0.14)',
+      light: "0px 2px 14px 0px rgba(0, 0, 0, 0.08)",
+      "light-hover": "0px 2px 14px 0px rgba(0, 0, 0, 0.14)",
+    },
+
+    backgroundImage: {
+      "gradient": "url('/src/assets/images/gradient.png')",
+      "home-pattern" : "url('/src/assets/icons/background.svg')",
+    
     },
 
     height: {
-      'spotlight-img': 'calc(100% - 64px)',
-      'sidebar' : 'calc(100vh - 64px)',
+      "spotlight-img": "calc(100% - 64px)",
+      sidebar: "calc(100vh - 64px)",
     },
 
     aspectRatio: {
-      'spotlight': '4/3',
+      spotlight: "4/3",
     },
     colors: {
       border: "hsl(var(--border))",
@@ -69,15 +74,13 @@ export const theme = {
       card: {
         DEFAULT: "hsl(var(--card))",
         foreground: "hsl(var(--card-foreground))",
-        hover: "var(--card-hover)",  
+        hover: "var(--card-hover)",
         red: "hsl(var(--card-red))",
         purple: "hsl(var(--card-purple))",
         yellow: "var(--card-yellow)",
-        blue : "var(--card-blue)",
-        green : "var(--card-green)",
+        blue: "var(--card-blue)",
+        green: "var(--card-green)",
       },
-
-     
     },
     borderRadius: {
       lg: "var(--radius)",
@@ -99,20 +102,17 @@ export const theme = {
       "accordion-up": "accordion-up 0.2s ease-out",
     },
 
-    screens:{
-      '4xl': '2200px',
-      'xl+': '1330px',
-      'showcase-xl' : '1280px',
-      'xs' : '375px',
+    screens: {
+      "4xl": "2200px",
+      "xl+": "1330px",
+      "showcase-xl": "1280px",
+      xs: "375px",
     },
 
-    scale:{
-      '103': '1.03',
-      '101': '1.005',
+    scale: {
+      103: "1.03",
+      101: "1.005",
     },
-
-
-
   },
 };
 // eslint-disable-next-line no-undef
