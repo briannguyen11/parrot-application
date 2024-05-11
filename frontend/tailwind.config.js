@@ -28,16 +28,18 @@ export const theme = {
     },
 
     backgroundImage: {
-      "gradient": "url('/src/assets/images/gradient.png')",
-      "home-pattern" : "url('/src/assets/icons/background.svg')",
-    
+      gradient: "url('/src/assets/images/gradient.png')",
+      "home-pattern": "url('/src/assets/icons/background.svg')",
+    },
+
+    width:{
+      project: "calc(100% - 300px)",
     },
 
     height: {
       "spotlight-img": "calc(100% - 64px)",
       sidebar: "calc(100vh - 64px)",
-      home : "calc(100vh - 64px)",
-      
+      home: "calc(100vh - 64px)",
     },
 
     minHeight: {

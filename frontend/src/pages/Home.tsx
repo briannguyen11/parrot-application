@@ -12,7 +12,7 @@ export default function Home() {
           <div className="lg:block hidden bg-white">
             <Sidebar />
           </div>
-          <div className="lg:ml-56 w-full h-full pl-1 flex lg:justify-start justify-center">
+          <div className="lg:ml-56 w-full h-full lg:pl-1 flex lg:justify-start justify-center">
             <Outlet />
           </div>
         </div>

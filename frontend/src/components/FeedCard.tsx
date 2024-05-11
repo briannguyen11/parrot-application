@@ -77,7 +77,7 @@ const FeedCard: React.FC<FeedCardProps> = ({
       </div>
 
       <div className="mt-3">
-        <p className="text-secondary">{description}</p>
+        <p className="text-secondary w-full break-words">{description}</p>
       </div>
 
       <div className="flex items-center gap-x-4 mt-6">

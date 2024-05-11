@@ -56,7 +56,6 @@ const Project = () => {
         <h2 className=" mt-5 mb-1 font-medium text-primary">Team Structure</h2>
         <div className="flex flex-col gap-2">
           <TeamCard
-            img="https://parrot-showcase-photos-test.s3.amazonaws.com/profiles/profile_pics/20191120-CampusDusk-JoeJ0110-1024x576.png?AWSAccessKeyId=AKIAXYKJWCIHIUSSO26N&Signature=O0GNfcDbtzoylMV2O3wK53TD898%3D&Expires=1715337929"
             name={"Me"}
           />
           <TeamCard />
@@ -76,7 +75,7 @@ const Project = () => {
           isOwner && "lg:grid-cols-[auto_19rem] 2xl:grid-cols-[auto_25rem]"
         }`}
       >
-        <div className="h-home w-full overflow-y-auto p-5">
+        <div className="h-home w-full overflow-y-auto p-5 lg:pl-9">
           <button
             onClick={() => navigate(-1)}
             className="text-sm text-secondary-foreground underline"
@@ -104,7 +103,7 @@ const Project = () => {
           </p>
 
           <h3 className="mt-5  text-primary font-medium">Description</h3>
-          <p className="mt-1 text-secondary font-light">
+          <p className="mt-1 text-secondary font-light break-words">
             {project?.description}
           </p>
 
