@@ -286,7 +286,7 @@ const Create = () => {
           user={"the one thats logged in rn"}
           group_size={groupSize}
           level={difficultyLevel}
-          tags={techStack}
+          previewTags={techStack}
         />
 
         <button

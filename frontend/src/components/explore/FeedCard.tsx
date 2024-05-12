@@ -3,6 +3,12 @@ import { formatDistanceToNow } from "date-fns";
 import PersonIcon from "../../assets/icons/person.svg";
 import { useNavigate } from "react-router-dom";
 
+interface tag {
+  tag: string;
+  id: number;
+  project: number;
+}
+
 type FeedCardProps = {
   id?: number;
   project_name: string;
@@ -11,7 +17,8 @@ type FeedCardProps = {
   post_date: string;
   group_size: number;
   user: string;
-  tags?: string[]; // make tags optional for when we create, because the tags do not exist in db yet
+  tags?: tag[];
+  previewTags?: string[];
 };
 
 const FeedCard: React.FC<FeedCardProps> = ({
@@ -22,6 +29,7 @@ const FeedCard: React.FC<FeedCardProps> = ({
   group_size,
   user,
   tags,
+  previewTags,
 }) => {
   const timeAgo =
     "posted " +
@@ -30,9 +38,10 @@ const FeedCard: React.FC<FeedCardProps> = ({
     }) +
     " ago";
 
-  //hardcode tags for now
-  if (!tags) {
-    tags = ["Python", "Javascript", "React", "Django"];
+  if (previewTags) {
+    tags = previewTags.map((tag) => {
+      return { tag: tag, id: 0, project: 0 };
+    });
   }
 
   const navigate = useNavigate();
@@ -84,7 +93,7 @@ const FeedCard: React.FC<FeedCardProps> = ({
 
       <div className="flex items-center gap-x-4 mt-6">
         {tags?.map((tag) => (
-          <Tag name={tag} key={tag} />
+          <Tag name={tag.tag} key={tag.tag} />
         ))}
       </div>
     </div>
