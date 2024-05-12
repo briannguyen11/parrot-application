@@ -2,10 +2,11 @@ from rest_framework import viewsets, permissions
 from backend.views import MixedPermissionsViewSet
 from .serializers import (
     OpenProjectSerializer,
+    OpenProjectApplySerializer,
     OpenProjectSaveSerializer,
     OpenProjectTagSerializer,
 )
-from .models import OpenProject, OpenProjectSave, OpenProjectTag
+from .models import OpenProject, OpenProjectApply, OpenProjectSave, OpenProjectTag
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -23,9 +24,22 @@ class OpenProjectViewSet(MixedPermissionsViewSet):
         if user_id:
             queryset = queryset.filter(user_id=user_id)
         return queryset
-    
-    
 
+
+class OpenProjectApplyViewSet(viewsets.ModelViewSet):
+    serializer_class = OpenProjectApplySerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def get_queryset(self):
+        queryset = OpenProjectApply.objects.all()
+        user_id = self.request.query_params.get("user_id")
+        if user_id:
+            queryset = queryset.filter(user_id=user_id)
+        return queryset
+    
 
 class OpenProjectSaveViewSet(viewsets.ModelViewSet):
     serializer_class = OpenProjectSaveSerializer

@@ -22,7 +22,7 @@ class OpenProject(models.Model):
         ("approved", "Approved"),
         ("rejected", "Rejected"),
     ])
-    group_size = models.PositiveIntegerField(null=True, validators=[MinValueValidator(2), MaxValueValidator(9)])
+    group_size = models.PositiveIntegerField(validators=[MinValueValidator(2), MaxValueValidator(9)])
 
     def __str__(self):
         return self.project_name
@@ -32,6 +32,29 @@ class OpenProject(models.Model):
         verbose_name = _("Open Project")
         verbose_name_plural = _("Open Projects")
         ordering = ["-post_date"]
+
+
+class OpenProjectApply(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="applied_open_projects"
+    )
+    project = models.OneToOneField(
+        "OpenProject", on_delete=models.CASCADE, related_name="applied_open_project"
+    )
+    status = models.CharField(max_length=100, default="applied",
+    choices=[
+        ("applied", "Applied"),
+        ("joined", "Joined"),
+        ("rejected", "Rejected"),
+    ])
+
+    def __str__(self):
+        return f"{self.user.username} - {self.project.project_name}"
+
+    class Meta:
+        db_table = "open_project_apply"
+        verbose_name = _("Open Project Apply")
+        verbose_name_plural = _("Open Project Applies")
 
 
 class OpenProjectSave(models.Model):
