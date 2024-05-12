@@ -2,6 +2,18 @@ from rest_framework import serializers
 from .models import OpenProject, OpenProjectApply, OpenProjectSave, OpenProjectTag
 
 
+class ProjectDetailsMixin:
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        if "request" in self.context:
+            request = self.context["request"]
+            if request.method == "GET":
+                project = instance.project
+                project_serializer = OpenProjectSerializer(project)
+                data["project"] = project_serializer.data
+        return data
+
+
 class OpenProjectTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = OpenProjectTag
@@ -24,17 +36,17 @@ class OpenProjectSerializer(serializers.ModelSerializer):
             "group_size",
             "tags"
         ]
-        read_only_fields = ["user", "status"]
+        read_only_fields = ["user", "status", "tags"]
 
 
-class OpenProjectApplySerializer(serializers.ModelSerializer):
+class OpenProjectApplySerializer(ProjectDetailsMixin, serializers.ModelSerializer):
     class Meta:
         model = OpenProjectApply
         fields = ["id", "user", "project", "status"]
-        read_only_fields = ["user"]
+        read_only_fields = ["user", "status"]
 
 
-class OpenProjectSaveSerializer(serializers.ModelSerializer):
+class OpenProjectSaveSerializer(ProjectDetailsMixin, serializers.ModelSerializer):
     class Meta:
         model = OpenProjectSave
         fields = ["id", "user", "project"]

@@ -20,7 +20,6 @@ class OpenProjectViewSet(MixedPermissionsViewSet):
         serializer.save(user=self.request.user)
 
     def get_queryset(self):
-        # Preload related tags
         queryset = OpenProject.objects.prefetch_related(Prefetch("tags"))            
         user_id = self.request.query_params.get("user_id")
         if user_id:
@@ -36,7 +35,7 @@ class OpenProjectApplyViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
     def get_queryset(self):
-        queryset = OpenProjectApply.objects.all()
+        queryset = OpenProjectApply.objects.prefetch_related(Prefetch("project"))
         user_id = self.request.query_params.get("user_id")
         if user_id:
             queryset = queryset.filter(user_id=user_id)
@@ -51,7 +50,7 @@ class OpenProjectSaveViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
     def get_queryset(self):
-        queryset = OpenProjectSave.objects.all()
+        queryset = OpenProjectSave.objects.prefetch_related(Prefetch("project"))
         user_id = self.request.query_params.get("user_id")
         if user_id:
             queryset = queryset.filter(user_id=user_id)
@@ -68,7 +67,6 @@ class OpenProjectTagViewSet(MixedPermissionsViewSet):
             queryset = queryset.filter(project_id=project_id)
         return queryset
     
-
     # Overriding the create method to allow creating multiple tags at once
     def create(self, request):
         project_id = request.data.get('project')
@@ -88,7 +86,6 @@ class OpenProjectTagViewSet(MixedPermissionsViewSet):
                 return Response(tag_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         return Response(tag_instances, status=status.HTTP_201_CREATED)
-    
     
     # Overriding the delete method to allow deleting tags by project ID
     def delete(self, request):

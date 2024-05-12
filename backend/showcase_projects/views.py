@@ -1,3 +1,4 @@
+from django.db.models import Prefetch
 from rest_framework import viewsets, permissions
 from backend.views import MixedPermissionsViewSet
 from .serializers import (
@@ -17,7 +18,12 @@ class ShowcaseProjectViewSet(MixedPermissionsViewSet):
         serializer.save(user=self.request.user)
     
     def get_queryset(self):
-        queryset = ShowcaseProject.objects.all()
+        queryset = ShowcaseProject.objects.prefetch_related(
+            Prefetch("tags"),
+            Prefetch("photos"),
+            Prefetch("likes"),
+            Prefetch("comments"),
+        )
         user_id = self.request.query_params.get("user_id")
         if user_id:
             queryset = queryset.filter(user_id=user_id)
@@ -31,7 +37,7 @@ class ShowcaseProjectSaveViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
     def get_queryset(self):
-        queryset = ShowcaseProjectSave.objects.all()
+        queryset = ShowcaseProjectSave.objects.prefetch_related(Prefetch("project"))
         user_id = self.request.query_params.get("user_id")
         if user_id:
             queryset = queryset.filter(user_id=user_id)
@@ -80,7 +86,7 @@ class CommentViewSet(MixedPermissionsViewSet):
         serializer.save(user=self.request.user)
 
     def get_queryset(self):
-        queryset = Comment.objects.all()
+        queryset = Comment.objects.prefetch_related(Prefetch("comment_likes"))
         user_id = self.request.query_params.get("user_id")
         project_id = self.request.query_params.get("project_id")
         if user_id:

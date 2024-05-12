@@ -1,6 +1,5 @@
 from django.db import models
 from accounts.models import User
-from django.contrib.postgres.fields import ArrayField
 from django.utils.translation import gettext_lazy as _
 
 
@@ -8,7 +7,6 @@ class ShowcaseProject(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posted_projects")
     project_name = models.CharField(max_length=100)
     description = models.TextField()
-    photos = ArrayField(models.URLField(), blank=True, default=list)
     post_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -48,7 +46,7 @@ class ShowcaseProjectTag(models.Model):
 
 
 class ShowcaseProjectPhoto(models.Model):
-    project = models.ForeignKey("ShowcaseProject", on_delete=models.CASCADE, related_name="showcase_photos")
+    project = models.ForeignKey("ShowcaseProject", on_delete=models.CASCADE, related_name="photos")
     photo = models.ImageField(upload_to="photos/")
     caption = models.CharField(max_length=250)
     order = models.FloatField()
@@ -64,8 +62,8 @@ class ShowcaseProjectPhoto(models.Model):
 
 
 class Like(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="liked_projects")
-    project = models.OneToOneField("ShowcaseProject", on_delete=models.CASCADE, related_name="liked_project")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="likes")
+    project = models.ForeignKey("ShowcaseProject", on_delete=models.CASCADE, related_name="likes")
 
     def __str__(self):
         return f"{self.user.username} - {self.project.project_name}"
@@ -94,7 +92,7 @@ class Comment(models.Model):
 
 class CommentLike(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comment_likes")
-    comment = models.OneToOneField("Comment", on_delete=models.CASCADE, related_name="comment_likes")
+    comment = models.ForeignKey("Comment", on_delete=models.CASCADE, related_name="comment_likes")
 
     def __str__(self):
         return f"{self.user.username} - {self.comment.content}"
