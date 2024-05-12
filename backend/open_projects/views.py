@@ -1,3 +1,4 @@
+from django.db.models import Prefetch
 from rest_framework import viewsets, permissions
 from backend.views import MixedPermissionsViewSet
 from .serializers import (
@@ -19,7 +20,8 @@ class OpenProjectViewSet(MixedPermissionsViewSet):
         serializer.save(user=self.request.user)
 
     def get_queryset(self):
-        queryset = OpenProject.objects.all()
+        # Preload related tags
+        queryset = OpenProject.objects.prefetch_related(Prefetch("tags"))            
         user_id = self.request.query_params.get("user_id")
         if user_id:
             queryset = queryset.filter(user_id=user_id)
@@ -67,7 +69,6 @@ class OpenProjectTagViewSet(MixedPermissionsViewSet):
         return queryset
     
 
-    
     # Overriding the create method to allow creating multiple tags at once
     def create(self, request):
         project_id = request.data.get('project')

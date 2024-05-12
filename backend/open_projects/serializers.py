@@ -2,7 +2,14 @@ from rest_framework import serializers
 from .models import OpenProject, OpenProjectApply, OpenProjectSave, OpenProjectTag
 
 
+class OpenProjectTagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OpenProjectTag
+        fields = ["id", "project", "tag"]
+
+
 class OpenProjectSerializer(serializers.ModelSerializer):
+    tags = OpenProjectTagSerializer(many=True, read_only=True)
     class Meta:
         model = OpenProject
         fields = [
@@ -15,6 +22,7 @@ class OpenProjectSerializer(serializers.ModelSerializer):
             "open",
             "status",
             "group_size",
+            "tags"
         ]
         read_only_fields = ["user", "status"]
 
@@ -31,9 +39,3 @@ class OpenProjectSaveSerializer(serializers.ModelSerializer):
         model = OpenProjectSave
         fields = ["id", "user", "project"]
         read_only_fields = ["user"]
-
-
-class OpenProjectTagSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = OpenProjectTag
-        fields = ["id", "project", "tag"]
