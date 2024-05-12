@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { Tooltip } from "@/components/Tooltip";
 import api from "@/api";
 import { toast } from "sonner";
+import { useEffect } from "react";
 
 const Create = () => {
   const [techStack, setTechStack] = useState<string[]>([]);
@@ -17,6 +18,10 @@ const Create = () => {
   const [difficultyLevel, setDifficultyLevel] = useState<string>("");
   const [slide, setSlide] = useState<number>(0);
   const [showError, setShowError] = useState<boolean>(false);
+
+  useEffect(() => {
+    document.title = "Create Project";
+  }, []);
 
   const navigate = useNavigate();
 
@@ -59,8 +64,6 @@ const Create = () => {
           return res;
         });
       navigate(`/project/${res.data.id}`);
-
-
     } catch (error: any) {
       toast("Error", {
         description: error.response.data.message,

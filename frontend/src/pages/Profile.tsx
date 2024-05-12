@@ -26,6 +26,9 @@ const Profile = () => {
   const [userOpenProjects, setUserOpenProjects] = useState([]);
 
   useEffect(() => {
+
+    document.title = "View Profile";
+
     const fetchUserData = async () => {
       try {
         const data: ProfileData | undefined = await fetchProfile();

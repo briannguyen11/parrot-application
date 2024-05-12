@@ -12,6 +12,8 @@ const Feed = () => {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
+    document.title = "Explore Projects | Parrot";
+
     const handleScroll = () => {
       const scrollY = window.scrollY;
       const threshold = 60; // Adjust this value to set the scroll threshold
@@ -86,7 +88,7 @@ const Feed = () => {
         </div>
       </div>
       <div
-        className={` bg-gray-200 shadow-light w-64 h-96 xl+:flex hidden mt-16 rounded-xl ${
+        className={` bg-white shadow-light w-64 h-96 xl+:flex hidden mt-16 rounded-xl ${
           isFixed ? "fixed left-0 ml-[1032px] mr-7 top-5" : ""
         }`}
       ></div>

@@ -5,6 +5,8 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
+import { useEffect } from "react";
+
 // import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 
 interface RegisterFormData {
@@ -49,6 +51,10 @@ export function Register() {
       setConfirmPassword("");
     }
   };
+
+  useEffect(() => {
+    document.title = "Register | Parrot";
+  }, []);
 
   return (
     <div className="w-full lg:grid xl:min-h-[800px]">

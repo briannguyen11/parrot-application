@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants";
 import api from "../api";
+import { useEffect } from "react";
 
 interface LoginFormData {
   email: string;
@@ -14,6 +15,11 @@ interface LoginFormData {
 }
 
 export function Login() {
+
+  useEffect(() => {
+    document.title = "Login | Parrot";
+  }, []);
+
   const [loginFormData, setLoginFormData] = useState<LoginFormData>({
     email: "",
     password: "",

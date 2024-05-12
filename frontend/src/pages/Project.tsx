@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TeamCard from "@/components/TeamCard";
+import { ApplicantAccordion } from "@/components/ApplicantAccordion";
 
 interface Project {
   id: number;
@@ -21,7 +22,7 @@ const Project = () => {
   const { projectId } = useParams<{ projectId: string }>();
   const [loading, setLoading] = useState(true);
   const [project, setProject] = useState<Project | null>(null);
-  const [isOwner, setIsOwner] = useState(false);
+  const [isOwner, setIsOwner] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,15 +33,15 @@ const Project = () => {
         );
         console.log(res.data);
         setProject(res.data);
+        document.title = `${res.data.project_name} | Parrot`; 
         setLoading(false);
-        console.log(project);
-      } catch (error: unknown) {
+      } catch (error) {
         console.log(error);
       }
     };
 
     fetchProjects();
-  }, [project, projectId]);
+  }, [projectId]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -48,22 +49,24 @@ const Project = () => {
 
   const renderDashboard = () => {
     return (
-      <div className="border-l min-h-home overflow-y-auto pl-5 pt-11">
+      <div className="lg:inline-block hidden border-l min-h-home overflow-y-auto pl-5 pt-11">
         <h1 className="text-xl font-semibold text-primary">
           Project Dashboard
         </h1>
 
         <h2 className=" mt-5 mb-1 font-medium text-primary">Team Structure</h2>
         <div className="flex flex-col gap-2">
-          <TeamCard
-            name={"Me"}
-          />
-          <TeamCard />
+          <TeamCard name={"Me"} />
 
-          <TeamCard />
+          {Array.from(
+            { length: project ? project?.group_size - 1 : 0 },
+            (_, index) => (
+              <TeamCard key={index} />
+            )
+          )}
         </div>
 
-        <h2 className="mt-5 text-primary font-medium">Applicants (16)</h2>
+        <ApplicantAccordion />
       </div>
     );
   };
