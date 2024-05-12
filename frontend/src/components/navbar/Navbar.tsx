@@ -1,9 +1,9 @@
 import { ProfileDropDown } from "./ProfileDropDown";
-import { SidebarPopup } from "./SidebarPopup";
+import { SidebarPopup } from "../sidebar/SidebarPopup";
 import SearchBar from "./SearchBar";
 import { useNavigate, useLocation } from "react-router-dom";
-import SearchIcon from "../assets/icons/search-icon.svg";
-import CodeIcon from "../assets/icons/code.svg";
+import SearchIcon from "../../assets/icons/search-icon.svg";
+import CodeIcon from "../../assets/icons/code.svg";
 
 import NotificationPopover from "./NotificationPopover";
 
@@ -40,19 +40,21 @@ const Navbar = () => {
           className="md:hidden w-7 h-7 hover:bg-gray-200 p-1 rounded-full transition duration-300 ease-in-out hover:cursor-pointer"
         />
 
-        {(location.pathname !== "/create" || true) && <div
-          onClick={() => navigate("/create")}
-          className="hover:cursor-pointer  md:hover:bg-gray-200 flex justify-center items-center pr-3 pl-2 md:py-1 rounded-full gap-x-1  transition duration-300 ease-in-out"
-        >
-          <img
-            src={CodeIcon}
-            alt="search"
-            className="w-8 h-8 md:hover:bg-inherit hover:bg-gray-200 p-1 rounded-xl transition duration-300 ease-in-out"
-          />
-          <h4 className="font-normal text-sm text-primary md:flex hidden">
-            Create Project
-          </h4>
-        </div>}
+        {(location.pathname !== "/create" || true) && (
+          <div
+            onClick={() => navigate("/create")}
+            className="hover:cursor-pointer  md:hover:bg-gray-200 flex justify-center items-center pr-3 pl-2 md:py-1 rounded-full gap-x-1  transition duration-300 ease-in-out"
+          >
+            <img
+              src={CodeIcon}
+              alt="search"
+              className="w-8 h-8 md:hover:bg-inherit hover:bg-gray-200 p-1 rounded-xl transition duration-300 ease-in-out"
+            />
+            <h4 className="font-normal text-sm text-primary md:flex hidden">
+              Create Project
+            </h4>
+          </div>
+        )}
 
         <NotificationPopover />
         <div className="hover:cursor-pointer ml-2 ">

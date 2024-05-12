@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api";
 import { Skeleton } from "@/components/ui/skeleton";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/navbar/Navbar";
 import PersonalInfoCard from "@/components/PersonalInfoCard";
 import PersonalLinksCard from "@/components/PersonalLinksCard";
 import OpenProjectsTable from "@/components/OpenProjectsTable";
@@ -26,7 +26,6 @@ const Profile = () => {
   const [userOpenProjects, setUserOpenProjects] = useState([]);
 
   useEffect(() => {
-
     document.title = "View Profile";
 
     const fetchUserData = async () => {

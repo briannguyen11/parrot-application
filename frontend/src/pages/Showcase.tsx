@@ -1,8 +1,7 @@
-import ShowcaseGrid from "../components/ShowcaseGrid";
+import ShowcaseGrid from "../components/showcase/ShowcaseGrid";
 import { useEffect } from "react";
 
 const Showcase = () => {
-
   useEffect(() => {
     document.title = "Showcase | Parrot";
   }, []);

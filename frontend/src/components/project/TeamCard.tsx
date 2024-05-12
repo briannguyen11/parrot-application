@@ -1,5 +1,5 @@
 import React from "react";
-import EmptyIcon from "../assets/icons/blank.svg";
+import EmptyIcon from "../../assets/icons/blank.svg";
 
 interface TeamCardProps {
   img?: string;

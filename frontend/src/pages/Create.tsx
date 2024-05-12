@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/navbar/Navbar";
 import TechStackInput from "@/components/TechStackInput";
 import { useState } from "react";
-import Tag from "@/components/Tag";
-import FeedCard from "@/components/FeedCard";
+import Tag from "@/components/explore/Tag";
+import FeedCard from "@/components/explore/FeedCard";
 import { useNavigate } from "react-router-dom";
 import { Tooltip } from "@/components/Tooltip";
 import api from "@/api";

@@ -3,7 +3,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import NotificationIcon from "../assets/icons/notification.svg";
+import NotificationIcon from "../../assets/icons/notification.svg";
 
 const NotificationPopover = () => {
   return (

@@ -11,7 +11,7 @@ import {
   Users,
 } from "lucide-react";
 
-import ProfilePicture from "../assets/icons/noauth-avatar.svg";
+import ProfilePicture from "../../assets/icons/noauth-avatar.svg";
 
 import {
   DropdownMenu,

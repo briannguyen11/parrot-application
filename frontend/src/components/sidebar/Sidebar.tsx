@@ -1,13 +1,13 @@
 import SidebarElement from "./SidebarElement";
 
-import SearchIcon from "../assets/icons/search.svg";
-import SpotlightIcon from "../assets/icons/spotlight.svg";
-import ReportIcon from "../assets/icons/report.svg";
-import HelpIcon from "../assets/icons/help.svg";
-import SettingsIcon from "../assets/icons/settings.svg";
-import MessagesIcon from "../assets/icons/messages.svg";
-import CampusIcon from "../assets/icons/campus.svg";
-import SavedIcon from "../assets/icons/saved.svg";
+import SearchIcon from "../../assets/icons/search.svg";
+import SpotlightIcon from "../../assets/icons/spotlight.svg";
+import ReportIcon from "../../assets/icons/report.svg";
+import HelpIcon from "../../assets/icons/help.svg";
+import SettingsIcon from "../../assets/icons/settings.svg";
+import MessagesIcon from "../../assets/icons/messages.svg";
+import CampusIcon from "../../assets/icons/campus.svg";
+import SavedIcon from "../../assets/icons/saved.svg";
 
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";

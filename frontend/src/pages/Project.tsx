@@ -2,8 +2,9 @@ import api from "@/api";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import TeamCard from "@/components/TeamCard";
-import { ApplicantAccordion } from "@/components/ApplicantAccordion";
+import TeamCard from "@/components/project/TeamCard";
+import { ApplicantAccordion } from "@/components/project/ApplicantAccordion";
+import { EditModal } from "@/components/project/EditModal";
 
 interface Project {
   id: number;
@@ -31,9 +32,15 @@ const Project = () => {
         const res = await api.get(
           "/api/open-projects/projects/" + projectId + "/"
         );
+
+        const tags = await api.get(
+          "/api/open-projects/tags/?project_id=" + projectId
+        );
+
+        res.data.tags = tags.data.map((tag: { tag: string }) => tag.tag);
         console.log(res.data);
         setProject(res.data);
-        document.title = `${res.data.project_name} | Parrot`; 
+        document.title = `${res.data.project_name} | Parrot`;
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -90,10 +97,7 @@ const Project = () => {
               {project?.project_name}
             </h1>
 
-            <button className="border p-1 px-4 rounded-lg text-sm hover:bg-card-red hover:text-white">
-              Edit
-            </button>
-
+            <EditModal />
             <button
               onClick={() => setIsOwner(!isOwner)}
               className="border p-1 px-4 rounded-lg text-sm hover:bg-card-red hover:text-white"
@@ -108,6 +112,16 @@ const Project = () => {
           <h3 className="mt-5  text-primary font-medium">Description</h3>
           <p className="mt-1 text-secondary font-light break-words">
             {project?.description}
+          </p>
+
+          <h3 className="mt-5  text-primary font-medium">Difficulty</h3>
+          <p className="mt-1 text-secondary font-light break-words">
+            {project?.level}
+          </p>
+
+          <h3 className="mt-5  text-primary font-medium">Technologies Used</h3>
+          <p className="mt-1 text-secondary font-light break-words">
+            {project?.tags?.join(", ")}
           </p>
 
           <h3 className="mt-10  text-primary font-medium">Interest Form</h3>

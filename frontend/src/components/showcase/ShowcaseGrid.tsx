@@ -1,6 +1,6 @@
 import ShowcaseCard from "./ShowcaseCard";
 import { useState, useEffect } from "react";
-import { Skeleton } from "./ui/skeleton";
+import { Skeleton } from "../ui/skeleton";
 import api from "@/api";
 
 interface ShowcaseProject {

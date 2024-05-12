@@ -5,13 +5,17 @@ import {
   SheetClose,
 } from "@/components/ui/sheet";
 
+import SearchIcon from "../../assets/icons/search.svg";
+import SpotlightIcon from "../../assets/icons/spotlight.svg";
+import ReportIcon from "../../assets/icons/report.svg";
+import HelpIcon from "../../assets/icons/help.svg";
+import SettingsIcon from "../../assets/icons/settings.svg";
+import MessagesIcon from "../../assets/icons/messages.svg";
+import CampusIcon from "../../assets/icons/campus.svg";
+import SavedIcon from "../../assets/icons/saved.svg";
+
 import SidebarElement from "./SidebarElement";
-import SearchIcon from "../assets/icons/search.svg";
-import SpotlightIcon from "../assets/icons/spotlight.svg";
-import ReportIcon from "../assets/icons/report.svg";
-import HelpIcon from "../assets/icons/help.svg";
-import SettingsIcon from "../assets/icons/settings.svg";
-import MessagesIcon from "../assets/icons/messages.svg";
+
 import { useNavigate, useLocation } from "react-router-dom";
 
 import { useEffect, useState } from "react";
@@ -60,7 +64,7 @@ export function SidebarPopup() {
       <SheetContent className="w-72 mt-12" side={"left"}>
         <SheetClose asChild>
           <div className="fixed w-60 h-sidebar lg:border-r border-gray-200 pt-5 overflow-auto flex flex-col justify-between ">
-            <div>
+            <div className="flex flex-col gap-y-2">
               <SidebarElement
                 title="Explore"
                 icon={SearchIcon}
@@ -89,9 +93,29 @@ export function SidebarPopup() {
                   navigate("/messages");
                 }}
               />
+
+              <SidebarElement
+                title="Saved Posts"
+                icon={SavedIcon}
+                selected={tab === "saved"}
+                onClick={() => {
+                  setTab("saved");
+                  navigate("/saved");
+                }}
+              />
+
+              <SidebarElement
+                title="Campus"
+                icon={CampusIcon}
+                selected={tab === "campus"}
+                onClick={() => {
+                  setTab("campus");
+                  navigate("/campus");
+                }}
+              />
             </div>
 
-            <div className="border-t mr-4 py-4">
+            <div className="border-t mr-4 py-4 flex flex-col gap-y-2">
               <SidebarElement
                 title="Settings"
                 icon={SettingsIcon}
@@ -121,9 +145,6 @@ export function SidebarPopup() {
                   navigate("/report");
                 }}
               />
-              <p className="ml-3 p-3 text-xs font-light text-gray-400">
-                © 2024 Parrot, Inc
-              </p>
             </div>
           </div>
         </SheetClose>

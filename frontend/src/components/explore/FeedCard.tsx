@@ -1,6 +1,6 @@
 import Tag from "./Tag";
 import { formatDistanceToNow } from "date-fns";
-import PersonIcon from "../assets/icons/person.svg";
+import PersonIcon from "../../assets/icons/person.svg";
 import { useNavigate } from "react-router-dom";
 
 type FeedCardProps = {
@@ -44,7 +44,9 @@ const FeedCard: React.FC<FeedCardProps> = ({
     >
       <div className="flex items-center gap-x-5 justify-between">
         <div className="flex items-center gap-4">
-          <h2 className="text-xl font-semibold text-primary sm:max-w-full xs:max-w-64 whitespace-nowrap overflow-scroll">{project_name}</h2>
+          <h2 className="text-xl font-semibold text-primary sm:max-w-full xs:max-w-64 whitespace-nowrap overflow-scroll">
+            {project_name}
+          </h2>
 
           <div className="flex items-center gap-1">
             <p className="text-gray-400 text-sm">{group_size}</p>

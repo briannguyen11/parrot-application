@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Skeleton } from "../components/ui/skeleton";
-import FeedCard from "@/components/FeedCard";
-import { FilterPopup } from "../components/FilterPopup";
+import FeedCard from "@/components/explore/FeedCard";
+import { FilterPopup } from "../components/explore/FilterPopup";
 import { useEffect, useState } from "react";
 import api from "@/api";
 
@@ -48,8 +48,6 @@ const Feed = () => {
     fetchProjects();
   }, []);
 
- 
-
   const renderSkeletons = () => {
     if (loading) {
       return (
@@ -68,7 +66,7 @@ const Feed = () => {
       <div className="flex flex-col gap-3 lg:ml-16 w-full max-w-screen-sm">
         <div className="flex items-end justify-between">
           <div>
-            <h2 className="text-2xl font-semibold">Explore Projects</h2>
+            <h2 className="text-2xl font-semibold dark:text-primary">Explore Projects</h2>
             <p className="font-normal text-sm text-gray-500">
               Find projects for you to join
             </p>
@@ -84,7 +82,6 @@ const Feed = () => {
             projects.map((project: any, index: number) => (
               <FeedCard key={index} {...project} />
             ))}
-
         </div>
       </div>
       <div
