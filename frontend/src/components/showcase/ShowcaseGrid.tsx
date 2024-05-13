@@ -3,11 +3,18 @@ import { useState, useEffect } from "react";
 import { Skeleton } from "../ui/skeleton";
 import api from "@/api";
 
+interface Photo {
+  photo: string;
+  caption: string;
+  id: number;
+  project: number;
+}
+
 interface ShowcaseProject {
   id: number;
   project_name: string;
   description: string;
-  photos: string[];
+  photos: Photo[];
   user_id: string;
   post_date: string;
 }

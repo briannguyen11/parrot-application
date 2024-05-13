@@ -63,7 +63,7 @@ export function SidebarPopup() {
       </SheetTrigger>
       <SheetContent className="w-72 mt-12" side={"left"}>
         <SheetClose asChild>
-          <div className="fixed w-60 h-sidebar lg:border-r border-gray-200 pt-5 overflow-auto flex flex-col justify-between ">
+          <div className="fixed w-60 h-sidebar lg:border-r bg-white border-gray-200 pt-5 overflow-auto flex flex-col justify-between ">
             <div className="flex flex-col gap-y-2">
               <SidebarElement
                 title="Explore"
