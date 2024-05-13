@@ -11,6 +11,7 @@ import Feed from "./pages/Feed";
 import Create from "./pages/Create";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Settings from "./pages/Settings";
+import Messages from "./pages/Messages";
 
 import {
   Route,
@@ -35,14 +36,7 @@ const router = createBrowserRouter(
 
         <Route path="help" element={<div>help</div>} />
         <Route path="report" element={<div>report</div>} />
-        <Route
-          path="messages"
-          element={
-            <ProtectedRoute>
-              <div>messages</div>
-            </ProtectedRoute>
-          }
-        />
+
         <Route path="campus" element={<div>campus</div>} />
         <Route path="saved" element={<div>saved</div>} />
       </Route>
@@ -65,6 +59,14 @@ const router = createBrowserRouter(
       />
 
       <Route path="/onboard" element={<Onboard />} />
+      <Route
+        path="messages"
+        element={
+          <ProtectedRoute>
+            <Messages />
+          </ProtectedRoute>
+        }
+      />
 
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<RegisterAndLogout />} />

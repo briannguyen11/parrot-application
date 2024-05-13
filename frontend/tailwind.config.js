@@ -40,6 +40,9 @@ export const theme = {
       "spotlight-img": "calc(100% - 64px)",
       sidebar: "calc(100vh - 64px)",
       home: "calc(100vh - 64px)",
+      messages : "calc(100vh - 128px)",
+      "messages-r" : "calc(100% - 21px)",
+      "messages-r-1" : "calc(100% - 57px)", 
     },
 
     minHeight: {
