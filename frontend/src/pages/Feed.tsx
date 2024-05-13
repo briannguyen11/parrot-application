@@ -37,7 +37,7 @@ const Feed = () => {
     const fetchProjects = async () => {
       try {
         const res = await api.get("/api/open-projects/projects/");
-        console.log(res.data);
+        // console.log(res.data);
         setProjects(res.data);
         setLoading(false);
       } catch (error: any) {
