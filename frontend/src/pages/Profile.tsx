@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import api from "../api";
 import { Skeleton } from "@/components/ui/skeleton";
 import Navbar from "@/components/navbar/Navbar";
-import PersonalInfoCard from "@/components/PersonalInfoCard";
-import PersonalLinksCard from "@/components/PersonalLinksCard";
-import OpenProjectsTable from "@/components/OpenProjectsTable";
-import ShowcaseProjectsTable from "@/components/ShowcaseProjectsTable";
+import AccountCard from "@/components/profile/AccountCard";
+import OpenProjectsTable from "@/components/profile/OpenProjectsTable";
+import ShowcaseProjectsTable from "@/components/profile/ShowcaseProjectsTable";
+import AccountForm from "@/components/profile/AccountForm";
 
 interface ProfileData {
   userId: string;
+  profileId: string;
   firstName: string;
   lastName: string;
   school: string;
@@ -24,6 +25,7 @@ const Profile = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
   const [userOpenProjects, setUserOpenProjects] = useState([]);
+  const [updateAccount, setUpdateAccount] = useState<boolean>(false);
 
   useEffect(() => {
     document.title = "View Profile";
@@ -41,7 +43,7 @@ const Profile = () => {
     };
 
     fetchUserData();
-  }, []);
+  }, [updateAccount]);
 
   const fetchProfile = async () => {
     try {
@@ -49,6 +51,7 @@ const Profile = () => {
       const data = res.data[0];
       const newProfileData: ProfileData = {
         userId: data.user,
+        profileId: data.id,
         firstName: data.first_name,
         lastName: data.last_name,
         school: data.school,
@@ -107,21 +110,31 @@ const Profile = () => {
     <>
       <Navbar />
       <div className="md:mx-7 mx-5 mt-16 relative">
-        <div className="flex flex-col md:flex-row">
-          <div className="w-full md:w-1/3">
+        <div className="flex flex-col lg:flex-row">
+          <div className="w-full lg:w-1/3">
             {renderAccountSkeletons()}
-            {!loading && profileData && (
+            {!loading && profileData && !updateAccount && (
               <>
                 <div className="mt-4 mx-4">
-                  <PersonalInfoCard {...profileData} />
+                  <AccountCard
+                    {...profileData}
+                    setUpdateAccount={setUpdateAccount}
+                  />
                 </div>
+              </>
+            )}
+            {!loading && profileData && updateAccount && (
+              <>
                 <div className="mt-4 mx-4">
-                  <PersonalLinksCard {...profileData} />
+                  <AccountForm
+                    {...profileData}
+                    setUpdateAccount={setUpdateAccount}
+                  />
                 </div>
               </>
             )}
           </div>
-          <div className="w-full md:w-2/3 ">
+          <div className="w-full lg:w-2/3 ">
             {renderProjectSkeletons()}
             {!loading && (
               <>

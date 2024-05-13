@@ -1,10 +1,11 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "@/components/navbar/Navbar";
 import Sidebar from "@/components/sidebar/Sidebar";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+// import api from "../api";
+// import { ACCESS_TOKEN, FIRST_NAME, LAST_NAME, PFP } from "@/constants";
 
 export default function Home() {
-
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {

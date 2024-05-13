@@ -15,6 +15,7 @@ class ProfilesViewSet(viewsets.ModelViewSet):
     # Override perform_create to ensure only one profile per user is created
     def perform_create(self, serializer):
         # Check if the user already has a profile
+        print(self.request.user)
         existing_profile = Profiles.objects.filter(user=self.request.user).exists()
         if existing_profile:
             raise ValidationError("Profile already exists for this user.")

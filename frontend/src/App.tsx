@@ -2,10 +2,14 @@ import "./App.css";
 import Home from "./pages/Home";
 import Spotlight from "./pages/Showcase";
 import Profile from "./pages/Profile";
+import Onboard from "./pages/Onboard";
 import NotFound from "./pages/NotFound";
-import { Login } from "./pages/Login";
-import { Register } from "./pages/Register";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Project from "./pages/Project";
+import Feed from "./pages/Feed";
+import Create from "./pages/Create";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Settings from "./pages/Settings";
 
 import {
@@ -14,10 +18,6 @@ import {
   createRoutesFromElements,
   RouterProvider,
 } from "react-router-dom";
-
-import Feed from "./pages/Feed";
-import Create from "./pages/Create";
-import ProtectedRoute from "./components/ProtectedRoute";
 
 // clear local storage before registering
 function RegisterAndLogout() {
@@ -63,6 +63,8 @@ const router = createBrowserRouter(
           </ProtectedRoute>
         }
       />
+
+      <Route path="/onboard" element={<Onboard />} />
 
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<RegisterAndLogout />} />

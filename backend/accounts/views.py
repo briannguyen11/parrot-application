@@ -79,10 +79,18 @@ class AuthCreateNewUserView(APIView):
             serializer = UserSerializer(data=data)
             if serializer.is_valid():
                 serializer.save()
+                extra_data = {
+                    "firebase_id": user["localId"],
+                    "firebase_access_token": user["idToken"],
+                    "firebase_refresh_token": user["refreshToken"],
+                    "firebase_expires_in": user["expiresIn"],
+                    "firebase_kind": user["kind"],
+                    "user_data": serializer.data,
+                }
                 response = {
                     "status": "success",
                     "message": "User created successfully.",
-                    "data": serializer.data,
+                    "data": extra_data,
                 }
                 return Response(response, status=status.HTTP_201_CREATED)
             else:
@@ -143,6 +151,41 @@ class AuthLoginExisitingUserView(APIView):
             return Response(bad_response, status=status.HTTP_404_NOT_FOUND)
 
 
+class AuthVerifyNewUser(APIView):
+    permission_classes = [
+        AllowAny,
+    ]
+
+    def get(self, request):
+        try:
+            email = request.query_params.get("email")
+            user_info = firebase_admin_auth.get_user_by_email(email)
+            return Response(
+                {"verified": user_info.email_verified}, status=status.HTTP_200_OK
+            )
+        except firebase_admin_auth.UserNotFoundError:
+            return Response(
+                {"error": "User not found"}, status=status.HTTP_404_NOT_FOUND
+            )
+
+
+class AuthResendEmail(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        try:
+            email = request.data.get("email")
+            send_verification_email(email)
+            return Response(
+                {"success": "new email link sent"}, status=status.HTTP_200_OK
+            )
+        except Exception:
+            return Response(
+                {"error": "failed to send email link"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+
 class RefreshTokenView(APIView):
     permission_classes = [AllowAny]
     authentication_classes = []
@@ -165,3 +208,22 @@ class RefreshTokenView(APIView):
             return Response(
                 {"error": "Invalid refresh token"}, status=status.HTTP_400_BAD_REQUEST
             )
+
+
+class DeleteExistingUser(APIView):
+    permission_classes = [AllowAny]  # for debugging only
+
+    def delete(self, request):
+        user_id = request.query_params.get("id")
+
+        if not user_id:
+            return Response({"error": "User ID is required"}, status=400)
+
+        try:
+            user = User.objects.get(id=user_id)
+        except User.DoesNotExist:
+            return Response({"error": "User not found"}, status=404)
+
+        user.delete()
+
+        return Response({"message": "User deleted successfully"}, status=200)

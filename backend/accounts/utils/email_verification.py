@@ -12,12 +12,13 @@ from django.conf import settings
 def send_verification_email(email):
 
     # Generate email verification link
-    action_code_settings = firebase_admin_auth.ActionCodeSettings(
-        url="http://localhost:5173/login",
-        handle_code_in_app=True,
-    )
+    # action_code_settings = firebase_admin_auth.ActionCodeSettings(
+    #     url="http://localhost:5173/onboard",
+    #     handle_code_in_app=True,
+    # )
     verification_link = firebase_admin_auth.generate_email_verification_link(
-        email, action_code_settings
+        email
+        # , action_code_settings
     )
 
     # Create SendGrid email message
@@ -31,10 +32,5 @@ def send_verification_email(email):
     # Send email using SendGrid API
     sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
     response = sg.send(message)
-
-    # Print response details
-    # print(response.status_code)
-    # print(response.body)
-    # print(response.headers)
 
     return response.status_code

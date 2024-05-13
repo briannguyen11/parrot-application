@@ -5,16 +5,14 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
-import { useEffect } from "react";
-
-// import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
+import { ACCESS_TOKEN, EMAIL, REFRESH_TOKEN } from "../constants";
 
 interface RegisterFormData {
   email: string;
   password: string;
 }
 
-export function Register() {
+const Register = () => {
   const [registerFormData, setRegisterFormData] = useState<RegisterFormData>({
     email: "",
     password: "",
@@ -37,8 +35,13 @@ export function Register() {
           registerFormData
         );
         console.log(res);
-        alert("A verification email has been sent to you!");
-        navigate("/login");
+        localStorage.setItem(ACCESS_TOKEN, res.data.data.firebase_access_token);
+        localStorage.setItem(
+          REFRESH_TOKEN,
+          res.data.data.firebase_refresh_token
+        );
+        localStorage.setItem(EMAIL, res.data.data.user_data.email);
+        navigate("/onboard");
       } catch (error) {
         alert(error);
       }
@@ -131,4 +134,6 @@ export function Register() {
       </div>
     </div>
   );
-}
+};
+
+export default Register;

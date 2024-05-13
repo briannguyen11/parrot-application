@@ -32,6 +32,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 import { Toaster } from "@/components/ui/sonner";
+import { PFP } from "@/constants";
 
 export function ProfileDropDown() {
   const navigate = useNavigate();
@@ -44,11 +45,20 @@ export function ProfileDropDown() {
     navigate("/");
   };
 
+  const renderPfp = () => {
+    const pfp = localStorage.getItem(PFP);
+    if (pfp) {
+      return pfp;
+    } else {
+      return ProfilePicture;
+    }
+  };
+
   return (
     <DropdownMenu>
       <Toaster />
       <DropdownMenuTrigger asChild>
-        <img src={ProfilePicture} alt="profile" className="h-8 w-8" />
+        <img src={renderPfp()} alt="profile" className="h-8 w-8 rounded-full" />
       </DropdownMenuTrigger>
 
       {auth ? (

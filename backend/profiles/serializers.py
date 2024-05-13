@@ -3,6 +3,14 @@ from .models import Profiles
 
 
 class ProfilesSerializer(serializers.ModelSerializer):
+    school = serializers.CharField(required=False)
+    major = serializers.CharField(required=False)
+    bio = serializers.CharField(required=False)
+    profile_picture = serializers.ImageField(required=False)
+    resume = serializers.FileField(required=False)
+    linkedin = serializers.CharField(required=False)
+    github = serializers.CharField(required=False)
+
     class Meta:
         model = Profiles
         fields = [

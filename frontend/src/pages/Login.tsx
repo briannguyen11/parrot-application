@@ -14,17 +14,16 @@ interface LoginFormData {
   password: string;
 }
 
-export function Login() {
-
-  useEffect(() => {
-    document.title = "Login | Parrot";
-  }, []);
-
+const Login = () => {
   const [loginFormData, setLoginFormData] = useState<LoginFormData>({
     email: "",
     password: "",
   });
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = "Login | Parrot";
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -101,4 +100,6 @@ export function Login() {
       </div>
     </div>
   );
-}
+};
+
+export default Login;

@@ -21,4 +21,17 @@ api.interceptors.request.use(
   }
 );
 
+// Interceptor to handle expired tokens and redirect to login page
+// api.interceptors.response.use(
+//   (response) => {
+//     return response;
+//   },
+//   (error) => {
+//     if (error.response && error.response.status === 401) {
+//       window.location.href = "/login"; // Redirect to the login page
+//     }
+//     return Promise.reject(error);
+//   }
+// );
+
 export default api;
