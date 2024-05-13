@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import DefaultProfile from "../assets/icons/person-crop-circle-fill-svgrepo-com.svg";
+import DefaultProfile from "../../assets/icons/person-crop-circle-fill-svgrepo-com.svg";
 
 interface SetPfpProps {
   pfp: string | null;

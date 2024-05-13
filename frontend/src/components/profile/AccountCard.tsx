@@ -1,5 +1,5 @@
-import DefaultProfile from "../assets/icons/person-crop-circle-fill-svgrepo-com.svg";
-import Pencil from "../assets/icons/pencil-svgrepo-com.svg";
+import DefaultProfile from "../../assets/icons/person-crop-circle-fill-svgrepo-com.svg";
+import Pencil from "../../assets/icons/pencil-svgrepo-com.svg";
 // import DocumentIcon from "../assets/icons/document-filled-svgrepo-com.svg";
 // import LinkedinIcon from "../assets/icons/linkedin-svgrepo-com.svg";
 // import GithubIcon from "../assets/icons/github-142-svgrepo-com.svg";
