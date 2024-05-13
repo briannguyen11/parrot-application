@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
 import { ACCESS_TOKEN, EMAIL, REFRESH_TOKEN } from "../constants";
+import { useEffect } from "react";
 
 interface RegisterFormData {
   email: string;
