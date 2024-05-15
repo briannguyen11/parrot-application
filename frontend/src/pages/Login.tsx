@@ -22,7 +22,7 @@ const Login = () => {
     password: "",
   });
 
-  const { loggedIn, setPfp } = useAuth();
+  const { loggedIn, updatePfp } = useAuth();
 
   const navigate = useNavigate();
 
@@ -58,7 +58,7 @@ const Login = () => {
         if (profile.data.length !== 0) {
           // if user has profile, set pfp and go to home
           console.log(profile);
-          setPfp(profile.data[0].profile_picture);
+          updatePfp(profile.data[0].profile_picture);
           navigate("/");
         } else {
           // no profile, go to onboard

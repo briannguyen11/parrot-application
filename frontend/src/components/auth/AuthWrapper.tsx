@@ -6,14 +6,14 @@ import {
   useEffect,
   ReactNode,
 } from "react";
-import { ACCESS_TOKEN } from "../../constants";
+import { ACCESS_TOKEN, PFP } from "../../constants";
 
 interface AuthContextType {
   isLoggedIn: boolean;
   pfp: string | null;
   loggedIn: () => void;
   loggedOut: () => void;
-  setPfp: React.Dispatch<React.SetStateAction<string | null>>;
+  updatePfp: (pfpUrl: string | null) => void;
 }
 
 interface Props {
@@ -27,23 +27,13 @@ const AuthProvider = ({ children }: Props) => {
   const [pfp, setPfp] = useState<string | null>(null);
 
   useEffect(() => {
-    // const fetchUser = async () => {
-    //   try {
-    //     const res = await api.get("api/profiles/");
-    //     const data = {
-    //       firstName: res.data[0].first_name,
-    //       lastName: res.data[0].last_name_name,
-    //       pfp: res.data[0].profile_picture,
-    //     };
-    //     setUser(data);
-    //   } catch (error: any) {
-    //     console.error(error.response);
-    //   }
-    // };
-
     const storedToken = localStorage.getItem(ACCESS_TOKEN);
+    const storedPfp = localStorage.getItem(PFP);
     if (storedToken) {
       setIsLoggedIn(true);
+    }
+    if (storedPfp) {
+      setPfp(storedPfp);
     }
   }, []);
 
@@ -55,6 +45,13 @@ const AuthProvider = ({ children }: Props) => {
     setIsLoggedIn(false);
   };
 
+  const updatePfp = (pfpUrl: string | null) => {
+    if (pfpUrl) {
+      setPfp(pfpUrl);
+      localStorage.setItem(PFP, pfpUrl);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -62,7 +59,7 @@ const AuthProvider = ({ children }: Props) => {
         pfp,
         loggedIn,
         loggedOut,
-        setPfp,
+        updatePfp,
       }}
     >
       {children}

@@ -12,14 +12,14 @@ const Onboard = () => {
   const [major, setMajor] = useState<string>("");
   const [bio, setBio] = useState<string>("");
   const [resume, setResume] = useState<File>();
-  const [profilePicture, setProfilePicture] = useState<File>();
+  const [pfp, setPfp] = useState<File>();
   const [linkedin, setLinkedin] = useState<string>("");
   const [github, setGithub] = useState<string>("");
   const [slide, setSlide] = useState(1);
 
   const navigate = useNavigate();
 
-  const { setPfp } = useAuth();
+  const { updatePfp } = useAuth();
 
   const handleSubmit = async () => {
     const profileData = new FormData();
@@ -33,8 +33,8 @@ const Onboard = () => {
     if (resume) {
       profileData.append("resume", resume);
     }
-    if (profilePicture) {
-      profileData.append("profile_picture", profilePicture);
+    if (pfp) {
+      profileData.append("profile_picture", pfp);
     }
 
     try {
@@ -44,7 +44,7 @@ const Onboard = () => {
         },
       });
       console.log(res);
-      setPfp(res.data.profile_picture);
+      updatePfp(res.data.profile_picture);
       navigate("/");
     } catch (error: any) {
       console.log(error.response);
@@ -64,7 +64,7 @@ const Onboard = () => {
           ideas or share your own!
         </p>
         <div className="mt-4">
-          <ProfilePictureInput pfp={null} setPfp={setProfilePicture} />
+          <ProfilePictureInput pfp={null} setPfp={setPfp} />
         </div>
         <div className="flex-col mt-4">
           <h3 className="text-md font-semibold">Your Name *</h3>

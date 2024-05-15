@@ -4,31 +4,14 @@ import Pencil from "../../assets/icons/pencil-svgrepo-com.svg";
 // import LinkedinIcon from "../assets/icons/linkedin-svgrepo-com.svg";
 // import GithubIcon from "../assets/icons/github-142-svgrepo-com.svg";
 
-interface AccountCardProps {
-  profilePicture: string;
-  firstName: string;
-  lastName: string;
-  school: string;
-  major: string;
-  bio: string;
-  resume: string;
-  linkedin: string;
-  github: string;
-  setUpdateAccount: React.Dispatch<React.SetStateAction<boolean>>;
+import { UserData } from "./UserData";
+
+interface UserCardProps {
+  user: UserData;
+  setUpdateUser: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const AccountCard: React.FC<AccountCardProps> = ({
-  profilePicture,
-  firstName,
-  lastName,
-  school,
-  major,
-  bio,
-  resume,
-  linkedin,
-  github,
-  setUpdateAccount,
-}) => {
+const UserCard: React.FC<UserCardProps> = ({ user, setUpdateUser }) => {
   return (
     <div className="shadow-light p-8 border border-border rounded-lg ">
       <div className="flex justify-end">
@@ -36,55 +19,55 @@ const AccountCard: React.FC<AccountCardProps> = ({
           src={Pencil}
           alt="edit"
           className="w-6 h-6 hover:cursor-pointer"
-          onClick={() => setUpdateAccount(true)}
+          onClick={() => setUpdateUser(true)}
         />
       </div>
 
       <div className="flex flex-col items-center justify-between gap-1">
         <img
-          src={profilePicture || DefaultProfile}
+          src={user.profilePicture || DefaultProfile}
           alt="profile"
           className="w-28 h-28 rounded-full"
         />
         <h3 className="text-2xl font-bold text-center">
-          {firstName} {lastName}
+          {user.firstName} {user.lastName}
         </h3>
-        {school && major ? (
+        {user.school && user.major ? (
           <h4 className="text-xl font-semibold text-center">
-            {school} - {major}
+            {user.school} - {user.major}
           </h4>
         ) : null}
-        {bio ? <p className="text-center">{bio}</p> : null}
+        {user.bio ? <p className="text-center">{user.bio}</p> : null}
       </div>
 
       <div className="flex flex-col justify-left gap-1 pt-4">
         <div className="mb-2">
-          {resume ? (
+          {user.resume ? (
             <>
               <h4 className="text-slate-400">Resume</h4>
-              <a className="break-all text-blue-500" href={resume}>
-                {firstName}
-                {lastName}Resume.pdf
+              <a className="break-all text-blue-500" href={user.resume}>
+                {user.firstName}
+                {user.lastName}Resume.pdf
               </a>
             </>
           ) : null}
         </div>
         <div className="mb-2">
-          {linkedin ? (
+          {user.linkedin ? (
             <>
               <h4 className="text-slate-400">LinkedIn</h4>
-              <a className="break-all text-blue-500" href={linkedin}>
-                {linkedin}
+              <a className="break-all text-blue-500" href={user.linkedin}>
+                {user.linkedin}
               </a>
             </>
           ) : null}
         </div>
         <div>
-          {github ? (
+          {user.github ? (
             <>
               <h4 className="text-slate-400">Github</h4>
-              <a className="break-all text-blue-500" href={github}>
-                {github}
+              <a className="break-all text-blue-500" href={user.github}>
+                {user.github}
               </a>
             </>
           ) : null}
@@ -94,4 +77,4 @@ const AccountCard: React.FC<AccountCardProps> = ({
   );
 };
 
-export default AccountCard;
+export default UserCard;

@@ -1,71 +1,76 @@
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { useAuth } from "../auth/AuthWrapper";
+import { UserData } from "./UserData";
 import api from "../../api";
 import ProfilePictureInput from "@/components/profile/ProfilePictureInput";
 
-interface AccountFormProps {
-  profileId: string;
-  profilePicture: string;
-  firstName: string;
-  lastName: string;
-  school: string;
-  major: string;
-  bio: string;
-  linkedin: string;
-  github: string;
-  setUpdateAccount: React.Dispatch<React.SetStateAction<boolean>>;
+interface UpdateUserFormProps {
+  user: UserData;
+  setUser: React.Dispatch<React.SetStateAction<UserData | null>>;
+  setUpdateUser: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const AccountForm: React.FC<AccountFormProps> = ({
-  profileId,
-  profilePicture,
-  firstName,
-  lastName,
-  school,
-  major,
-  bio,
-  linkedin,
-  github,
-  setUpdateAccount,
+const UpdateUserForm: React.FC<UpdateUserFormProps> = ({
+  user,
+  setUser,
+  setUpdateUser,
 }) => {
-  const [newFirstName, setNewFirstName] = useState<string>(firstName);
-  const [newLastName, setNewLastName] = useState<string>(lastName);
-  const [newSchool, setNewSchool] = useState<string>(school);
-  const [newMajor, setNewMajor] = useState<string>(major);
-  const [newBio, setNewBio] = useState<string>(bio);
+  const [newFirstName, setNewFirstName] = useState<string>(user.firstName);
+  const [newLastName, setNewLastName] = useState<string>(user.lastName);
+  const [newSchool, setNewSchool] = useState<string>(user.school);
+  const [newMajor, setNewMajor] = useState<string>(user.major);
+  const [newBio, setNewBio] = useState<string>(user.bio);
   const [newResume, setNewResume] = useState<File>();
   const [newPfp, setNewPfp] = useState<File>();
-  const [newLinkedin, setNewLinkedin] = useState<string>(linkedin);
-  const [newGithub, setNewGithub] = useState<string>(github);
+  const [newLinkedin, setNewLinkedin] = useState<string>(user.linkedin);
+  const [newGithub, setNewGithub] = useState<string>(user.github);
 
-  const { setPfp } = useAuth();
+  const { updatePfp } = useAuth();
 
   const handleUpdate = async () => {
-    const profileData = new FormData();
-    profileData.append("first_name", newFirstName);
-    profileData.append("last_name", newLastName);
-    profileData.append("school", newSchool);
-    profileData.append("major", newMajor);
-    profileData.append("bio", newBio);
-    profileData.append("linkedin", newLinkedin);
-    profileData.append("github", newGithub);
+    const formData = new FormData();
+    formData.append("first_name", newFirstName);
+    formData.append("last_name", newLastName);
+    formData.append("school", newSchool);
+    formData.append("major", newMajor);
+    formData.append("bio", newBio);
+    formData.append("linkedin", newLinkedin);
+    formData.append("github", newGithub);
     if (newResume) {
-      profileData.append("resume", newResume);
+      formData.append("resume", newResume);
     }
     if (newPfp) {
-      profileData.append("profile_picture", newPfp);
+      formData.append("profile_picture", newPfp);
     }
 
     try {
-      const res = await api.patch(`/api/profiles/${profileId}/`, profileData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      console.log(res);
-      setPfp(res.data.profile_picture);
-      setUpdateAccount(false);
+      const res = await api.patch(
+        `/api/profiles/${user.profileId}/`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      const data = res.data;
+      const updatedUser: UserData = {
+        userId: data.user,
+        profileId: data.id,
+        firstName: data.first_name,
+        lastName: data.last_name,
+        school: data.school,
+        major: data.major,
+        bio: data.bio,
+        profilePicture: data.profile_picture,
+        resume: data.resume,
+        linkedin: data.linkedin,
+        github: data.github,
+      };
+      setUser(updatedUser);
+      updatePfp(data.profile_picture);
+      setUpdateUser(false);
     } catch (error: any) {
       console.error(error.response);
     }
@@ -75,7 +80,7 @@ const AccountForm: React.FC<AccountFormProps> = ({
     <div className="shadow-light p-8 border border-border rounded-lg">
       <div className="flex-col items-center gap-5">
         <div>
-          <ProfilePictureInput pfp={profilePicture} setPfp={setNewPfp} />
+          <ProfilePictureInput pfp={user.profilePicture} setPfp={setNewPfp} />
         </div>
         <div className="flex-col mt-2">
           <h3 className="text-md font-semibold">Your Name</h3>
@@ -84,14 +89,14 @@ const AccountForm: React.FC<AccountFormProps> = ({
               type="text"
               value={newFirstName}
               onChange={(e) => setNewFirstName(e.target.value)}
-              placeholder={firstName}
+              placeholder={user.firstName}
               className="border border-border rounded-lg p-2 text-sm outline-none w-full"
             />
             <input
               type="text"
               value={newLastName}
               onChange={(e) => setNewLastName(e.target.value)}
-              placeholder={lastName}
+              placeholder={user.lastName}
               className="border border-border rounded-lg p-2 text-sm outline-none w-full"
             />
           </div>
@@ -102,14 +107,14 @@ const AccountForm: React.FC<AccountFormProps> = ({
             <input
               type="text"
               value={newSchool}
-              placeholder={school}
+              placeholder={user.school}
               onChange={(e) => setNewSchool(e.target.value)}
               className="border border-border rounded-lg p-2 text-sm outline-none w-full"
             />
             <input
               type="text"
               value={newMajor}
-              placeholder={major}
+              placeholder={user.major}
               onChange={(e) => setNewMajor(e.target.value)}
               className="border border-border rounded-lg p-2 text-sm outline-none w-full"
             />
@@ -119,7 +124,7 @@ const AccountForm: React.FC<AccountFormProps> = ({
           <h3 className="text-md font-semibold">Your Bio</h3>
           <textarea
             value={newBio}
-            placeholder={bio}
+            placeholder={user.bio}
             onChange={(e) => setNewBio(e.target.value)}
             className="border border-border rounded-lg p-2 text-sm outline-none w-full"
           />
@@ -142,7 +147,7 @@ const AccountForm: React.FC<AccountFormProps> = ({
           <input
             type="text"
             value={newLinkedin}
-            placeholder={linkedin}
+            placeholder={user.linkedin}
             onChange={(e) => setNewLinkedin(e.target.value)}
             className="border border-border rounded-lg p-2 text-sm outline-none w-full"
           />
@@ -152,7 +157,7 @@ const AccountForm: React.FC<AccountFormProps> = ({
           <input
             type="text"
             value={newGithub}
-            placeholder={github}
+            placeholder={user.github}
             onChange={(e) => setNewGithub(e.target.value)}
             className="border border-border rounded-lg p-2 text-sm outline-none w-full"
           />
@@ -164,4 +169,4 @@ const AccountForm: React.FC<AccountFormProps> = ({
     </div>
   );
 };
-export default AccountForm;
+export default UpdateUserForm;

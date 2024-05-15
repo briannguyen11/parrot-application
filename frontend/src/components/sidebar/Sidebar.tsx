@@ -66,6 +66,7 @@ const Sidebar = () => {
             navigate("/showcase");
           }}
         />
+
         <SidebarElement
           title="Messages"
           icon={MessagesIcon}

@@ -2,37 +2,25 @@ import { useEffect, useState } from "react";
 import api from "../api";
 import { Skeleton } from "@/components/ui/skeleton";
 import Navbar from "@/components/navbar/Navbar";
-import AccountCard from "@/components/profile/AccountCard";
 import OpenProjectsTable from "@/components/profile/OpenProjectsTable";
 import ShowcaseProjectsTable from "@/components/profile/ShowcaseProjectsTable";
-import AccountForm from "@/components/profile/AccountForm";
+import UserCard from "@/components/profile/UserCard";
+import UpdateUserForm from "@/components/profile/UpdateUserForm";
 
-interface ProfileData {
-  userId: string;
-  profileId: string;
-  firstName: string;
-  lastName: string;
-  school: string;
-  major: string;
-  bio: string;
-  profilePicture: string;
-  resume: string;
-  linkedin: string;
-  github: string;
-}
+import { UserData } from "@/components/profile/UserData";
 
 const Profile = () => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [profileData, setProfileData] = useState<ProfileData | null>(null);
+  const [user, setUser] = useState<UserData | null>(null);
   const [userOpenProjects, setUserOpenProjects] = useState([]);
-  const [updateAccount, setUpdateAccount] = useState<boolean>(false);
+  const [updateUser, setUpdateUser] = useState<boolean>(false);
 
   useEffect(() => {
     document.title = "View Profile";
 
     const fetchUserData = async () => {
       try {
-        const data: ProfileData | undefined = await fetchProfile();
+        const data: UserData | undefined = await fetchProfile();
         if (data) {
           await fetchUserOpenProjects(data.userId);
           setLoading(false);
@@ -43,13 +31,13 @@ const Profile = () => {
     };
 
     fetchUserData();
-  }, [updateAccount]);
+  }, []);
 
   const fetchProfile = async () => {
     try {
       const res = await api.get("/api/profiles/");
       const data = res.data[0];
-      const newProfileData: ProfileData = {
+      const fetchedUser: UserData = {
         userId: data.user,
         profileId: data.id,
         firstName: data.first_name,
@@ -62,8 +50,8 @@ const Profile = () => {
         linkedin: data.linkedin,
         github: data.github,
       };
-      setProfileData(newProfileData);
-      return newProfileData;
+      setUser(fetchedUser);
+      return fetchedUser;
     } catch (error) {
       throw error;
     }
@@ -113,22 +101,20 @@ const Profile = () => {
         <div className="flex flex-col lg:flex-row">
           <div className="w-full lg:w-1/3">
             {renderAccountSkeletons()}
-            {!loading && profileData && !updateAccount && (
+            {!loading && user && !updateUser && (
               <>
                 <div className="mt-4 mx-4">
-                  <AccountCard
-                    {...profileData}
-                    setUpdateAccount={setUpdateAccount}
-                  />
+                  <UserCard user={user} setUpdateUser={setUpdateUser} />
                 </div>
               </>
             )}
-            {!loading && profileData && updateAccount && (
+            {!loading && user && updateUser && (
               <>
                 <div className="mt-4 mx-4">
-                  <AccountForm
-                    {...profileData}
-                    setUpdateAccount={setUpdateAccount}
+                  <UpdateUserForm
+                    user={user}
+                    setUser={setUser}
+                    setUpdateUser={setUpdateUser}
                   />
                 </div>
               </>
