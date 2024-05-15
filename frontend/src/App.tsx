@@ -3,15 +3,17 @@ import Home from "./pages/Home";
 import Spotlight from "./pages/Showcase";
 import Profile from "./pages/Profile";
 import Onboard from "./pages/Onboard";
+import Wait from "./pages/Wait";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Project from "./pages/Project";
 import Feed from "./pages/Feed";
 import Create from "./pages/Create";
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 import Settings from "./pages/Settings";
 import Messages from "./pages/Messages";
+import { AuthProvider } from "./components/auth/AuthWrapper";
 
 import {
   Route,
@@ -58,7 +60,17 @@ const router = createBrowserRouter(
         }
       />
 
-      <Route path="/onboard" element={<Onboard />} />
+      <Route path="/wait" element={<Wait />} />
+
+      <Route
+        path="/onboard"
+        element={
+          <ProtectedRoute>
+            <Onboard />
+          </ProtectedRoute>
+        }
+      />
+
       <Route
         path="messages"
         element={
@@ -79,7 +91,9 @@ const router = createBrowserRouter(
 function App() {
   return (
     <>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </>
   );
 }

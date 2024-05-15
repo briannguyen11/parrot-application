@@ -79,18 +79,11 @@ class AuthCreateNewUserView(APIView):
             serializer = UserSerializer(data=data)
             if serializer.is_valid():
                 serializer.save()
-                extra_data = {
-                    "firebase_id": user["localId"],
-                    "firebase_access_token": user["idToken"],
-                    "firebase_refresh_token": user["refreshToken"],
-                    "firebase_expires_in": user["expiresIn"],
-                    "firebase_kind": user["kind"],
-                    "user_data": serializer.data,
-                }
+                data = serializer.data
                 response = {
                     "status": "success",
                     "message": "User created successfully.",
-                    "data": extra_data,
+                    "data": data,
                 }
                 return Response(response, status=status.HTTP_201_CREATED)
             else:
@@ -149,24 +142,6 @@ class AuthLoginExisitingUserView(APIView):
             auth.delete_user_account(user["idToken"])
             bad_response = {"status": "failed", "message": "User does not exist."}
             return Response(bad_response, status=status.HTTP_404_NOT_FOUND)
-
-
-class AuthVerifyNewUser(APIView):
-    permission_classes = [
-        AllowAny,
-    ]
-
-    def get(self, request):
-        try:
-            email = request.query_params.get("email")
-            user_info = firebase_admin_auth.get_user_by_email(email)
-            return Response(
-                {"verified": user_info.email_verified}, status=status.HTTP_200_OK
-            )
-        except firebase_admin_auth.UserNotFoundError:
-            return Response(
-                {"error": "User not found"}, status=status.HTTP_404_NOT_FOUND
-            )
 
 
 class AuthResendEmail(APIView):

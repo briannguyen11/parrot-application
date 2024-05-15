@@ -26,7 +26,7 @@ def send_verification_email(email):
         from_email=settings.DEFAULT_FROM_EMAIL,
         to_emails=email,
         subject="Email Verification for Parrot",
-        html_content=f"Click the following link to verify your email: {verification_link}",
+        html_content=f"Click the following link to verify your email: <a href='{verification_link}'>{verification_link}</a>",
     )
 
     # Send email using SendGrid API

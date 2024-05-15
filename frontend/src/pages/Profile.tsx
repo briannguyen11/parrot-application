@@ -47,7 +47,7 @@ const Profile = () => {
 
   const fetchProfile = async () => {
     try {
-      const res = await api.get("api/profiles/");
+      const res = await api.get("/api/profiles/");
       const data = res.data[0];
       const newProfileData: ProfileData = {
         userId: data.user,
@@ -71,7 +71,7 @@ const Profile = () => {
 
   const fetchUserOpenProjects = async (userId: string) => {
     try {
-      const res = await api.get("api/open-projects/projects/", {
+      const res = await api.get("/api/open-projects/projects/", {
         params: {
           user_id: userId,
         },

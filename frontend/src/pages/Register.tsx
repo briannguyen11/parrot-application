@@ -2,11 +2,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
 import api from "../api";
-import { ACCESS_TOKEN, EMAIL, REFRESH_TOKEN } from "../constants";
-import { useEffect } from "react";
+import { EMAIL } from "@/constants";
 
 interface RegisterFormData {
   email: string;
@@ -19,6 +19,7 @@ const Register = () => {
     password: "",
   });
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+
   const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,13 +37,8 @@ const Register = () => {
           registerFormData
         );
         console.log(res);
-        localStorage.setItem(ACCESS_TOKEN, res.data.data.firebase_access_token);
-        localStorage.setItem(
-          REFRESH_TOKEN,
-          res.data.data.firebase_refresh_token
-        );
-        localStorage.setItem(EMAIL, res.data.data.user_data.email);
-        navigate("/onboard");
+        localStorage.setItem(EMAIL, res.data.data.email);
+        navigate("/wait");
       } catch (error) {
         alert(error);
       }

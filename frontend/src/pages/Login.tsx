@@ -3,11 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants";
+import { jwtDecode } from "jwt-decode";
+import { ACCESS_TOKEN, EMAIL, REFRESH_TOKEN } from "@/constants";
+import { useAuth } from "@/components/auth/AuthWrapper";
+
 import api from "../api";
-import { useEffect } from "react";
 
 interface LoginFormData {
   email: string;
@@ -19,6 +21,9 @@ const Login = () => {
     email: "",
     password: "",
   });
+
+  const { loggedIn, setPfp } = useAuth();
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,9 +39,35 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await api.post("/api/users/auth/login/", loginFormData);
-      localStorage.setItem(ACCESS_TOKEN, res.data.data.firebase_access_token);
-      localStorage.setItem(REFRESH_TOKEN, res.data.data.firebase_refresh_token);
-      navigate("/");
+      const accessToken = res.data.data.firebase_access_token;
+      const refreshToken = res.data.data.firebase_refresh_token;
+      const email = res.data.data.user_data.email;
+
+      // check if user email verified
+      const decoded: { email_verified: boolean } = jwtDecode(accessToken);
+      const verified: boolean = decoded.email_verified;
+
+      if (verified) {
+        localStorage.setItem(ACCESS_TOKEN, accessToken);
+        localStorage.setItem(REFRESH_TOKEN, refreshToken);
+        localStorage.setItem(EMAIL, email);
+
+        loggedIn();
+
+        const profile = await api.get("/api/profiles/");
+        if (profile.data.length !== 0) {
+          // if user has profile, set pfp and go to home
+          console.log(profile);
+          setPfp(profile.data[0].profile_picture);
+          navigate("/");
+        } else {
+          // no profile, go to onboard
+          navigate("/onboard");
+        }
+      } else {
+        alert("Email not verified yet!");
+        navigate("/");
+      }
     } catch (error: any) {
       const errorMessage: string = error.response.data.message;
       alert(errorMessage);

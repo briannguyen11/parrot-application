@@ -1,14 +1,11 @@
 import {
   LifeBuoy,
+  LogIn,
   LogOut,
-  Mail,
   MessageSquare,
-  Plus,
-  PlusCircle,
   Settings,
-  User,
   UserPlus,
-  Users,
+  User,
 } from "lucide-react";
 
 import ProfilePicture from "../../assets/icons/noauth-avatar.svg";
@@ -19,12 +16,8 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
@@ -32,21 +25,22 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 import { Toaster } from "@/components/ui/sonner";
-import { PFP } from "@/constants";
+import { useAuth } from "../auth/AuthWrapper";
 
 export function ProfileDropDown() {
   const navigate = useNavigate();
+  const { isLoggedIn, pfp, loggedOut, setPfp } = useAuth();
 
-  // hardcode for now, change when using auth wrapper
-  const auth = true;
+  const auth = isLoggedIn;
 
   const handleLogout = () => {
     localStorage.clear();
+    setPfp(null);
+    loggedOut();
     navigate("/");
   };
 
   const renderPfp = () => {
-    const pfp = localStorage.getItem(PFP);
     if (pfp) {
       return pfp;
     } else {
@@ -64,15 +58,10 @@ export function ProfileDropDown() {
       {auth ? (
         <DropdownMenuContent className="lg:mr-7 mr-5 mt-3 w-56">
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
+
           <DropdownMenuSeparator />
+
           <DropdownMenuGroup>
-            <DropdownMenuItem
-              className="hover:cursor-pointer"
-              onClick={() => navigate("/login")}
-            >
-              <User className="mr-2 h-4 w-4" />
-              <span>Log In</span>
-            </DropdownMenuItem>
             <DropdownMenuItem
               className="hover:cursor-pointer"
               onClick={() => navigate("/profile")}
@@ -81,56 +70,34 @@ export function ProfileDropDown() {
               <span>Profile</span>
               <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
             </DropdownMenuItem>
+            <DropdownMenuItem
+              className="hover:cursor-pointer"
+              onClick={() => navigate("/messages")}
+            >
+              <MessageSquare className="mr-2 h-4 w-4" />
+              <span>Message</span>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
 
-            <DropdownMenuItem className="hover:cursor-pointer">
+          <DropdownMenuSeparator />
+
+          <DropdownMenuGroup>
+            <DropdownMenuItem
+              className="hover:cursor-pointer"
+              onClick={() => navigate("/settings")}
+            >
               <Settings className="mr-2 h-4 w-4" />
               <span>Settings</span>
               <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
             </DropdownMenuItem>
-          </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuGroup>
             <DropdownMenuItem className="hover:cursor-pointer">
-              <Users className="mr-2 h-4 w-4" />
-              <span>Projects</span>
-            </DropdownMenuItem>
-            <DropdownMenuSub>
-              <DropdownMenuSubTrigger>
-                <UserPlus className="mr-2 h-4 w-4" />
-                <span>Invite users</span>
-              </DropdownMenuSubTrigger>
-              <DropdownMenuPortal>
-                <DropdownMenuSubContent>
-                  <DropdownMenuItem className="hover:cursor-pointer">
-                    <Mail className="mr-2 h-4 w-4" />
-                    <span>Email</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="hover:cursor-pointer">
-                    <MessageSquare className="mr-2 h-4 w-4" />
-                    <span>Message</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem className="hover:cursor-pointer">
-                    <PlusCircle className="mr-2 h-4 w-4" />
-                    <span>More...</span>
-                  </DropdownMenuItem>
-                </DropdownMenuSubContent>
-              </DropdownMenuPortal>
-            </DropdownMenuSub>
-            <DropdownMenuItem className="hover:cursor-pointer">
-              <Plus className="mr-2 h-4 w-4" />
-              <span>New Project</span>
-              <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
+              <LifeBuoy className="mr-2 h-4 w-4" />
+              <span>Support</span>
             </DropdownMenuItem>
           </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-
-          <DropdownMenuItem className="hover:cursor-pointer">
-            <LifeBuoy className="mr-2 h-4 w-4" />
-            <span>Support</span>
-          </DropdownMenuItem>
 
           <DropdownMenuSeparator />
+
           <DropdownMenuItem
             className="hover:cursor-pointer"
             onClick={() => {
@@ -156,15 +123,15 @@ export function ProfileDropDown() {
             className="hover:cursor-pointer"
             onClick={() => navigate("/login")}
           >
-            <User className="mr-2 h-4 w-4" />
+            <LogIn className="mr-2 h-4 w-4" />
             <span>Log In</span>
           </DropdownMenuItem>
 
           <DropdownMenuItem
             className="hover:cursor-pointer"
-            onClick={() => navigate("/profile")}
+            onClick={() => navigate("/register")}
           >
-            <User className="mr-2 h-4 w-4" />
+            <UserPlus className="mr-2 h-4 w-4" />
             <span>Sign Up</span>
           </DropdownMenuItem>
         </DropdownMenuContent>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button } from "../ui/button";
+import { useAuth } from "../auth/AuthWrapper";
 import api from "../../api";
 import ProfilePictureInput from "@/components/profile/ProfilePictureInput";
 
@@ -38,6 +39,8 @@ const AccountForm: React.FC<AccountFormProps> = ({
   const [newLinkedin, setNewLinkedin] = useState<string>(linkedin);
   const [newGithub, setNewGithub] = useState<string>(github);
 
+  const { setPfp } = useAuth();
+
   const handleUpdate = async () => {
     const profileData = new FormData();
     profileData.append("first_name", newFirstName);
@@ -61,9 +64,10 @@ const AccountForm: React.FC<AccountFormProps> = ({
         },
       });
       console.log(res);
+      setPfp(res.data.profile_picture);
       setUpdateAccount(false);
     } catch (error: any) {
-      console.log(error);
+      console.error(error.response);
     }
   };
 
