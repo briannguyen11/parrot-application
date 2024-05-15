@@ -7,8 +7,11 @@ import {
   addDoc,
   orderBy,
   query,
+  limit,
+  startAfter,
   onSnapshot,
   DocumentData,
+  Timestamp,
 } from "firebase/firestore";
 import { FormEvent, useEffect, useState, useRef } from "react";
 import api from "@/api";
@@ -40,44 +43,64 @@ interface ProfileData {
   github: string;
 }
 
-const Messages = () => {
-  const [messages, setMessages] = useState<DocumentData[]>([]);
-  const [formValue, setFormValue] = useState("");
-  const dummy = useRef();
+interface Message {
+  uid: string;
+  message: string;
+  timestamp: Timestamp;
+  photoUrl: string;
+}
 
+const Messages = () => {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [formValue, setFormValue] = useState("");
+  const [loading, setLoading] = useState(true);
+  const dummy = useRef();
+  const [lastDoc, setLastDoc] = useState<DocumentData | null>(null);
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
+
+  const fetchMessages = (next = false) => {
+    let q = query(
+      collection(db, "messages"),
+      orderBy("timestamp", "desc"),
+      limit(20)
+    );
+
+    if (next && lastDoc) {
+      q = query(
+        collection(db, "messages"),
+        orderBy("timestamp", "desc"),
+        startAfter(lastDoc),
+        limit(20)
+      );
+    }
+
+    onSnapshot(q, (querySnapshot) => {
+      const newMessages: Message[] = [];
+      querySnapshot.forEach((doc) => {
+        newMessages.push(doc.data() as Message);
+      });
+
+      setMessages((prevMessages) =>
+        next ? [...prevMessages, ...newMessages] : newMessages
+      );
+
+      // Set the last document from the query
+      setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1] || null);
+    });
+  };
 
   // One time fetch of profile data
   useEffect(() => {
     api.get("api/profiles/").then((res) => {
       setProfileData(res.data[0]);
-      console.log(res.data[0]);
+      setLoading(false);
     });
-
-  
   }, []);
 
   // Realtime listener to messages
   useEffect(() => {
-    const q = query(collection(db, "messages"), orderBy("timestamp", "asc"));
-
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const updatedMessages: DocumentData[] = [];
-      querySnapshot.forEach((doc) => {
-        updatedMessages.push(doc.data());
-      });
-
-      setMessages(updatedMessages);
-    });
-
-    return () => unsubscribe();
+    fetchMessages();
   }, []);
-
-  useEffect(() => {
-    if (dummy.current) {
-      dummy.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [messages]);
 
   const handleSendMessage = async (e: FormEvent) => {
     e.preventDefault();
@@ -95,8 +118,16 @@ const Messages = () => {
     } catch (e) {
       console.error("Error adding document: ", e);
     }
-
+    if (dummy.current) {
+      dummy.current.scrollIntoView({ behavior: "smooth" });
+    }
     setFormValue("");
+  };
+
+  const loadMoreMessages = () => {
+    if (!loading) {
+      fetchMessages(true);
+    }
   };
 
   return (
@@ -113,13 +144,22 @@ const Messages = () => {
               <div className="grid grid-cols-[19rem_auto] h-full">
                 <div></div>
 
-                <div className="relative border-l h-messages-r overflow-scroll">
-                  <div className="flex flex-col gap-5 h-messages-r-1 overflow-scroll">
-                    {messages.map((message: DocumentData, index) => (
-                      <MessageCard message={message} key={index} />
-                    ))}
-
+                <div className="relative border-l h-messages-r overflow-scroll ">
+                  <div className="flex flex-col-reverse gap-5 h-messages-r-1 overflow-scroll p-5">
                     <span ref={dummy}></span>
+                    {!loading &&
+                      messages &&
+                      messages.map((message: Message, index) => (
+                        <MessageCard
+                          message={message}
+                          owner={message.uid === profileData?.id ? true : false}
+                          key={index}
+                        />
+                      ))}
+
+                    {lastDoc && <button onClick={loadMoreMessages} disabled={loading}>
+                      {loading ? "Loading..." : "Load More Messages"}
+                    </button>}
                   </div>
 
                   <div className="absolute bottom-0 w-full border-t bg-white p-4 pr-0">
@@ -131,7 +171,11 @@ const Messages = () => {
                         className="w-full border-none bg-gray-100 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50"
                       />
 
-                      <button type="submit" disabled={!formValue} className="bg-card-green w-20 text-white rounded-lg disabled:bg-gray-300">
+                      <button
+                        type="submit"
+                        disabled={!formValue}
+                        className="bg-card-green w-20 text-white rounded-lg disabled:bg-gray-300"
+                      >
                         Enter
                       </button>
                     </form>
