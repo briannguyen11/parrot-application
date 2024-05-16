@@ -53,7 +53,7 @@ const FeedCard: React.FC<FeedCardProps> = ({
     >
       <div className="flex items-center gap-x-5 justify-between">
         <div className="flex items-center gap-4">
-          <h2 className="text-xl font-semibold text-primary sm:max-w-full xs:max-w-64 whitespace-nowrap overflow-scroll">
+          <h2 className="text-xl font-semibold text-gray-800 sm:max-w-full xs:max-w-64 whitespace-nowrap overflow-scroll">
             {project_name}
           </h2>
 
@@ -63,11 +63,11 @@ const FeedCard: React.FC<FeedCardProps> = ({
           </div>
         </div>
 
-        <h4 className="text-secondary py-1 px-6 border rounded-full border-gray-300 hover:bg-primary hover:text-white hover:border-transparent transition duration-300 ease-in-out">
+        <h4 className="text-secondary py-1 px-6 border rounded-full border-gray-300 hover:bg-black hover:text-white  hover:border-transparent transition duration-300 ease-in-out">
           Join
         </h4>
       </div>
-      <p className="text-sm font-extralight text-secondary-foreground">
+      <p className="text-sm font-extralight text-primary-foreground">
         {timeAgo}
       </p>
 

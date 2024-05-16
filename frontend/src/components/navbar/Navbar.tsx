@@ -3,16 +3,17 @@ import { SidebarPopup } from "../sidebar/SidebarPopup";
 import SearchBar from "./SearchBar";
 import { useNavigate, useLocation } from "react-router-dom";
 import SearchIcon from "../../assets/icons/search-icon.svg";
-import CodeIcon from "../../assets/icons/code.svg";
+
 
 import NotificationPopover from "./NotificationPopover";
+import Spritesheet from "../../assets/icons/spritesheet.svg";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
   return (
-    <div className="fixed top-0 left-0 w-full md:px-7 px-5 md:py-3 py-4 flex border-b border-gray-200 z-50 justify-between bg-white ">
+    <div className="fixed top-0 left-0 w-full md:px-7 px-5 md:py-3 py-4 flex border-b border-border z-50 justify-between bg-white dark:bg-background ">
       <div className="flex justify-center items-center gap-5">
         <SidebarPopup />
 
@@ -45,11 +46,11 @@ const Navbar = () => {
             onClick={() => navigate("/create")}
             className="hover:cursor-pointer  md:hover:bg-gray-200 flex justify-center items-center pr-3 pl-2 md:py-1 rounded-full gap-x-1  transition duration-300 ease-in-out"
           >
-            <img
-              src={CodeIcon}
-              alt="search"
-              className="w-8 h-8 md:hover:bg-inherit hover:bg-gray-200 p-1 rounded-xl transition duration-300 ease-in-out"
-            />
+          
+
+            <svg className="w-8 h-8 md:hover:bg-inherit hover:bg-gray-200 p-1 rounded-xl transition duration-300 ease-in-out stroke-primary dark:stroke-white">
+              <use href={Spritesheet + "#code"} />
+            </svg>
             <h4 className="font-normal text-sm text-primary md:flex hidden">
               Create Project
             </h4>

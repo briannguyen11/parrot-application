@@ -17,7 +17,7 @@ export function FilterPopup() {
       <DialogTrigger asChild>
         <div className="hover:cursor-pointer hover:bg-gray-100 flex rounded-lg items-center gap-2 w-20 p-2">
           <img src={FilterIcon} alt="filter" className="w-5 h-5" />
-          <p className="text-sm text-secondary">Filter</p>
+          <p className="text-sm text-primary">Filter</p>
         </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[800px] h-[400px] bg-white">
