@@ -36,7 +36,7 @@ const Feed = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await api.get("/api/open-projects/projects/");
+        const res = await api.get("/api/open-projects/projects/?explore=true");
         // console.log(res.data);
         setProjects(res.data);
         setLoading(false);

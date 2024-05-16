@@ -18,6 +18,8 @@ const Admin = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState("pending");
+  const [error, setError] = useState("");
+
 
   useEffect(() => {
     const fetchProjects = async (tab: string) => {
@@ -26,8 +28,9 @@ const Admin = () => {
         console.log(res.data);
         setProjects(res.data);
         setLoading(false);
-      } catch (error) {
+      } catch (error: unknown) {
         console.log(error);
+        setError('Forbidden');
       }
     };
     fetchProjects(tab);
@@ -58,6 +61,23 @@ const Admin = () => {
       console.log(error);
     }
   };
+
+  const pendProject = async (id: number) => {
+    try {
+      await api.patch(`/api/open-projects/projects/${id}/`, {
+        status: "pending_approval",
+      });
+
+      const newProjects = projects.filter((project) => project.id !== id);
+      setProjects(newProjects);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <div className="">
@@ -110,18 +130,30 @@ const Admin = () => {
                   <p className="text-sm mt-2">Status: {project.status}</p>
 
                   <div className="flex gap-3">
-                    <button
-                      onClick={() => approveProject(project.id)}
-                      className="border p-2 mt-2 hover:bg-gray-300"
-                    >
-                      Approve
-                    </button>
-                    <button
-                      onClick={() => rejectProject(project.id)}
-                      className="border p-2 mt-2 hover:bg-gray-300"
-                    >
-                      Reject
-                    </button>
+                    {tab !== "approved" && (
+                      <button
+                        onClick={() => approveProject(project.id)}
+                        className="border p-2 mt-2 hover:bg-gray-300"
+                      >
+                        Approve
+                      </button>
+                    )}
+                    {tab !== "rejected" && (
+                      <button
+                        onClick={() => rejectProject(project.id)}
+                        className="border p-2 mt-2 hover:bg-gray-300"
+                      >
+                        Reject
+                      </button>
+                    )}
+                    {tab !== "pending" && (
+                      <button
+                        onClick={() => pendProject(project.id)}
+                        className="border p-2 mt-2 hover:bg-gray-300"
+                      >
+                        Set Pending
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}

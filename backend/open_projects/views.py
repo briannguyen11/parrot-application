@@ -22,9 +22,13 @@ class OpenProjectViewSet(MixedPermissionsViewSet):
     def get_queryset(self):
         queryset = OpenProject.objects.prefetch_related(Prefetch("tags"))            
         user_id = self.request.query_params.get("user_id")
-        
+        explore = self.request.query_params.get("explore")
         if user_id:
             queryset = queryset.filter(user_id=user_id)
+        
+        if explore:
+            queryset = queryset.filter(status="approved")
+        
         return queryset
     
 class AdminOpenProjectViewSet(viewsets.ModelViewSet):
@@ -35,8 +39,7 @@ class AdminOpenProjectViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = OpenProject.objects.all()
 
-        # if self.request.user.is_superuser:
-        if True:
+        if self.request.user.is_superuser:
             if self.request.query_params.get("status") == "pending":
                 queryset = queryset.filter(status="pending_approval")
                 return queryset
@@ -46,6 +49,8 @@ class AdminOpenProjectViewSet(viewsets.ModelViewSet):
             if self.request.query_params.get("status") == "rejected":
                 queryset = queryset.filter(status="rejected")
                 return queryset
+        else:
+            return Response({"error": "You are not authorized to view this page."}, status=status.HTTP_403_FORBIDDEN)
              
         
         
