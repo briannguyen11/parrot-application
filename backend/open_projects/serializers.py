@@ -36,7 +36,7 @@ class OpenProjectSerializer(serializers.ModelSerializer):
             "group_size",
             "tags"
         ]
-        read_only_fields = ["user", "status", "tags"]
+        read_only_fields = ["user", "tags"]
 
 
 class OpenProjectApplySerializer(ProjectDetailsMixin, serializers.ModelSerializer):

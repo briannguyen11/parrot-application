@@ -21,6 +21,7 @@ import {
   createRoutesFromElements,
   RouterProvider,
 } from "react-router-dom";
+import Admin from "./pages/Admin";
 
 // clear local storage before registering
 function RegisterAndLogout() {
@@ -83,6 +84,14 @@ const router = createBrowserRouter(
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<RegisterAndLogout />} />
       <Route path="/settings" element={<Settings />} />
+      <Route
+        path="*"
+        element={
+          <ProtectedRoute>
+            <Admin />
+          </ProtectedRoute>
+        }
+      />
       <Route path="*" element={<NotFound />} />
     </Route>
   )

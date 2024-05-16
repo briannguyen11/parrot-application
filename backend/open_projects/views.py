@@ -22,10 +22,37 @@ class OpenProjectViewSet(MixedPermissionsViewSet):
     def get_queryset(self):
         queryset = OpenProject.objects.prefetch_related(Prefetch("tags"))            
         user_id = self.request.query_params.get("user_id")
+        
         if user_id:
             queryset = queryset.filter(user_id=user_id)
         return queryset
+    
+class AdminOpenProjectViewSet(viewsets.ModelViewSet):
 
+    serializer_class = OpenProjectSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = OpenProject.objects.all()
+
+        # if self.request.user.is_superuser:
+        if True:
+            if self.request.query_params.get("status") == "pending":
+                queryset = queryset.filter(status="pending_approval")
+                return queryset
+            if self.request.query_params.get("status") == "approved":
+                queryset = queryset.filter(status="approved")
+                return queryset
+            if self.request.query_params.get("status") == "rejected":
+                queryset = queryset.filter(status="rejected")
+                return queryset
+             
+        
+        
+       
+       
+
+    
 
 class OpenProjectApplyViewSet(viewsets.ModelViewSet):
     serializer_class = OpenProjectApplySerializer
