@@ -10,10 +10,10 @@ import Register from "./pages/Register";
 import Project from "./pages/Project";
 import Feed from "./pages/Feed";
 import Create from "./pages/Create";
-import ProtectedRoute from "./components/auth/ProtectedRoute";
+import ProtectedRoute from "./auth/ProtectedRoute";
 import Settings from "./pages/Settings";
 import Messages from "./pages/Messages";
-import { AuthProvider } from "./components/auth/AuthWrapper";
+import { AuthProvider } from "./auth/AuthWrapper";
 
 import {
   Route,

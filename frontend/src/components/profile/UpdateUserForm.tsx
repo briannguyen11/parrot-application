@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "../ui/button";
-import { useAuth } from "../auth/AuthWrapper";
+import { useAuth } from "../../auth/AuthWrapper";
 import { UserData } from "./UserData";
 import api from "../../api";
 import ProfilePictureInput from "@/components/profile/ProfilePictureInput";

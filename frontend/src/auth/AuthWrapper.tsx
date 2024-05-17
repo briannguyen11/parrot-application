@@ -6,7 +6,7 @@ import {
   useEffect,
   ReactNode,
 } from "react";
-import { ACCESS_TOKEN, PFP } from "../../constants";
+import { ACCESS_TOKEN, PFP } from "../constants";
 
 interface AuthContextType {
   isLoggedIn: boolean;

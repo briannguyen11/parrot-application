@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/components/auth/AuthWrapper";
+import { useAuth } from "@/auth/AuthWrapper";
 import api from "../api";
 import ProfilePictureInput from "@/components/profile/ProfilePictureInput";
 

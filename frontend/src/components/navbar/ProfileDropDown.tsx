@@ -25,17 +25,17 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 import { Toaster } from "@/components/ui/sonner";
-import { useAuth } from "../auth/AuthWrapper";
+import { useAuth } from "../../auth/AuthWrapper";
 
 export function ProfileDropDown() {
   const navigate = useNavigate();
-  const { isLoggedIn, pfp, loggedOut, setPfp } = useAuth();
+  const { isLoggedIn, pfp, loggedOut, updatePfp } = useAuth();
 
   const auth = isLoggedIn;
 
   const handleLogout = () => {
     localStorage.clear();
-    setPfp(null);
+    updatePfp(null);
     loggedOut();
     navigate("/");
   };

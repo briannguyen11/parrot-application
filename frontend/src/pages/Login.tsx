@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { ACCESS_TOKEN, EMAIL, REFRESH_TOKEN } from "@/constants";
-import { useAuth } from "@/components/auth/AuthWrapper";
+import { useAuth } from "@/auth/AuthWrapper";
 
 import api from "../api";
 
