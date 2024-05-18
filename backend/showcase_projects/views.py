@@ -2,13 +2,26 @@ from django.db.models import Prefetch
 from rest_framework import viewsets, permissions
 from backend.views import MixedPermissionsViewSet
 from .serializers import (
-    ShowcaseProjectSerializer, ShowcaseProjectSaveSerializer,
-    ShowcaseProjectTagSerializer, ShowcaseProjectPhotoSerializer, LikeSerializer, CommentSerializer, CommentLikeSerializer
+    ShowcaseProjectSerializer,
+    ShowcaseProjectSaveSerializer,
+    ShowcaseProjectTagSerializer,
+    ShowcaseProjectPhotoSerializer,
+    LikeSerializer,
+    CommentSerializer,
+    CommentLikeSerializer,
 )
 from .models import (
-    ShowcaseProject, ShowcaseProjectSave, ShowcaseProjectTag, ShowcaseProjectPhoto,
-    Like, Comment, CommentLike
+    ShowcaseProject,
+    ShowcaseProjectSave,
+    ShowcaseProjectTag,
+    ShowcaseProjectPhoto,
+    Like,
+    Comment,
+    CommentLike,
 )
+from rest_framework.response import Response
+from rest_framework import status
+
 
 class ShowcaseProjectViewSet(MixedPermissionsViewSet):
     serializer_class = ShowcaseProjectSerializer
@@ -16,7 +29,7 @@ class ShowcaseProjectViewSet(MixedPermissionsViewSet):
     # Populate user field with the authenticated user
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
-    
+
     def get_queryset(self):
         queryset = ShowcaseProject.objects.prefetch_related(
             Prefetch("tags"),
@@ -28,6 +41,7 @@ class ShowcaseProjectViewSet(MixedPermissionsViewSet):
         if user_id:
             queryset = queryset.filter(user_id=user_id)
         return queryset
+
 
 class ShowcaseProjectSaveViewSet(viewsets.ModelViewSet):
     serializer_class = ShowcaseProjectSaveSerializer
@@ -43,6 +57,7 @@ class ShowcaseProjectSaveViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(user_id=user_id)
         return queryset
 
+
 class ShowcaseProjectTagViewSet(MixedPermissionsViewSet):
     serializer_class = ShowcaseProjectTagSerializer
 
@@ -53,6 +68,32 @@ class ShowcaseProjectTagViewSet(MixedPermissionsViewSet):
             queryset = queryset.filter(project_id=project_id)
         return queryset
 
+    # Overriding the create method to allow creating multiple tags at once
+    def create(self, request):
+        project_id = request.data.get("project")
+
+        tags = request.data.get("tags", [])
+        if not isinstance(tags, list):
+            return Response(
+                {"error": "Expected a list of tags."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        tag_instances = []
+        for tag_name in tags:
+            tag_data = {"project": project_id, "tag": tag_name}
+            tag_serializer = self.get_serializer(data=tag_data)
+            if tag_serializer.is_valid():
+                tag_serializer.save()
+                tag_instances.append(tag_serializer.data)
+            else:
+                return Response(
+                    tag_serializer.errors, status=status.HTTP_400_BAD_REQUEST
+                )
+
+        return Response(tag_instances, status=status.HTTP_201_CREATED)
+
+
 class ShowcaseProjectPhotoViewSet(MixedPermissionsViewSet):
     serializer_class = ShowcaseProjectPhotoSerializer
 
@@ -62,6 +103,7 @@ class ShowcaseProjectPhotoViewSet(MixedPermissionsViewSet):
         if project_id:
             queryset = queryset.filter(project_id=project_id)
         return queryset
+
 
 class LikeViewSet(MixedPermissionsViewSet):
     serializer_class = LikeSerializer
@@ -79,6 +121,7 @@ class LikeViewSet(MixedPermissionsViewSet):
             queryset = queryset.filter(project_id=project_id)
         return queryset
 
+
 class CommentViewSet(MixedPermissionsViewSet):
     serializer_class = CommentSerializer
 
@@ -95,6 +138,7 @@ class CommentViewSet(MixedPermissionsViewSet):
             queryset = queryset.filter(project_id=project_id)
         return queryset
 
+
 class CommentLikeViewSet(MixedPermissionsViewSet):
     serializer_class = CommentLikeSerializer
 
@@ -107,4 +151,3 @@ class CommentLikeViewSet(MixedPermissionsViewSet):
         if comment_id:
             queryset = queryset.filter(comment_id=comment_id)
         return queryset
-

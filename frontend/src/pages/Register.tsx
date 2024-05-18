@@ -37,7 +37,7 @@ const Register = () => {
           registerFormData
         );
         console.log(res);
-        localStorage.setItem(EMAIL, res.data.data.email);
+        sessionStorage.setItem(EMAIL, res.data.data.email);
         navigate("/wait");
       } catch (error) {
         alert(error);

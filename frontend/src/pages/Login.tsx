@@ -48,9 +48,9 @@ const Login = () => {
       const verified: boolean = decoded.email_verified;
 
       if (verified) {
-        localStorage.setItem(ACCESS_TOKEN, accessToken);
-        localStorage.setItem(REFRESH_TOKEN, refreshToken);
-        localStorage.setItem(EMAIL, email);
+        sessionStorage.setItem(ACCESS_TOKEN, accessToken);
+        sessionStorage.setItem(REFRESH_TOKEN, refreshToken);
+        sessionStorage.setItem(EMAIL, email);
 
         loggedIn();
 

@@ -34,7 +34,7 @@ export function ProfileDropDown() {
   const auth = isLoggedIn;
 
   const handleLogout = () => {
-    localStorage.clear();
+    sessionStorage.clear();
     updatePfp(null);
     loggedOut();
     navigate("/");

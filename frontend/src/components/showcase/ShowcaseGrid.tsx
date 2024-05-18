@@ -76,7 +76,9 @@ const ShowcaseGrid = () => {
           <ShowcaseCard
             key={project.id}
             projectName={project.project_name}
+            description={project.description}
             photos={project.photos}
+            postDate={project.post_date}
           />
         ))}
     </div>

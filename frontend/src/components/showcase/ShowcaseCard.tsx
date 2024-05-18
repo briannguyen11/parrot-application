@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { formatDistanceToNow } from "date-fns";
+import LeftIcon from "../../assets/icons/left-arrow-backup-2-svgrepo-com.svg";
+import RightIcon from "../../assets/icons/right-arrow-backup-2-svgrepo-com.svg";
+import PersonIcon from "../../assets/icons/person-crop-circle-fill-svgrepo-com.svg";
 
 interface Photo {
   photo: string;
@@ -9,10 +13,17 @@ interface Photo {
 
 type ShowcaseCardProps = {
   projectName: string;
+  description: string;
   photos: Photo[];
+  postDate: string;
 };
 
-const ShowcaseCard: React.FC<ShowcaseCardProps> = ({ projectName, photos }) => {
+const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
+  projectName,
+  description,
+  photos,
+  postDate,
+}) => {
   const [photoIndex, setPhotoIndex] = useState(0);
   const [preloadedImages, setPreloadedImages] = useState<string[]>([]);
 
@@ -34,28 +45,63 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({ projectName, photos }) => {
     preloadImages();
   }, [photos]);
 
+  const nextPhotoButton = () => {
+    return (
+      <button
+        onClick={() => setPhotoIndex(photoIndex + 1)}
+        className="bg-white rounded-full absolute right-0 mr-2 p-2 flex justify-center items-center opacity-80 hover:opacity-100"
+      >
+        <img src={RightIcon} alt="next" className="h-4 w-4" />
+      </button>
+    );
+  };
+
+  const prevPhotoButton = () => {
+    return (
+      <button
+        onClick={() => setPhotoIndex(photoIndex - 1)}
+        className="bg-white rounded-full absolute left-0 ml-2 p-2 flex justify-center items-center opacity-80 hover:opacity-100"
+      >
+        <img src={LeftIcon} alt="prev" className="h-4 w-4" />
+      </button>
+    );
+  };
+
+  const timeAgo =
+    "posted " +
+    formatDistanceToNow(new Date(postDate), {
+      addSuffix: false,
+    }) +
+    " ago";
+
   return (
-    <div
-      onClick={() => setPhotoIndex((photoIndex + 1) % photos.length)}
-      className="aspect-spotlight bg-gray-50 relative rounded-sm shadow-light hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none"
-    >
-      {preloadedImages.length > 0 ? (
-        <img
-          src={preloadedImages[photoIndex]}
-          alt="placeholder"
-          className="object-cover w-full h-full "
-          draggable="false"
-        />
-      ) : (
-        <div className="w-[100vw] h-[100vh] bg-gray-400"></div>
-      )}
-      <div className="absolute bottom-0 left-0 w-full h-full  bg-card-hover opacity-0 hover:opacity-100">
-        <div className="flex items-end h-full w-full">
-          <div className="m-6 flex justify-between w-full items-center">
-            <h2 className="text-primary text-white text-sm bg-white rounded-lg p-2 backdrop-filter backdrop-blur-xl bg-opacity-30">
-              {projectName}
-            </h2>
+    <div className="relative">
+      <div className="aspect-spotlight relative hover:cursor-pointer hover:scale-103 transition duration-300 ease-in-out select-none">
+        {preloadedImages.length > 0 ? (
+          <img
+            src={preloadedImages[photoIndex]}
+            alt="placeholder"
+            className="object-cover w-full h-full rounded-2xl"
+            draggable="false"
+          />
+        ) : (
+          <div className="w-full h-full bg-gray-400 rounded-2xl"></div>
+        )}
+        <div className="absolute bottom-0 left-0 w-full h-full opacity-0 hover:opacity-100">
+          <div className="flex items-center h-full w-full">
+            {photoIndex > 0 && prevPhotoButton()}
+            {photoIndex < photos.length - 1 && nextPhotoButton()}
           </div>
+        </div>
+      </div>
+      <div className="flex flex-inline p-2 mt-1">
+        <img src={PersonIcon} alt="pfp" className="w-12 h-12" />
+        <div className="flex-col ml-4">
+          <h4 className="font-bold text-lg md:text-xl sm:text-lg">
+            {projectName}
+          </h4>
+          <p className="text-slate-500">{description}</p>
+          <p className="text-slate-500">{timeAgo}</p>
         </div>
       </div>
     </div>

@@ -20,15 +20,15 @@ const ProtectedRoute = ({ children }: Props) => {
 
   // request new token from backend
   const refreshToken = async () => {
-    const refreshToken = localStorage.getItem(REFRESH_TOKEN);
+    const refreshToken = sessionStorage.getItem(REFRESH_TOKEN);
     try {
       const res = await api.post("/api/users/auth/refresh-token/", {
         refresh_token: refreshToken,
       });
       if (res.status === 200) {
         const { idToken, refreshToken } = res.data.access_token;
-        localStorage.setItem(ACCESS_TOKEN, idToken);
-        localStorage.setItem(REFRESH_TOKEN, refreshToken);
+        sessionStorage.setItem(ACCESS_TOKEN, idToken);
+        sessionStorage.setItem(REFRESH_TOKEN, refreshToken);
         setIsAuthorized(true);
       } else {
         setIsAuthorized(false);
@@ -41,7 +41,7 @@ const ProtectedRoute = ({ children }: Props) => {
 
   // check is token is still valid
   const auth = async () => {
-    const token = localStorage.getItem(ACCESS_TOKEN);
+    const token = sessionStorage.getItem(ACCESS_TOKEN);
     if (!token) {
       setIsAuthorized(false);
       return;
