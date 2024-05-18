@@ -2,14 +2,17 @@
 import { Skeleton } from "../components/ui/skeleton";
 import FeedCard from "@/components/explore/FeedCard";
 import { FilterPopup } from "../components/explore/FilterPopup";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import api from "@/api";
 
 const Feed = () => {
   const [isFixed, setIsFixed] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [projects, setProjects] = useState<any[]>([]);
+  const [nextPage, setNextPage] = useState("");
 
-  const [projects, setProjects] = useState([]);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const triggerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     document.title = "Explore Projects | Parrot";
@@ -37,8 +40,8 @@ const Feed = () => {
     const fetchProjects = async () => {
       try {
         const res = await api.get("/api/open-projects/projects/?explore=true");
-        // console.log(res.data);
-        setProjects(res.data);
+        setProjects(res.data.results);
+        setNextPage(res.data.next);
         setLoading(false);
       } catch (error: any) {
         console.log(error.response.data.message);
@@ -47,6 +50,45 @@ const Feed = () => {
 
     fetchProjects();
   }, []);
+
+  const fetchMoreProjects = useCallback(async () => {
+    if (!nextPage) return;
+
+    try {
+      const res = await api.get(nextPage);
+      const newProjects = [...projects, ...res.data.results];
+      setProjects(newProjects);
+      setNextPage(res.data.next);
+    } catch (error: any) {
+      console.log(error.response.data.message);
+    }
+  }, [nextPage, projects]);
+
+  useEffect(() => {
+    if (loading) return;
+
+    const options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 1.0,
+    };
+
+    observerRef.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && nextPage) {
+        fetchMoreProjects();
+      }
+    }, options);
+
+    if (triggerRef.current) {
+      observerRef.current.observe(triggerRef.current);
+    }
+
+    return () => {
+      if (observerRef.current && triggerRef.current) {
+        observerRef.current.unobserve(triggerRef.current);
+      }
+    };
+  }, [loading, nextPage, fetchMoreProjects]);
 
   const renderSkeletons = () => {
     if (loading) {
@@ -66,7 +108,9 @@ const Feed = () => {
       <div className="flex flex-col gap-3 lg:ml-16 w-full max-w-screen-sm">
         <div className="flex items-end justify-between">
           <div>
-            <h2 className="text-2xl font-semibold dark:text-primary">Explore Projects</h2>
+            <h2 className="text-2xl font-semibold dark:text-primary">
+              Explore Projects
+            </h2>
             <p className="font-normal text-sm text-gray-500">
               Find projects for you to join
             </p>
@@ -75,13 +119,17 @@ const Feed = () => {
           <FilterPopup />
         </div>
 
-        <div className="flex flex-col gap-7  lg:items-start items-center  max-w-screen-sm">
+        <div className="flex flex-col gap-7  lg:items-start items-center  max-w-screen-sm mb-10">
           {renderSkeletons()}
 
           {!loading &&
             projects.map((project: any, index: number) => (
               <FeedCard key={index} {...project} />
             ))}
+
+          {!loading && nextPage && (
+            <div ref={triggerRef} className="h-10 w-full"></div>
+          )}
         </div>
       </div>
       <div

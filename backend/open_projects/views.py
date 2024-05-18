@@ -10,10 +10,15 @@ from .serializers import (
 from .models import OpenProject, OpenProjectApply, OpenProjectSave, OpenProjectTag
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.pagination import PageNumberPagination
 
+class OpenProjectPagination(PageNumberPagination):
+    page_size = 10  
+    max_page_size = 20  
 
 class OpenProjectViewSet(MixedPermissionsViewSet):
     serializer_class = OpenProjectSerializer
+    pagination_class = OpenProjectPagination
 
     # Populate user field with the authenticated user
     def perform_create(self, serializer):

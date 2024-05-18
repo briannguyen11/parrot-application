@@ -21,10 +21,16 @@ from .models import (
 )
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.pagination import PageNumberPagination
+
+class ShowcaseProjectPagination(PageNumberPagination):
+    page_size = 10 
+    max_page_size = 20  
 
 
 class ShowcaseProjectViewSet(MixedPermissionsViewSet):
     serializer_class = ShowcaseProjectSerializer
+    pagination_class = ShowcaseProjectPagination   
 
     # Populate user field with the authenticated user
     def perform_create(self, serializer):
