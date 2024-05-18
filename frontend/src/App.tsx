@@ -85,7 +85,7 @@ const router = createBrowserRouter(
       <Route path="/register" element={<RegisterAndLogout />} />
       <Route path="/settings" element={<Settings />} />
       <Route
-        path="*"
+        path="/admin"
         element={
           <ProtectedRoute>
             <Admin />
