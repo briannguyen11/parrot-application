@@ -64,7 +64,7 @@ const Profile = () => {
           user_id: userId,
         },
       });
-      setUserOpenProjects(res.data);
+      setUserOpenProjects(res.data.results);
     } catch (error) {
       throw error;
     }
