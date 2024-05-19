@@ -1,8 +1,16 @@
 from rest_framework import serializers
+from open_projects.serializers import OpenProjectSerializer, OpenProjectApplySerializer, OpenProjectSaveSerializer
+from showcase_projects.serializers import ShowcaseProjectSerializer, ShowcaseProjectSaveSerializer, LikeSerializer
 from .models import Profiles
 
 
-class ProfilesSerializer(serializers.ModelSerializer):
+class ProfilesSerializer(serializers.ModelSerializer): 
+    open_projects = OpenProjectSerializer(many=True, read_only=True, source="user.open_projects")
+    applied_open_projects = OpenProjectApplySerializer(many=True, read_only=True, source="user.applied_open_projects")
+    saved_open_projects = OpenProjectSaveSerializer(many=True, read_only=True, source="user.saved_open_projects")
+    showcase_projects = ShowcaseProjectSerializer(many=True, read_only=True, source="user.showcase_projects")
+    saved_showcase_projects = ShowcaseProjectSaveSerializer(many=True, read_only=True, source="user.saved_showcase_projects")
+    likes = LikeSerializer(many=True, read_only=True, source="user.likes")
     class Meta:
         model = Profiles
         fields = [
@@ -17,8 +25,22 @@ class ProfilesSerializer(serializers.ModelSerializer):
             "resume",
             "linkedin",
             "github",
+            "open_projects",
+            "applied_open_projects",
+            "saved_open_projects",
+            "showcase_projects",
+            "saved_showcase_projects",
+            "likes"
         ]
-        read_only_fields = ["user"]
+        read_only_fields = [
+            "user", 
+            "open_projects", 
+            "applied_open_projects",
+            "saved_open_projects",
+            "showcase_projects",
+            "saved_showcase_projects",
+            "likes"
+        ]
 
     def validate(self, data):
         # Check if profile_picture is provided

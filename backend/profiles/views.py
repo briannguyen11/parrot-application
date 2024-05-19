@@ -1,5 +1,8 @@
+from django.db.models import Prefetch
 from rest_framework import viewsets, permissions
 from rest_framework.exceptions import ValidationError
+from open_projects.models import OpenProject, OpenProjectApply, OpenProjectSave
+from showcase_projects.models import ShowcaseProject, ShowcaseProjectSave, Like
 from .serializers import ProfilesSerializer
 from .models import Profiles
 
@@ -9,7 +12,33 @@ class ProfilesViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        queryset = Profiles.objects.filter(user=self.request.user)
+        queryset = (Profiles.objects
+            .prefetch_related(Prefetch(
+                "user__open_projects", 
+                queryset=OpenProject.objects.filter(user=self.request.user))
+            )
+            .prefetch_related(Prefetch(
+                "user__applied_open_projects", 
+                queryset=OpenProjectApply.objects.filter(user=self.request.user))
+            )
+            .prefetch_related(Prefetch(
+                "user__saved_open_projects", 
+                queryset=OpenProjectSave.objects.filter(user=self.request.user))
+            )
+            .prefetch_related(Prefetch(
+                "user__showcase_projects", 
+                queryset=ShowcaseProject.objects.filter(user=self.request.user))
+            )
+            .prefetch_related(Prefetch(
+                "user__saved_showcase_projects", 
+                queryset=ShowcaseProjectSave.objects.filter(user=self.request.user))
+            )
+            .prefetch_related(Prefetch(
+                "user__likes", 
+                queryset=Like.objects.filter(user=self.request.user))
+            )
+            .filter(user=self.request.user)
+        )
         return queryset
 
     # Override perform_create to ensure only one profile per user is created

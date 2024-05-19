@@ -5,7 +5,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 class OpenProject(models.Model):
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="created_projects"
+        User, on_delete=models.CASCADE, related_name="open_projects"
     )
     project_name = models.CharField(max_length=100)
     description = models.TextField()

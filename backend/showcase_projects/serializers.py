@@ -26,7 +26,7 @@ class ShowcaseProjectPhotoSerializer(serializers.ModelSerializer):
         fields = ["id", "project", "photo", "caption", "order"]
 
 
-class LikeSerializer(serializers.ModelSerializer):
+class LikeSerializer(ProjectDetailsMixin, serializers.ModelSerializer):
     class Meta:
         model = Like
         fields = ["id", "user", "project"]

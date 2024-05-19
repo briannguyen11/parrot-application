@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 class ShowcaseProject(models.Model):
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="posted_projects"
+        User, on_delete=models.CASCADE, related_name="showcase_projects"
     )
     project_name = models.CharField(max_length=100)
     description = models.TextField()
