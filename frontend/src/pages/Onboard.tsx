@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/auth/AuthWrapper";
 import api from "../api";
-import ProfilePictureInput from "@/components/profile/ProfilePictureInput";
+import PhotoInput from "@/components/profile/PhotoInput";
 
 const Onboard = () => {
   const [firstName, setFirstName] = useState<string>("");
@@ -64,7 +64,7 @@ const Onboard = () => {
           ideas or share your own!
         </p>
         <div className="mt-4">
-          <ProfilePictureInput pfp={null} setPfp={setPfp} />
+          <PhotoInput pfp={null} setPfp={setPfp} />
         </div>
         <div className="flex-col mt-4">
           <h3 className="text-md font-semibold">Your Name *</h3>

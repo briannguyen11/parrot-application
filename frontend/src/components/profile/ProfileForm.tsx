@@ -1,30 +1,31 @@
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { useAuth } from "../../auth/AuthWrapper";
-import { UserData } from "./UserData";
+import { ProfileData } from "../interfaces";
 import api from "../../api";
-import ProfilePictureInput from "@/components/profile/ProfilePictureInput";
+import PhotoInput from "@/components/profile/PhotoInput";
+import CloseIcon from "../../assets/icons/close-svgrepo-com.svg";
 
-interface UpdateUserFormProps {
-  user: UserData;
-  setUser: React.Dispatch<React.SetStateAction<UserData | null>>;
-  setUpdateUser: React.Dispatch<React.SetStateAction<boolean>>;
+interface ProfileFormProps {
+  profile: ProfileData;
+  setProfile: React.Dispatch<React.SetStateAction<ProfileData | null>>;
+  setUpdateProfile: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const UpdateUserForm: React.FC<UpdateUserFormProps> = ({
-  user,
-  setUser,
-  setUpdateUser,
+const ProfileForm: React.FC<ProfileFormProps> = ({
+  profile,
+  setProfile,
+  setUpdateProfile,
 }) => {
-  const [newFirstName, setNewFirstName] = useState<string>(user.firstName);
-  const [newLastName, setNewLastName] = useState<string>(user.lastName);
-  const [newSchool, setNewSchool] = useState<string>(user.school);
-  const [newMajor, setNewMajor] = useState<string>(user.major);
-  const [newBio, setNewBio] = useState<string>(user.bio);
+  const [newFirstName, setNewFirstName] = useState<string>(profile.first_name);
+  const [newLastName, setNewLastName] = useState<string>(profile.last_name);
+  const [newSchool, setNewSchool] = useState<string>(profile.school);
+  const [newMajor, setNewMajor] = useState<string>(profile.major);
+  const [newBio, setNewBio] = useState<string>(profile.bio);
   const [newResume, setNewResume] = useState<File>();
   const [newPfp, setNewPfp] = useState<File>();
-  const [newLinkedin, setNewLinkedin] = useState<string>(user.linkedin);
-  const [newGithub, setNewGithub] = useState<string>(user.github);
+  const [newLinkedin, setNewLinkedin] = useState<string>(profile.linkedin);
+  const [newGithub, setNewGithub] = useState<string>(profile.github);
 
   const { updatePfp } = useAuth();
 
@@ -45,32 +46,15 @@ const UpdateUserForm: React.FC<UpdateUserFormProps> = ({
     }
 
     try {
-      const res = await api.patch(
-        `/api/profiles/${user.profileId}/`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      const data = res.data;
-      const updatedUser: UserData = {
-        userId: data.user,
-        profileId: data.id,
-        firstName: data.first_name,
-        lastName: data.last_name,
-        school: data.school,
-        major: data.major,
-        bio: data.bio,
-        profilePicture: data.profile_picture,
-        resume: data.resume,
-        linkedin: data.linkedin,
-        github: data.github,
-      };
-      setUser(updatedUser);
-      updatePfp(data.profile_picture);
-      setUpdateUser(false);
+      const res = await api.patch(`/api/profiles/${profile.id}/`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      setProfile(res.data);
+      updatePfp(res.data.profile_picture);
+      setUpdateProfile(false);
     } catch (error: any) {
       console.error(error.response);
     }
@@ -79,8 +63,16 @@ const UpdateUserForm: React.FC<UpdateUserFormProps> = ({
   return (
     <div className="shadow-light p-8 border border-border rounded-lg">
       <div className="flex-col items-center gap-5">
-        <div>
-          <ProfilePictureInput pfp={user.profilePicture} setPfp={setNewPfp} />
+        <div className="flex justify-end">
+          <img
+            src={CloseIcon}
+            alt="edit"
+            className="w-6 h-6 hover:cursor-pointer"
+            onClick={() => setUpdateProfile(false)}
+          />
+        </div>
+        <div className="flex items-center justify-center">
+          <PhotoInput pfp={profile.profile_picture} setPfp={setNewPfp} />
         </div>
         <div className="flex-col mt-2">
           <h3 className="text-md font-semibold">Your Name</h3>
@@ -89,14 +81,14 @@ const UpdateUserForm: React.FC<UpdateUserFormProps> = ({
               type="text"
               value={newFirstName}
               onChange={(e) => setNewFirstName(e.target.value)}
-              placeholder={user.firstName}
+              placeholder={profile.first_name}
               className="border border-border rounded-lg p-2 text-sm outline-none w-full"
             />
             <input
               type="text"
               value={newLastName}
               onChange={(e) => setNewLastName(e.target.value)}
-              placeholder={user.lastName}
+              placeholder={profile.last_name}
               className="border border-border rounded-lg p-2 text-sm outline-none w-full"
             />
           </div>
@@ -107,14 +99,14 @@ const UpdateUserForm: React.FC<UpdateUserFormProps> = ({
             <input
               type="text"
               value={newSchool}
-              placeholder={user.school}
+              placeholder={profile.school}
               onChange={(e) => setNewSchool(e.target.value)}
               className="border border-border rounded-lg p-2 text-sm outline-none w-full"
             />
             <input
               type="text"
               value={newMajor}
-              placeholder={user.major}
+              placeholder={profile.major}
               onChange={(e) => setNewMajor(e.target.value)}
               className="border border-border rounded-lg p-2 text-sm outline-none w-full"
             />
@@ -124,7 +116,7 @@ const UpdateUserForm: React.FC<UpdateUserFormProps> = ({
           <h3 className="text-md font-semibold">Your Bio</h3>
           <textarea
             value={newBio}
-            placeholder={user.bio}
+            placeholder={profile.bio}
             onChange={(e) => setNewBio(e.target.value)}
             className="border border-border rounded-lg p-2 text-sm outline-none w-full"
           />
@@ -147,7 +139,7 @@ const UpdateUserForm: React.FC<UpdateUserFormProps> = ({
           <input
             type="text"
             value={newLinkedin}
-            placeholder={user.linkedin}
+            placeholder={profile.linkedin}
             onChange={(e) => setNewLinkedin(e.target.value)}
             className="border border-border rounded-lg p-2 text-sm outline-none w-full"
           />
@@ -157,16 +149,19 @@ const UpdateUserForm: React.FC<UpdateUserFormProps> = ({
           <input
             type="text"
             value={newGithub}
-            placeholder={user.github}
+            placeholder={profile.github}
             onChange={(e) => setNewGithub(e.target.value)}
             className="border border-border rounded-lg p-2 text-sm outline-none w-full"
           />
         </div>
-        <Button className="mt-4 w-full " onClick={() => handleUpdate()}>
+        <Button
+          className="mt-4 w-full text-white"
+          onClick={() => handleUpdate()}
+        >
           Save
         </Button>
       </div>
     </div>
   );
 };
-export default UpdateUserForm;
+export default ProfileForm;

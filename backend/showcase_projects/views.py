@@ -22,15 +22,17 @@ from .models import (
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.decorators import action
+
 
 class ShowcaseProjectPagination(PageNumberPagination):
-    page_size = 10 
-    max_page_size = 20  
+    page_size = 10
+    max_page_size = 20
 
 
 class ShowcaseProjectViewSet(MixedPermissionsViewSet):
     serializer_class = ShowcaseProjectSerializer
-    pagination_class = ShowcaseProjectPagination   
+    pagination_class = ShowcaseProjectPagination
 
     # Populate user field with the authenticated user
     def perform_create(self, serializer):
@@ -47,6 +49,21 @@ class ShowcaseProjectViewSet(MixedPermissionsViewSet):
         if user_id:
             queryset = queryset.filter(user_id=user_id)
         return queryset
+
+    @action(detail=False, methods=["post"], url_path="delete-many")
+    def delete_many(self, request):
+        try:
+            print(request.data)
+            ids_to_delete = request.data.get("ids", [])
+            print(ids_to_delete)
+            if not ids_to_delete:
+                return Response(
+                    {"error": "No IDs provided"}, status=status.HTTP_400_BAD_REQUEST
+                )
+            ShowcaseProject.objects.filter(id__in=ids_to_delete).delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ShowcaseProjectSaveViewSet(viewsets.ModelViewSet):

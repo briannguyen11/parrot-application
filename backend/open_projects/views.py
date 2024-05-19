@@ -9,17 +9,19 @@ from .serializers import (
 )
 from .models import OpenProject, OpenProjectApply, OpenProjectSave, OpenProjectTag
 from rest_framework.response import Response
+from rest_framework.decorators import action
 from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
 
+
 class OpenProjectPagination(PageNumberPagination):
-    page_size = 10  
-    max_page_size = 20  
+    page_size = 10
+    max_page_size = 20
+
 
 class OpenProjectViewSet(MixedPermissionsViewSet):
     serializer_class = OpenProjectSerializer
     pagination_class = OpenProjectPagination
-
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -28,28 +30,37 @@ class OpenProjectViewSet(MixedPermissionsViewSet):
         queryset = OpenProject.objects.prefetch_related(Prefetch("tags"))
         user_id = self.request.query_params.get("user_id")
         level = self.request.query_params.get("level")
-        group_size = self.request.query_params.get("group_size")    
+        group_size = self.request.query_params.get("group_size")
         tags = self.request.query_params.get("tags")
-       
+
         if user_id:
             queryset = queryset.filter(user_id=user_id)
 
         if level:
-            queryset = queryset.filter(level = level)
-        
+            queryset = queryset.filter(level=level)
+
         if group_size:
-            queryset = queryset.filter(group_size = group_size)
+            queryset = queryset.filter(group_size=group_size)
 
         if tags:
             queryset = queryset.filter(tags__tag__in=tags.split(","))
-    
-        
-    
 
         # Only return approved projects in this view
         queryset = queryset.filter(status="approved")
-
         return queryset
+
+    @action(detail=False, methods=["post"], url_path="delete-many")
+    def delete_many(self, request):
+        try:
+            ids_to_delete = request.data.get("ids", [])
+            if not ids_to_delete:
+                return Response(
+                    {"error": "No IDs provided"}, status=status.HTTP_400_BAD_REQUEST
+                )
+            OpenProject.objects.filter(id__in=ids_to_delete).delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class AdminOpenProjectViewSet(viewsets.ModelViewSet):

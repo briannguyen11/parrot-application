@@ -93,7 +93,7 @@ const PictureInput: React.FC<AddPhotoProps> = ({ addPhoto }) => {
           Add Photo
         </button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-2xl w-full max-w-[70%] bg-white top-[30%] rounded-xl">
+      <DialogContent className="sm:max-w-2xl w-full max-w-[70%] bg-white rounded-xl">
         <DialogHeader>
           <DialogTitle>Select Photo</DialogTitle>
           <DialogDescription>

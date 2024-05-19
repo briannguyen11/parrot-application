@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import FilterIcon from "@/assets/icons/filter.svg";
 import { useState } from "react";
 import TechStackInput from "../TechStackInput";
-import Tag from "./Tag";
+import Tag from "../Tag";
 
 export function FilterPopup({
   handleFilter,

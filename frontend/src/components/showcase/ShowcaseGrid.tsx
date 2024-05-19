@@ -112,6 +112,7 @@ const ShowcaseGrid = () => {
         projects.map((project) => (
           <ShowcaseCard
             key={project.id}
+            projectId={project.id}
             projectName={project.project_name}
             description={project.description}
             photos={project.photos}

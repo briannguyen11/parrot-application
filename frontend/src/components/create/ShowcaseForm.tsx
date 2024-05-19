@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Tooltip } from "@/components/Tooltip";
 
 import TechStackInput from "@/components/TechStackInput";
-import PhotoInput from "./PhotoInput";
-import Tag from "@/components/explore/Tag";
+import PictureInput from "./PictureInput";
+import Tag from "@/components/Tag";
 
 import api from "@/api";
 import { useNavigate } from "react-router-dom";
@@ -146,7 +146,7 @@ const ShowcaseProjectForm = () => {
           </div>
           {photos.length < 5 && (
             <div>
-              <PhotoInput addPhoto={addPhoto} />
+              <PictureInput addPhoto={addPhoto} />
             </div>
           )}
           {photos.length !== 0 && <div className="mt-2">{renderPhotos()}</div>}

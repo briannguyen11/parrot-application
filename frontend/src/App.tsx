@@ -7,7 +7,8 @@ import Wait from "./pages/Wait";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Project from "./pages/Project";
+import OpenProject from "./pages/OpenProject";
+import ShowcaseProject from "./pages/ShowcaseProject";
 import Feed from "./pages/Feed";
 import Create from "./pages/Create";
 import ProtectedRoute from "./auth/ProtectedRoute";
@@ -35,7 +36,11 @@ const router = createBrowserRouter(
       <Route path="/" element={<Home />}>
         <Route index element={<Feed />} />
         <Route path="showcase" element={<Spotlight />} />
-        <Route path="/project/:projectId" element={<Project />} />
+        <Route path="/open-project/:projectId" element={<OpenProject />} />
+        <Route
+          path="/showcase-project/:projectId"
+          element={<ShowcaseProject />}
+        />
 
         <Route path="help" element={<div>help</div>} />
         <Route path="report" element={<div>report</div>} />

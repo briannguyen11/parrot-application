@@ -3,6 +3,7 @@ import { formatDistanceToNow } from "date-fns";
 import LeftIcon from "../../assets/icons/left-arrow-backup-2-svgrepo-com.svg";
 import RightIcon from "../../assets/icons/right-arrow-backup-2-svgrepo-com.svg";
 import PersonIcon from "../../assets/icons/person-crop-circle-fill-svgrepo-com.svg";
+import { useNavigate } from "react-router-dom";
 
 interface Photo {
   photo: string;
@@ -11,14 +12,16 @@ interface Photo {
   project: number;
 }
 
-type ShowcaseCardProps = {
+interface ShowcaseCardProps {
+  projectId: number;
   projectName: string;
   description: string;
   photos: Photo[];
   postDate: string;
-};
+}
 
 const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
+  projectId,
   projectName,
   description,
   photos,
@@ -26,6 +29,7 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
 }) => {
   const [photoIndex, setPhotoIndex] = useState(0);
   const [preloadedImages, setPreloadedImages] = useState<string[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const preloadImages = () => {
@@ -75,7 +79,10 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
     " ago";
 
   return (
-    <div className="relative">
+    <div
+      className="relative"
+      onClick={() => navigate("/showcase-project/" + projectId)}
+    >
       <div className="aspect-spotlight relative hover:cursor-pointer hover:scale-103 transition duration-300 ease-in-out select-none">
         {preloadedImages.length > 0 ? (
           <img

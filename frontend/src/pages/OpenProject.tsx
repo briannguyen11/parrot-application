@@ -19,7 +19,7 @@ interface Project {
   status: string;
 }
 
-const Project = () => {
+const OpenProject = () => {
   const { projectId } = useParams<{ projectId: string }>();
   const [loading, setLoading] = useState(true);
   const [project, setProject] = useState<Project | null>(null);
@@ -152,4 +152,4 @@ const Project = () => {
   );
 };
 
-export default Project;
+export default OpenProject;
