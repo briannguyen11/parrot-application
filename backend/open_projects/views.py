@@ -20,19 +20,34 @@ class OpenProjectViewSet(MixedPermissionsViewSet):
     serializer_class = OpenProjectSerializer
     pagination_class = OpenProjectPagination
 
-    # Populate user field with the authenticated user
+
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
     def get_queryset(self):
         queryset = OpenProject.objects.prefetch_related(Prefetch("tags"))
         user_id = self.request.query_params.get("user_id")
-        explore = self.request.query_params.get("explore")
+        level = self.request.query_params.get("level")
+        group_size = self.request.query_params.get("group_size")    
+        tags = self.request.query_params.get("tags")
+       
         if user_id:
             queryset = queryset.filter(user_id=user_id)
 
-        if explore:
-            queryset = queryset.filter(status="approved")
+        if level:
+            queryset = queryset.filter(level = level)
+        
+        if group_size:
+            queryset = queryset.filter(group_size = group_size)
+
+        if tags:
+            queryset = queryset.filter(tags__tag__in=tags.split(","))
+    
+        
+    
+
+        # Only return approved projects in this view
+        queryset = queryset.filter(status="approved")
 
         return queryset
 
