@@ -1,4 +1,6 @@
-import { useState } from "react";
+import React, { useState, useRef } from "react";
+import Cropper, { ReactCropperElement } from "react-cropper";
+import "cropperjs/dist/cropper.css";
 import {
   Dialog,
   DialogClose,
@@ -17,7 +19,9 @@ interface SetPfpProps {
 }
 
 const PhotoInput: React.FC<SetPfpProps> = ({ pfp, setPfp }) => {
-  const [imagePreview, setImagePreview] = useState<string | null>(pfp);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [fileName, setFileName] = useState<string>();
+  const cropperRef = useRef<ReactCropperElement>(null);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -27,36 +31,100 @@ const PhotoInput: React.FC<SetPfpProps> = ({ pfp, setPfp }) => {
         setImagePreview(reader.result as string);
       };
       reader.readAsDataURL(file);
-      setPfp(file);
+      setFileName(file.name);
     }
+  };
+
+  const handleCrop = () => {
+    const cropper = cropperRef.current?.cropper;
+    if (cropper) {
+      const croppedCanvas = cropper.getCroppedCanvas();
+      const dataURL = croppedCanvas.toDataURL("image/png");
+      setImagePreview(dataURL);
+
+      croppedCanvas.toBlob((blob) => {
+        if (fileName) {
+          if (blob) {
+            const croppedFile = new File([blob], fileName, {
+              type: "image/png",
+            });
+            setPfp(croppedFile);
+          }
+        }
+      });
+    }
+  };
+
+  const renderEditPfpButton = () => {
+    return (
+      <button className="relative">
+        <div className="opacity-100 hover:opacity-0 w-28 h-28 rounded-full">
+          {imagePreview && (
+            <img
+              src={imagePreview}
+              alt="Profile Preview"
+              className="w-28 h-28 rounded-full"
+            />
+          )}
+          {!imagePreview && pfp && (
+            <img src={pfp} alt="Original" className="w-28 h-28 rounded-full" />
+          )}
+          {!imagePreview && !pfp && (
+            <img
+              src={DefaultProfile}
+              alt="Default Profile Picture"
+              className="w-28 h-28 rounded-full"
+            />
+          )}
+        </div>
+        <div className="flex w-28 h-28 rounded-full bg-black text-white absolute top-0 left-0 justify-center items-center opacity-0 hover:opacity-100">
+          Edit
+        </div>
+      </button>
+    );
   };
 
   const renderPhotoInput = () => {
     return (
       <div className="flex flex-col items-center justify-center">
-        <div>
+        <div className="flex flex-inline items-center gap-5">
           {imagePreview && (
-            <img
-              src={imagePreview}
-              alt="Profile Preview"
-              className="w-60 h-60 rounded-full"
-            />
+            <div className="w-full h-full">
+              <Cropper
+                src={imagePreview}
+                style={{ height: "50vh" }}
+                // Cropper.js options
+                initialAspectRatio={1}
+                aspectRatio={1}
+                guides={false}
+                zoomable={false}
+                ref={cropperRef}
+              />
+            </div>
           )}
         </div>
+
+        {!imagePreview && pfp && (
+          <img
+            src={pfp}
+            alt="Profile Preview"
+            className="w-60 h-60 rounded-full"
+          />
+        )}
         <input
           type="file"
           accept="image/*"
           onChange={handleFileSelect}
           className="hidden"
-          id="profilePictureInput"
+          id="pfpInput"
         />
 
         <div className="mt-4 flex gap-2">
           <label
-            htmlFor="profilePictureInput"
+            htmlFor="pfpInput"
             className="bg-black text-white py-1 px-2 rounded-lg"
           >
-            Upload Photo
+            {imagePreview ? "Change Photo" : "Upload Photo"}
           </label>
 
           {imagePreview && (
@@ -64,7 +132,7 @@ const PhotoInput: React.FC<SetPfpProps> = ({ pfp, setPfp }) => {
               className="text-black px-2 py-1 hover:underline"
               onClick={() => setImagePreview(null)}
             >
-              Remove
+              Back
             </button>
           )}
         </div>
@@ -74,23 +142,7 @@ const PhotoInput: React.FC<SetPfpProps> = ({ pfp, setPfp }) => {
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <button>
-          {imagePreview ? (
-            <img
-              src={imagePreview}
-              alt="Profile Preview"
-              className="w-28 h-28 rounded-full"
-            />
-          ) : (
-            <img
-              src={DefaultProfile}
-              alt="Default Profile Picture"
-              className="w-28 h-28 rounded-full"
-            />
-          )}
-        </button>
-      </DialogTrigger>
+      <DialogTrigger asChild>{renderEditPfpButton()}</DialogTrigger>
       <DialogContent className="sm:max-w-2xl w-full max-w-[70%] bg-white rounded-xl">
         <DialogHeader>
           <DialogTitle>Select Photo</DialogTitle>
@@ -98,13 +150,14 @@ const PhotoInput: React.FC<SetPfpProps> = ({ pfp, setPfp }) => {
             This photo is the face of your profile!
           </DialogDescription>
         </DialogHeader>
-
-        <div className="w-full">{renderPhotoInput()}</div>
-
+        {renderPhotoInput()}
         {imagePreview && (
           <DialogFooter className="sm:justify-end">
             <DialogClose asChild>
-              <button className="border border-slate-400 px-2 py-1 rounded-lg hover:border-black">
+              <button
+                className="border border-slate-400 px-2 py-1 rounded-lg hover:border-black"
+                onClick={handleCrop}
+              >
                 Done
               </button>
             </DialogClose>

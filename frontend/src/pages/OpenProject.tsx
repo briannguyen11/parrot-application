@@ -6,23 +6,12 @@ import TeamCard from "@/components/project/TeamCard";
 import { ApplicantAccordion } from "@/components/project/ApplicantAccordion";
 import { EditModal } from "@/components/project/EditModal";
 
-interface Project {
-  id: number;
-  project_name: string;
-  description: string;
-  level: string;
-  post_date: string;
-  group_size: number;
-  user: string;
-  tags?: string[];
-  open: boolean;
-  status: string;
-}
+import { OpenData } from "@/components/interfaces";
 
 const OpenProject = () => {
   const { projectId } = useParams<{ projectId: string }>();
   const [loading, setLoading] = useState(true);
-  const [project, setProject] = useState<Project | null>(null);
+  const [project, setProject] = useState<OpenData | null>(null);
   const [isOwner, setIsOwner] = useState(true);
   const navigate = useNavigate();
 

@@ -53,9 +53,7 @@ class ShowcaseProjectViewSet(MixedPermissionsViewSet):
     @action(detail=False, methods=["post"], url_path="delete-many")
     def delete_many(self, request):
         try:
-            print(request.data)
             ids_to_delete = request.data.get("ids", [])
-            print(ids_to_delete)
             if not ids_to_delete:
                 return Response(
                     {"error": "No IDs provided"}, status=status.HTTP_400_BAD_REQUEST

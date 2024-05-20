@@ -5,8 +5,8 @@ import Navbar from "@/components/navbar/Navbar";
 import OpenTable from "@/components/profile/OpenTable";
 import ApplyTable from "@/components/profile/ApplyTable";
 import ShowcaseTable from "@/components/profile/ShowcaseTable";
-import UserCard from "@/components/profile/ProfileCard";
-import UserForm from "@/components/profile/ProfileForm";
+import ProfileCard from "@/components/profile/ProfileCard";
+import ProfileForm from "@/components/profile/ProfileForm";
 
 import {
   ProfileData,
@@ -131,7 +131,7 @@ const Profile = () => {
             {!loading && profile && !updateProfile && (
               <>
                 <div className="mt-4 mx-4">
-                  <UserCard
+                  <ProfileCard
                     profile={profile}
                     setUpdateProfile={setUpdateProfile}
                   />
@@ -141,7 +141,7 @@ const Profile = () => {
             {!loading && profile && updateProfile && (
               <>
                 <div className="mt-4 mx-4">
-                  <UserForm
+                  <ProfileForm
                     profile={profile}
                     setProfile={setProfile}
                     setUpdateProfile={setUpdateProfile}

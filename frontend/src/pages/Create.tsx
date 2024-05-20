@@ -3,8 +3,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 
 import Navbar from "@/components/navbar/Navbar";
-import OpenProjectForm from "@/components/create/OpenForm";
-import ShowcaseProjectForm from "@/components/create/ShowcaseForm";
+import OpenForm from "@/components/create/OpenForm";
+import ShowcaseForm from "@/components/create/ShowcaseForm";
 
 const Create = () => {
   const [form, setForm] = useState<string>("open");
@@ -34,9 +34,9 @@ const Create = () => {
 
   const renderForm = (form: string) => {
     if (form === "open") {
-      return <OpenProjectForm />;
+      return <OpenForm />;
     } else if (form === "showcase") {
-      return <ShowcaseProjectForm />;
+      return <ShowcaseForm />;
     }
   };
 

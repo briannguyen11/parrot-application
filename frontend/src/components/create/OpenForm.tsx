@@ -8,7 +8,7 @@ import FeedCard from "@/components/explore/FeedCard";
 import TechStackInput from "@/components/TechStackInput";
 import api from "@/api";
 
-const OpenProjectForm = () => {
+const OpenForm = () => {
   const [techStack, setTechStack] = useState<string[]>([]);
   const [projectName, setProjectName] = useState<string>("");
   const [projectDescription, setProjectDescription] = useState<string>("");
@@ -300,4 +300,4 @@ const OpenProjectForm = () => {
   );
 };
 
-export default OpenProjectForm;
+export default OpenForm;

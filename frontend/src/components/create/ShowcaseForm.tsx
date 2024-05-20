@@ -13,7 +13,7 @@ interface Photo {
   caption: string;
 }
 
-const ShowcaseProjectForm = () => {
+const ShowcaseForm = () => {
   const [projectName, setProjectName] = useState<string>("");
   const [projectDescription, setProjectDescription] = useState<string>("");
   const [techStack, setTechStack] = useState<string[]>([]);
@@ -188,4 +188,4 @@ const ShowcaseProjectForm = () => {
   );
 };
 
-export default ShowcaseProjectForm;
+export default ShowcaseForm;

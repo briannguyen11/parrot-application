@@ -63,8 +63,11 @@ const Onboard = () => {
           Lets's start your profile so you can connect with people with cool
           ideas or share your own!
         </p>
-        <div className="mt-4">
+        <div className="flex-col mt-4">
           <PhotoInput pfp={null} setPfp={setPfp} />
+          <p className="text-slate-400 text-center mt-2">
+            Hover over profile to change picture
+          </p>
         </div>
         <div className="flex-col mt-4">
           <h3 className="text-md font-semibold">Your Name *</h3>
