@@ -108,6 +108,7 @@ const ShowcaseGrid = () => {
     <div className="mt-5 grid 4xl:grid-cols-4 showcase-xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10">
       {loading && renderSkeletons()}
       {!loading &&
+        projects &&
         projects.length > 0 &&
         projects.map((project) => (
           <ShowcaseCard

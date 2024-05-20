@@ -39,22 +39,24 @@ const Feed = () => {
     };
   }, []);
 
-  
   // fetch projects from backend
   useEffect(() => {
-
     const createFilterParams = () => {
       // const techStackParam = filter.techStack.map((tech) => `tags=${tech}`).join(",");
-      return `?level=${filter.level}&${filter?.groupSize && filter.groupSize > 1 && `group_size=${filter.groupSize}`}`;
+      return `?level=${filter.level}&${
+        filter?.groupSize &&
+        filter.groupSize > 1 &&
+        `group_size=${filter.groupSize}`
+      }`;
     };
-  
+
     const fetchProjects = async () => {
       try {
         const params = createFilterParams();
         const link = `/api/open-projects/projects/${params}`;
         console.log(link);
         const res = await api.get(link);
-        
+
         setProjects(res.data.results);
         setNextPage(res.data.next);
         setLoading(false);
@@ -66,15 +68,11 @@ const Feed = () => {
     fetchProjects();
   }, [filter]);
 
-
   // Pass this function to FilterPopup component
   const handleFilter = (newFilter: any) => {
     console.log(newFilter);
     setFilter(newFilter);
-  }
-
-
-
+  };
 
   const fetchMoreProjects = useCallback(async () => {
     if (!nextPage) return;
@@ -141,13 +139,14 @@ const Feed = () => {
             </p>
           </div>
 
-          <FilterPopup handleFilter = {handleFilter}/>
+          <FilterPopup handleFilter={handleFilter} />
         </div>
 
         <div className="flex flex-col gap-7  lg:items-start items-center  max-w-screen-sm mb-10">
           {renderSkeletons()}
 
           {!loading &&
+            projects &&
             projects.map((project: any, index: number) => (
               <FeedCard key={index} {...project} />
             ))}
