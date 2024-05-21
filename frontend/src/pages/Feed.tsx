@@ -56,7 +56,7 @@ const Feed = () => {
         const link = `/api/open-projects/projects/${params}`;
         console.log(link);
         const res = await api.get(link);
-
+        console.log(res.data.results);
         setProjects(res.data.results);
         setNextPage(res.data.next);
         setLoading(false);

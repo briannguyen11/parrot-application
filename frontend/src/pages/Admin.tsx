@@ -38,7 +38,7 @@ const Admin = () => {
 
   const approveProject = async (id: number) => {
     try {
-      await api.patch(`/api/open-projects/projects/${id}/`, {
+      await api.patch(`/api/open-projects/admin/${id}/`, {
         status: "approved",
       });
 
@@ -51,7 +51,7 @@ const Admin = () => {
 
   const rejectProject = async (id: number) => {
     try {
-      await api.patch(`/api/open-projects/projects/${id}/`, {
+      await api.patch(`/api/open-projects/admin/${id}/`, {
         status: "rejected",
       });
 
@@ -64,7 +64,7 @@ const Admin = () => {
 
   const pendProject = async (id: number) => {
     try {
-      await api.patch(`/api/open-projects/projects/${id}/`, {
+      await api.patch(`/api/open-projects/admin/${id}/`, {
         status: "pending_approval",
       });
 

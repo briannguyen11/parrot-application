@@ -3,6 +3,7 @@ import { formatDistanceToNow } from "date-fns";
 import PersonIcon from "../../assets/icons/person.svg";
 import { useNavigate } from "react-router-dom";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import LevelIcon from "../../assets/icons/steps.svg";
 
 interface tag {
   tag: string;
@@ -27,6 +28,7 @@ const FeedCard: React.FC<FeedCardProps> = ({
   project_name,
   description,
   post_date,
+  level,
   group_size,
   user,
   tags,
@@ -43,6 +45,20 @@ const FeedCard: React.FC<FeedCardProps> = ({
     tags = previewTags.map((tag) => {
       return { tag: tag, id: 0, project: 0 };
     });
+  }
+
+
+  const parseLevel = (level: string) => {
+    switch (level) {
+      case "beginner":
+        return 1;
+      case "intermediate":
+        return 2;
+      case "advanced":
+        return 3;
+      default:
+        return "";
+    }
   }
 
   const navigate = useNavigate();
@@ -62,6 +78,11 @@ const FeedCard: React.FC<FeedCardProps> = ({
           <div className="flex items-center gap-1">
             <p className="text-gray-400 text-sm">{group_size}</p>
             <img src={PersonIcon} alt="person" className="w-4 h-4" />
+          </div>
+
+          <div className="flex items-center gap-1">
+            <p className="text-gray-400 text-sm">{parseLevel(level)}</p>
+            <img src={LevelIcon} alt="difficulty" className="w-4 h-4" />
           </div>
         </div>
 

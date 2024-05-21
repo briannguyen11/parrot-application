@@ -81,6 +81,7 @@ class AdminOpenProjectViewSet(viewsets.ModelViewSet):
             if self.request.query_params.get("status") == "rejected":
                 queryset = queryset.filter(status="rejected")
                 return queryset
+            return queryset
         else:
             return Response(
                 {"error": "You are not authorized to view this page."},
