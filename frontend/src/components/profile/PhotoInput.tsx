@@ -43,13 +43,11 @@ const PhotoInput: React.FC<SetPfpProps> = ({ pfp, setPfp }) => {
       setImagePreview(dataURL);
 
       croppedCanvas.toBlob((blob) => {
-        if (fileName) {
-          if (blob) {
-            const croppedFile = new File([blob], fileName, {
-              type: "image/png",
-            });
-            setPfp(croppedFile);
-          }
+        if (blob && fileName) {
+          const croppedFile = new File([blob], fileName, {
+            type: "image/png",
+          });
+          setPfp(croppedFile);
         }
       });
     }
@@ -87,22 +85,23 @@ const PhotoInput: React.FC<SetPfpProps> = ({ pfp, setPfp }) => {
   const renderPhotoInput = () => {
     return (
       <div className="flex flex-col items-center justify-center">
-        <div className="flex flex-inline items-center gap-5">
-          {imagePreview && (
-            <div className="w-full h-full">
-              <Cropper
-                src={imagePreview}
-                style={{ height: "50vh" }}
-                // Cropper.js options
-                initialAspectRatio={1}
-                aspectRatio={1}
-                guides={false}
-                zoomable={false}
-                ref={cropperRef}
-              />
-            </div>
-          )}
-        </div>
+        {imagePreview && (
+          <div className="mx-auto max-w-full max-h-full relative">
+            <Cropper
+              src={imagePreview}
+              style={{ width: "100%", height: 400 }}
+              // Cropper.js options
+              initialAspectRatio={1}
+              aspectRatio={1}
+              guides={false}
+              zoomable={false}
+              background={false}
+              autoCropArea={1}
+              viewMode={1}
+              ref={cropperRef}
+            />
+          </div>
+        )}
 
         {!imagePreview && pfp && (
           <img

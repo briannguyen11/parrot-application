@@ -88,11 +88,11 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
           <img
             src={preloadedImages[photoIndex]}
             alt="placeholder"
-            className="object-cover w-full h-full rounded-2xl"
+            className="object-cover w-full h-full rounded-md"
             draggable="false"
           />
         ) : (
-          <div className="w-full h-full bg-gray-400 rounded-2xl"></div>
+          <div className="w-full h-full bg-gray-400 rounded-md"></div>
         )}
         <div className="absolute bottom-0 left-0 w-full h-full opacity-0 hover:opacity-100">
           <div className="flex items-center h-full w-full">

@@ -96,18 +96,18 @@ const ShowcaseProject = () => {
       <p className="hover:underline" onClick={() => navigate("/showcase")}>
         {"<- back"}
       </p>
-      <h3 className="text-lg mt-2">{project?.project_name}</h3>
-      <div className="relative w-96 h-96 mt-2">
+      <div className="relative w-2/3 h-auto mt-2">
         {preloadedImages.length > 0 ? (
           <img
             src={preloadedImages[photoIndex]}
             alt="placeholder"
-            className="object-cover rounded-xl w-full h-full"
+            className="object-cover rounded-md w-full h-full"
             draggable="false"
           />
         ) : (
           <div className="w-full h-full bg-gray-400 rounded-2xl"></div>
         )}
+        <h3 className="text-lg mt-2">{project?.project_name}</h3>
         <div className="absolute bottom-0 left-0 opacity-0 hover:opacity-100 h-full w-full">
           <div className="flex h-full items-center ">
             {project && photoIndex > 0 && prevPhotoButton()}

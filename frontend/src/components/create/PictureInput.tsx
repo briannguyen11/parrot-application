@@ -1,4 +1,6 @@
-import { useState } from "react";
+import React, { useState, useRef } from "react";
+import Cropper, { ReactCropperElement } from "react-cropper";
+import "cropperjs/dist/cropper.css";
 import {
   Dialog,
   DialogClose,
@@ -20,9 +22,10 @@ interface AddPhotoProps {
 }
 
 const PictureInput: React.FC<AddPhotoProps> = ({ addPhoto }) => {
+  const [caption, setCaption] = useState<string>("");
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [photo, setPhoto] = useState<File>();
-  const [caption, setCapption] = useState<string>("");
+  const [fileName, setFileName] = useState<string>();
+  const cropperRef = useRef<ReactCropperElement>(null);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -32,19 +35,26 @@ const PictureInput: React.FC<AddPhotoProps> = ({ addPhoto }) => {
         setImagePreview(reader.result as string);
       };
       reader.readAsDataURL(file);
-      setPhoto(file);
+      setFileName(file.name);
     }
   };
 
   const handleAddPhoto = () => {
-    if (photo) {
-      const photoData: Photo = {
-        photo: photo,
-        caption: caption,
-      };
-      addPhoto(photoData);
-      setImagePreview(null);
-      setCapption("");
+    const cropper = cropperRef.current?.cropper;
+    if (cropper) {
+      const croppedCanvas = cropper.getCroppedCanvas();
+      croppedCanvas.toBlob((blob) => {
+        if (blob && fileName) {
+          const croppedFile = new File([blob], fileName, { type: "image/png" });
+          const photoData: Photo = {
+            photo: croppedFile,
+            caption: caption,
+          };
+          addPhoto(photoData);
+          setImagePreview("");
+          setCaption("");
+        }
+      }, "image/png");
     }
   };
 
@@ -52,11 +62,21 @@ const PictureInput: React.FC<AddPhotoProps> = ({ addPhoto }) => {
     return (
       <div className="flex flex-col items-center justify-center">
         {imagePreview && (
-          <img
-            src={imagePreview}
-            alt="Profile Preview"
-            className="w-[70%] h-[70%] rounded-xl mb-2 "
-          />
+          <div className="mx-auto max-w-full max-h-full relative">
+            <Cropper
+              src={imagePreview}
+              style={{ width: "100%", height: 400 }}
+              // Cropper.js options
+              initialAspectRatio={16 / 9}
+              aspectRatio={16 / 9}
+              guides={false}
+              zoomable={false}
+              background={false}
+              autoCropArea={1}
+              viewMode={1}
+              ref={cropperRef}
+            />
+          </div>
         )}
 
         <input
@@ -66,12 +86,12 @@ const PictureInput: React.FC<AddPhotoProps> = ({ addPhoto }) => {
           className="hidden"
           id="pictureInput"
         />
-        <div className="flex gap-2">
+        <div className="flex gap-2 mt-2">
           <label
             htmlFor="pictureInput"
             className="text-white px-2 py-1 bg-blue-600 rounded-md"
           >
-            Upload
+            {imagePreview ? "Change Photo" : "Upload Photo"}
           </label>
           {imagePreview && (
             <button
@@ -108,7 +128,7 @@ const PictureInput: React.FC<AddPhotoProps> = ({ addPhoto }) => {
               <textarea
                 value={caption}
                 placeholder="Enter caption for this photo"
-                onChange={(e) => setCapption(e.target.value)}
+                onChange={(e) => setCaption(e.target.value)}
                 className="border border-slate-200 py-1 px-2 rounded-md outline-none min-h-10 max-h-38 resize-none w-full"
               />
             </div>

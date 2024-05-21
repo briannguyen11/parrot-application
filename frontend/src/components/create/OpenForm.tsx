@@ -34,7 +34,6 @@ const OpenForm = () => {
 
   const handlePost = async () => {
     // Post project
-
     const project = {
       project_name: projectName,
       description: projectDescription,

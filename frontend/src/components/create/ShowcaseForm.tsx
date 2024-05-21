@@ -18,6 +18,7 @@ const ShowcaseForm = () => {
   const [projectDescription, setProjectDescription] = useState<string>("");
   const [techStack, setTechStack] = useState<string[]>([]);
   const [photos, setPhotos] = useState<Photo[]>([]);
+  const [showError, setShowError] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -44,27 +45,58 @@ const ShowcaseForm = () => {
 
   const renderPhotos = (): JSX.Element[] => {
     return photos.map((photo, index) => (
-      <div
-        key={index}
-        className="flex flex-inline gap-4 items-center mt-2 relative"
-      >
-        <button
-          className="absolute top-0 left-0 opacity-0 hover:opacity-100 bg-red-500 text-white w-28 h-28 rounded-lg"
-          onClick={() => deletePhoto(index)}
-        >
-          delete
-        </button>
+      <div key={index} className="flex flex-inline gap-4 items-center mt-2">
         <img
           src={URL.createObjectURL(photo.photo)}
           alt={"photo" + index}
-          className="w-28 h-28 rounded-lg"
+          className="w-32 h-auto rounded-md"
         />
         <div className="flex flex-col">
           <p className="text-slate-400">Caption for photo {index + 1}:</p>
           <p>{photo.caption}</p>
         </div>
+        <button
+          className="bg-red-500 text-white rounded-md px-2 py-1 ml-auto"
+          onClick={() => deletePhoto(index)}
+        >
+          delete
+        </button>
       </div>
     ));
+  };
+
+  const renderError = () => {
+    return (
+      <>
+        {techStack.length < 1 && (
+          <p className="text-sm text-red-500 mt-5">
+            Please select at least one technology for your project
+          </p>
+        )}
+        {projectDescription.length < 10 && (
+          <p className="text-sm text-red-500 mt-5">
+            Please input a description of at least ten characters
+          </p>
+        )}
+        {projectName.length < 3 && (
+          <p className="text-sm text-red-500 mt-5">
+            Please select a longer project name
+          </p>
+        )}
+        {photos.length < 1 && (
+          <p className="text-sm text-red-500 mt-5">
+            Please add at least one photo
+          </p>
+        )}
+      </>
+    );
+  };
+
+  const handleShowError = () => {
+    setShowError(true);
+    setTimeout(() => {
+      setShowError(false);
+    }, 3000);
   };
 
   const handleSubmit = async () => {
@@ -177,12 +209,26 @@ const ShowcaseForm = () => {
             ))}
           </div>
         </div>
-        <button
-          className="w-full bg-black text-white rounded-lg py-2 px-1"
-          onClick={() => handleSubmit()}
-        >
-          Showcase
-        </button>
+
+        {projectName.length > 3 &&
+        projectDescription.length > 10 &&
+        photos.length > 0 &&
+        techStack.length > 0 ? (
+          <button
+            onClick={() => handleSubmit()}
+            className="mt-7 bg-primary text-white rounded-lg py-2"
+          >
+            Showcase
+          </button>
+        ) : (
+          <button
+            onClick={handleShowError}
+            className="mt-7 bg-primary text-white rounded-lg py-2 opacity-50"
+          >
+            Showcase
+          </button>
+        )}
+        {showError && renderError()}
       </div>
     </div>
   );

@@ -49,6 +49,8 @@ const AuthProvider = ({ children }: Props) => {
     if (pfpUrl) {
       setPfp(pfpUrl);
       sessionStorage.setItem(PFP, pfpUrl);
+    } else {
+      setPfp(null);
     }
   };
 
