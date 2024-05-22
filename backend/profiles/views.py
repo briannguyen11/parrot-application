@@ -3,9 +3,29 @@ from rest_framework import viewsets, permissions
 from rest_framework.exceptions import ValidationError
 from open_projects.models import OpenProject, OpenProjectApply, OpenProjectSave
 from showcase_projects.models import ShowcaseProject, ShowcaseProjectSave, Like
-from .serializers import ProfilesSerializer
+from .serializers import ProfilesSerializer, BaseProfilesSerializer
 from .models import Profiles
 
+
+
+# This viewset is used to search for profiles
+class ProfileSearchViewSet(viewsets.ModelViewSet):
+    serializer_class = BaseProfilesSerializer
+
+
+    def get_queryset(self):
+        queryset = Profiles.objects.all()
+        search = self.request.query_params.get('query', None)
+        if search is not None:
+            queryset = queryset.filter(
+                first_name__icontains=search
+            ) | queryset.filter(
+                last_name__icontains=search
+            )
+            print(search)
+        return queryset
+
+        
 
 class ProfilesViewSet(viewsets.ModelViewSet):
     serializer_class = ProfilesSerializer
@@ -49,3 +69,6 @@ class ProfilesViewSet(viewsets.ModelViewSet):
         if existing_profile:
             raise ValidationError("Profile already exists for this user.")
         serializer.save(user=self.request.user)
+
+
+

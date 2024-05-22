@@ -4,6 +4,28 @@ from showcase_projects.serializers import ShowcaseProjectSerializer, ShowcasePro
 from .models import Profiles
 
 
+# Used for searching just for regular profiles, no joins neccessary
+class BaseProfilesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profiles
+        fields = [
+            "id",
+            "user",
+            "first_name",
+            "last_name",
+            "school",
+            "major",
+            "bio",
+            "profile_picture",
+            "resume",
+            "linkedin",
+            "github"
+        ]
+        read_only_fields = ["user"]
+
+
+
+
 class ProfilesSerializer(serializers.ModelSerializer): 
     open_projects = OpenProjectSerializer(many=True, read_only=True, source="user.open_projects")
     applied_open_projects = OpenProjectApplySerializer(many=True, read_only=True, source="user.applied_open_projects")

@@ -14,6 +14,7 @@ import Create from "./pages/Create";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import Settings from "./pages/Settings";
 import Messages from "./pages/Messages";
+import SearchResults from "./pages/SearchResults";
 import { AuthProvider } from "./auth/AuthWrapper";
 
 import {
@@ -41,6 +42,8 @@ const router = createBrowserRouter(
           path="/showcase-project/:projectId"
           element={<ShowcaseProject />}
         />
+
+        <Route path="/search" element={<SearchResults />} />
 
         <Route path="help" element={<div>help</div>} />
         <Route path="report" element={<div>report</div>} />

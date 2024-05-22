@@ -142,7 +142,11 @@ const Messages = () => {
               </h1>
 
               <div className="grid grid-cols-[19rem_auto] h-full">
-                <div></div>
+                <div>
+
+
+                  
+                </div>
 
                 <div className="relative border-l h-messages-r overflow-scroll ">
                   <div className="flex flex-col-reverse gap-5 h-messages-r-1 overflow-scroll p-5">
