@@ -42,7 +42,7 @@ export function FilterPopup({
           <p className="text-sm text-primary">Filter</p>
         </div>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[800px] h-[400px] bg-white overflow-scroll">
+      <DialogContent className="sm:max-w-[800px] h-[600px] bg-white overflow-scroll">
         <DialogHeader>
           <DialogTitle>Filters</DialogTitle>
           <DialogDescription>

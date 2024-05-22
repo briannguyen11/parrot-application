@@ -47,7 +47,6 @@ const FeedCard: React.FC<FeedCardProps> = ({
     });
   }
 
-
   const parseLevel = (level: string) => {
     switch (level) {
       case "beginner":
@@ -59,7 +58,7 @@ const FeedCard: React.FC<FeedCardProps> = ({
       default:
         return "";
     }
-  }
+  };
 
   const navigate = useNavigate();
 
@@ -71,7 +70,12 @@ const FeedCard: React.FC<FeedCardProps> = ({
       <div className="flex items-center gap-x-5 justify-between">
         <div className="flex max-w-96 items-center gap-4">
           <ScrollArea className="text-xl font-semibold text-gray-800 sm:max-w-full xs:max-w-64  whitespace-nowrap overflow-scroll">
-            {project_name}
+            <h3>
+              {project_name.length > 30
+                ? project_name.slice(0, 30) + "..."
+                : project_name}
+            </h3>
+
             <ScrollBar orientation="horizontal" />
           </ScrollArea>
 

@@ -13,7 +13,7 @@ const Showcase = () => {
       <div className="grid grid-cols-1 ">
         <div className="flex justify-between gap-10">
           <CategoryList />
-          <FilterPopup handleFilter={()=>console.log()}/>
+          <FilterPopup handleFilter={() => console.log()} />
         </div>
       </div>
 

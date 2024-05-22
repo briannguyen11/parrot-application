@@ -8,9 +8,11 @@ from .models import Profiles
 
 
 
+
 # This viewset is used to search for profiles
 class ProfileSearchViewSet(viewsets.ModelViewSet):
     serializer_class = BaseProfilesSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
     def get_queryset(self):

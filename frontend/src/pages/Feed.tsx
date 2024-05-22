@@ -52,6 +52,7 @@ const Feed = () => {
 
     const fetchProjects = async () => {
       try {
+        setLoading(true);
         const params = createFilterParams();
         const link = `/api/open-projects/projects/${params}`;
         console.log(link);
