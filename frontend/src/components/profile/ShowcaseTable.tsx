@@ -91,11 +91,11 @@ const ShowcaseTable: React.FC<ShowcaseProjectProp> = ({
                 </TableCell>
                 <TableCell className="font-medium">
                   <div className="flex flex-inline gap-2">
-                    <img
+                    {project.photos[0] && <img
                       src={project.photos[0].photo}
                       alt="cover"
                       className="w-28"
-                    />
+                    />}
                     <div className="flex-col">
                       <h5 className="text-md font-semibold">
                         {project.project_name}
