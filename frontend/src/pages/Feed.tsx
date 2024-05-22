@@ -129,6 +129,9 @@ const Feed = () => {
   return (
     <div className="flex w-full items-start  lg:justify-start lg:pl-8 pt-5 justify-center gap-10">
       <div className="flex flex-col gap-3 lg:ml-16 w-full max-w-screen-sm">
+        <div className="bg-green-600 p-2 pl-4 rounded-md">
+          <h3 className="text-sm text-white font-medium">Prompt of the day: Design a dating app with one new feature!</h3>
+        </div>
         <div className="flex items-end justify-between">
           <div>
             <h2 className="text-2xl font-semibold dark:text-primary">

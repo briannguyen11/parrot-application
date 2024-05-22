@@ -1,5 +1,7 @@
 import ShowcaseGrid from "../components/showcase/ShowcaseGrid";
 import { useEffect } from "react";
+import CategoryList from "@/components/showcase/CategoryList";
+import { FilterPopup } from "@/components/explore/FilterPopup";
 
 const Showcase = () => {
   useEffect(() => {
@@ -7,12 +9,12 @@ const Showcase = () => {
   }, []);
 
   return (
-    <div className="pt-5 lg:pl-5">
-      <div>
-        <h2 className="text-2xl font-semibold">Project Showcase</h2>
-        <p className="font-normal text-sm text-gray-500">
-          Find Inspiration for your next project
-        </p>
+    <div className="w-full pt-5 lg:pl-5">
+      <div className="grid grid-cols-1 ">
+        <div className="flex justify-between gap-10">
+          <CategoryList />
+          <FilterPopup handleFilter={()=>console.log()}/>
+        </div>
       </div>
 
       <ShowcaseGrid />
