@@ -5,14 +5,14 @@ from open_projects.models import OpenProject, OpenProjectApply, OpenProjectSave
 from showcase_projects.models import ShowcaseProject, ShowcaseProjectSave, Like
 from .serializers import ProfilesSerializer, BaseProfilesSerializer
 from .models import Profiles
+from backend.views import MixedPermissionsViewSet
 
 
 
 
 # This viewset is used to search for profiles
-class ProfileSearchViewSet(viewsets.ModelViewSet):
+class ProfileSearchViewSet(MixedPermissionsViewSet):
     serializer_class = BaseProfilesSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
 
     def get_queryset(self):

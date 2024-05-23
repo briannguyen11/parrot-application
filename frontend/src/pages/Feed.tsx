@@ -131,12 +131,14 @@ const Feed = () => {
     <div className="flex w-full items-start  lg:justify-start lg:pl-8 pt-5 justify-center gap-10">
       <div className="flex flex-col gap-3 lg:ml-16 w-full max-w-screen-sm">
         <div className="bg-green-600 p-2 pl-4 rounded-sm">
-          <h3 className="text-sm text-white font-light flex items-center gap-2">
-            Prompt of the day 🎉:{" "}
-            <h3 className=" font-normal">
-              Design a dating app with one new feature!
+          <div className="flex items-center gap-2">
+            <h3 className="text-sm text-white font-light">
+              Prompt of the day 🎉:
             </h3>
-          </h3>
+            <span className="text-sm text-white font-normal">
+              Design a dating app with one new feature!
+            </span>
+          </div>
         </div>
         <div className="flex items-end justify-between">
           <div>
