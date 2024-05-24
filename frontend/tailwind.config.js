@@ -19,6 +19,7 @@ export const theme = {
   fontFamily: {
     body: ["system-ui", "sans-serif"],
     sidebar: ["system-ui", "sans-serif"],
+    navbar: ["Raleway", "sans-serif"],  
   },
 
   extend: {

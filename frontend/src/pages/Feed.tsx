@@ -128,7 +128,7 @@ const Feed = () => {
   };
 
   return (
-    <div className="flex w-full items-start  lg:justify-start lg:pl-8 pt-5 justify-center gap-10">
+    <div className="flex w-full items-start pt-5 justify-center gap-10">
       <div className="flex flex-col gap-3 lg:ml-16 w-full max-w-screen-sm">
         <div className="bg-green-600 p-2 pl-4 rounded-sm">
           <div className="flex items-center gap-2">
@@ -167,11 +167,6 @@ const Feed = () => {
           )}
         </div>
       </div>
-      <div
-        className={` bg-white shadow-light w-64 h-96 xl+:flex hidden mt-16 rounded-xl ${
-          isFixed ? "fixed left-0 ml-[1032px] mr-7 top-5" : ""
-        }`}
-      ></div>
     </div>
   );
 };

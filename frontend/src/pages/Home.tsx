@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "@/components/navbar/Navbar";
-import Sidebar from "@/components/sidebar/Sidebar";
 import { useState, useEffect } from "react";
 
 export default function Home() {
@@ -22,11 +21,9 @@ export default function Home() {
       <Navbar />
 
       <div className="mt-16 h-full ">
-        <div className="md:px-7 px-5 bg-slate-50 dark:bg-background bg-fixed flex flex-row h-full min-h-home">
-          <div className="lg:block hidden bg-white">
-            <Sidebar />
-          </div>
-          <div className="lg:ml-56 w-full h-full lg:pl-1 flex lg:justify-start justify-center">
+        <div className="md:px-7 px-5 dark:bg-background bg-fixed flex flex-row h-full min-h-home">
+          
+          <div className="w-full h-full flex justify-center">
             <Outlet />
           </div>
         </div>

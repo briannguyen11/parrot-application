@@ -9,7 +9,7 @@ const Showcase = () => {
   }, []);
 
   return (
-    <div className="w-full pt-5 lg:pl-5">
+    <div className="w-full pt-5">
       <div className="grid grid-cols-1 ">
         <div className="flex justify-between gap-10">
           <CategoryList />
