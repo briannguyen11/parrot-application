@@ -4,6 +4,7 @@ import LeftIcon from "../../assets/icons/left-arrow-backup-2-svgrepo-com.svg";
 import RightIcon from "../../assets/icons/right-arrow-backup-2-svgrepo-com.svg";
 import PersonIcon from "../../assets/icons/person-crop-circle-fill-svgrepo-com.svg";
 import { useNavigate } from "react-router-dom";
+import NoPic from "../../assets/icons/nopic.svg";
 
 interface Photo {
   photo: string;
@@ -53,7 +54,7 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
     return (
       <button
         onClick={() => setPhotoIndex(photoIndex + 1)}
-        className="bg-white rounded-full absolute right-0 mr-2 p-2 flex justify-center items-center opacity-80 hover:opacity-100"
+        className="z-50 bg-white rounded-full absolute right-0 mr-2 p-2 flex justify-center items-center opacity-80 hover:opacity-100"
       >
         <img src={RightIcon} alt="next" className="h-4 w-4" />
       </button>
@@ -72,11 +73,10 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
   };
 
   const timeAgo =
-    "posted " +
+  
     formatDistanceToNow(new Date(postDate), {
-      addSuffix: false,
-    }) +
-    " ago";
+      addSuffix: true,
+    });
 
   return (
     <div
@@ -92,7 +92,9 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
             draggable="false"
           />
         ) : (
-          <div className="w-full h-full bg-gray-400 rounded-md"></div>
+          <div className="w-full h-full bg-gray-200 rounded-md flex items-center justify-center">
+            <img src={NoPic} alt="placeholder" className="w-12 h-12" />
+          </div>
         )}
         <div className="absolute bottom-0 left-0 w-full h-full opacity-0 hover:opacity-100">
           <div className="flex items-center h-full w-full">
@@ -101,14 +103,18 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
           </div>
         </div>
       </div>
-      <div className="flex flex-inline p-2 mt-1">
-        <img src={PersonIcon} alt="pfp" className="w-12 h-12" />
-        <div className="flex-col ml-4">
-          <h4 className="font-bold text-lg md:text-xl sm:text-lg">
+      <div className="flex flex-inline py-2 mt-1">
+        <img src={PersonIcon} alt="pfp" className="w-10 h-10" />
+        <div className="flex-col ml-4 w-full">
+          <div className="flex items-center justify-between gap-2">
+          <h4 className="font-bold text-md">
             {projectName}
           </h4>
-          <p className="text-slate-500">{description}</p>
-          <p className="text-slate-500">{timeAgo}</p>
+          <p className="text-gray-400 text-sm">{timeAgo}</p>
+          </div>
+          
+          <p className="text-slate-500 text-sm">{description}</p>
+         
         </div>
       </div>
     </div>

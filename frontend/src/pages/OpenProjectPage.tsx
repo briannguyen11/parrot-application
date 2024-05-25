@@ -136,7 +136,7 @@ const Feed = () => {
           <input
             type="text"
             placeholder="Search for projects"
-            className="text-md text-secondary font-light pl-5 w-full bg-inherit rounded-2xl focus:outline-none p-2"
+            className="text-sm text-secondary font-montserrat  pl-5 w-full bg-inherit rounded-2xl focus:outline-none p-2"
           />
         </div>
 

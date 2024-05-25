@@ -32,6 +32,7 @@ const ShowcaseProject = () => {
         preloadImages(res.data.photos);
 
         document.title = `${res.data.project_name} | Parrot`;
+
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -51,9 +52,10 @@ const ShowcaseProject = () => {
         };
       });
     });
-    Promise.all<string>(imagePromises).then((images) =>
-      setPreloadedImages(images)
-    );
+    Promise.all<string>(imagePromises).then((images) => {
+      setPreloadedImages(images);
+      setLoading(false);
+    });
   };
 
   const nextPhotoButton = () => {

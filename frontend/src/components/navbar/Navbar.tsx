@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 import NotificationPopover from "./NotificationPopover";
 
+
 const Navbar = () => {
   const navigate = useNavigate();
 
@@ -84,6 +85,7 @@ const Navbar = () => {
           >
             Find Teams
           </h2>
+       
           <h2
             onClick={() => handleNavigate("/create")}
             className="font-semibold font-raleway text-sm hover:cursor-pointer hover:text-primary-foreground"
