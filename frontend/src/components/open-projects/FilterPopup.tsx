@@ -37,9 +37,13 @@ export function FilterPopup({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="hover:cursor-pointer hover:bg-gray-100 flex rounded-lg items-center gap-2 w-20 p-2">
-          <img src={FilterIcon} alt="filter" className="w-5 h-5" />
-          <p className="text-sm text-primary">Filter</p>
+        <div className="inline-block mt-3 hover:cursor-pointer border border-secondary-foreground rounded-lg items-center gap-2 p-2">
+          <div className="flex items-center gap-2">
+            <p className="text-xs font-semibold text-primary font-montserrat whitespace-nowrap">
+              Filter
+            </p>
+            <img src={FilterIcon} alt="filter" className="w-5 h-5" />
+          </div>
         </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[800px] h-[600px] bg-white overflow-scroll">

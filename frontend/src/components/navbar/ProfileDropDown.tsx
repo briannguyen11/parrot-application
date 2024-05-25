@@ -56,7 +56,7 @@ export function ProfileDropDown() {
       </DropdownMenuTrigger>
 
       {auth ? (
-        <DropdownMenuContent className="lg:mr-7 mr-5 mt-3 w-56">
+        <DropdownMenuContent className="md:mr-12 mr-5 mt-[14px] w-56">
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
 
           <DropdownMenuSeparator />

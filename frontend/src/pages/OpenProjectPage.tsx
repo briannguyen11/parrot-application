@@ -114,7 +114,7 @@ const Feed = () => {
 
   return (
     <div className="flex w-full items-start pt-5 justify-center gap-10">
-      <div className="flex flex-col gap-3 w-full max-w-[700px]">
+      <div className="flex flex-col w-full max-w-[700px]">
         <div className="flex items-end justify-between">
           <div>
             <h1 className="mt-4 text-3xl font-bold font-raleway text-primary">
@@ -131,7 +131,7 @@ const Feed = () => {
           </div>
         </div>
 
-        <div className="border rounded-xl flex items-center gap-3">
+        <div className="border rounded-xl flex items-center gap-3 mt-4">
           <SearchIcon size={25} className="ml-3 stroke-gray-500" />
           <input
             type="text"
@@ -139,10 +139,11 @@ const Feed = () => {
             className="text-sm text-secondary font-montserrat  pl-5 w-full bg-inherit rounded-2xl focus:outline-none p-2"
           />
         </div>
+        <div className="flex">
+          <FilterPopup handleFilter={handleFilter} />
+        </div>
 
-        <FilterPopup handleFilter={handleFilter} />
-
-        <div className="flex flex-col gap-7  lg:items-start items-center  max-w-screen-[700px] mb-10">
+        <div className="mt-8 flex flex-col gap-7  lg:items-start items-center  max-w-screen-[700px] mb-10">
           {renderSkeletons()}
 
           {!loading &&

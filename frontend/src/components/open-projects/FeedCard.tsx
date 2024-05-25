@@ -65,7 +65,7 @@ const FeedCard: React.FC<FeedCardProps> = ({
   return (
     <div
       onClick={() => navigate("/open-project/" + id)}
-      className="shadow-light p-7 px-10  w-full bg-white border border-border rounded-lg hover:cursor-pointer hover:shadow-light-hover hover:border-gray-400  transition duration-300 ease-in-out"
+      className="shadow-light p-7 px-10  w-full bg-white  rounded-lg hover:cursor-pointer hover:shadow-light-hover hover:border-gray-400  transition duration-300 ease-in-out"
     >
       <div className="flex items-center gap-x-5 justify-between">
         <div className="flex max-w-96 items-center gap-4">
