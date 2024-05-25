@@ -56,7 +56,7 @@ const OpenForm = () => {
 
           return res;
         });
-      navigate(`/project/${res.data.id}`);
+      navigate(`/open-project/${res.data.id}`);
     } catch (error: any) {
       toast("Error", {
         description: error.response.data.message,

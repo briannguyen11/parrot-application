@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../api";
 import { Skeleton } from "@/components/ui/skeleton";
-import Navbar from "@/components/navbar/Navbar";
 import OpenTable from "@/components/profile/OpenTable";
 import ApplyTable from "@/components/profile/ApplyTable";
 import ShowcaseTable from "@/components/profile/ShowcaseTable";
@@ -123,7 +122,6 @@ const Profile = () => {
 
   return (
     <>
-      <Navbar />
       <div className="md:mx-7 mx-5 mt-16 relative">
         <div className="flex flex-col lg:flex-row">
           <div className="w-full lg:w-1/4">

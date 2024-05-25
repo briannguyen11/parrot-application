@@ -43,7 +43,7 @@ const Navbar = () => {
   return (
     <div className={`fixed top-0 left-0 w-full md:px-12 px-5 py-4 flex z-50 justify-between bg-white dark:bg-background h-[68px] transition duration-1000 ease-in-out  ${border && "shadow-light"}`}>
       {loading && (
-          <div className="absolute bottom-0 left-0 h-[3px] bg-parrot-gradient  animate-loading-bar"></div>
+          <div className="absolute bottom-0 left-0 h-[3px] bg-navbar-gradient  animate-loading-bar"></div>
         )}
       <div className="flex gap-10 items-center">
         <div className="flex justify-center items-center gap-5">
@@ -64,7 +64,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        <SearchBar />
+        <SearchBar handleNavigate = {handleNavigate}/>
         <div className="lg:flex gap-14 items-center hidden select-none">
           <h2
             onClick={() => handleNavigate("/")}

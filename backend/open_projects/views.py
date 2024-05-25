@@ -46,7 +46,7 @@ class OpenProjectViewSet(MixedPermissionsViewSet):
             queryset = queryset.filter(tags__tag__in=tags.split(","))
 
         # Only return approved projects in this view
-        queryset = queryset.filter(status="approved")
+        queryset = queryset.exclude(status="rejected")
         return queryset
 
     @action(detail=False, methods=["post"], url_path="delete-many")

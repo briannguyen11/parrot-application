@@ -1,12 +1,12 @@
 import SearchIcon from "../../assets/icons/search-alt.svg";
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
+type SearchBarProps = {
+  handleNavigate: (path: string) => void;
+};
 
-const SearchBar = () => {
-
-  const navigate = useNavigate(); 
+const SearchBar: React.FC<SearchBarProps> = ({ handleNavigate }) => {
   const [search, setSearch] = useState("");
 
   return (
@@ -20,7 +20,7 @@ const SearchBar = () => {
         onChange={(e) => setSearch(e.target.value)}
         onKeyPress={(e) => {
           if (e.key === "Enter" && search.length > 0) {
-            navigate(`/search?query=${search}`);
+            handleNavigate(`/search?query=${search}`);
           }
         }}
       />
