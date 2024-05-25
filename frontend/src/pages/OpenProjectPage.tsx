@@ -6,7 +6,6 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import api from "@/api";
 
 const Feed = () => {
-  const [isFixed, setIsFixed] = useState(false);
   const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState<any[]>([]);
   const [nextPage, setNextPage] = useState("");
@@ -20,23 +19,6 @@ const Feed = () => {
 
   useEffect(() => {
     document.title = "Explore Projects | Parrot";
-
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const threshold = 60; // Adjust this value to set the scroll threshold
-
-      if (scrollY > threshold) {
-        setIsFixed(true);
-      } else {
-        setIsFixed(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
   }, []);
 
   // fetch projects from backend
@@ -144,8 +126,6 @@ const Feed = () => {
               individuals and work together to bring your vision to life.
             </p>
           </div>
-
-          
         </div>
 
         <FilterPopup handleFilter={handleFilter} />

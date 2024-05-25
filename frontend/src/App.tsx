@@ -35,7 +35,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
       <Route path="/" element={<Home />}>
-        <Route index element={<Explore/>} />
+        <Route index element={<Explore />} />
         <Route path="/open-projects" element={<OpenProjectPage />} />
         <Route path="/open-project/:projectId" element={<OpenProjectInfo />} />
         <Route
@@ -50,24 +50,24 @@ const router = createBrowserRouter(
 
         <Route path="campus" element={<div>campus</div>} />
         <Route path="saved" element={<div>saved</div>} />
-      </Route>
 
-      <Route
-        path="/create"
-        element={
-          <ProtectedRoute>
-            <Create />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/profile"
-        element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        }
-      />
+        <Route
+          path="/create"
+          element={
+            <ProtectedRoute>
+              <Create />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+      </Route>
 
       <Route path="/wait" element={<Wait />} />
 

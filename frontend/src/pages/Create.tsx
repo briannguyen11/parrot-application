@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 
-import Navbar from "@/components/navbar/Navbar";
 import OpenForm from "@/components/create/OpenForm";
 import ShowcaseForm from "@/components/create/ShowcaseForm";
 
@@ -46,8 +45,8 @@ const Create = () => {
 
   return (
     <>
-      <Navbar />
-      <div className="md:mx-7 mx-5 mt-16 relative">
+      
+      <div className="md:mx-7 mx-5 relative w-full">
         <div className="absolute top-0 left-0 right-0 h-full flex justify-center">
           <div className="mt-9 w-[700px] h-[600px] ">
             <h2 className="text-2xl font-semibold text-primary">
