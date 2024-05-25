@@ -12,12 +12,18 @@ import { ChevronDown } from "lucide-react";
 
 import { useState } from "react";
 
-export function CommunityPopover({
-  handleFilter,
-}: {
-  handleFilter: (filter: { level: string; groupSize: number }) => void;
-}) {
-const [communities, setCommunities] = useState<string[]>([]);
+export interface CommunityPopoverProps {
+  handleFilter: (filter: string[]) => void;
+}
+
+export function CommunityPopover({ handleFilter }: CommunityPopoverProps) {
+  const [communities, setCommunities] = useState<string[]>([]);
+
+  const handleBlock = () => {
+    handleFilter(communities);
+
+    setCommunities([]);
+  };
 
   return (
     <Dialog>
@@ -116,7 +122,10 @@ const [communities, setCommunities] = useState<string[]>([]);
 
         <DialogFooter>
           <DialogTrigger className="inline-block" asChild>
-            <button className="bg-border hover:bg-gray-300 border border-border text-sm text-primary font-raleway rounded-lg inline-block h-10 p-2 transition duration-300 ease-in-out">
+            <button
+              onClick={() => handleBlock()}
+              className="bg-border hover:bg-gray-300 border border-border text-sm text-primary font-raleway rounded-lg inline-block h-10 p-2 transition duration-300 ease-in-out"
+            >
               Save Changes
             </button>
           </DialogTrigger>

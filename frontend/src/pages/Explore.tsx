@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { SearchIcon } from "lucide-react";
 import { SortByPopover } from "@/components/explore/SortByPopover";
 import { CommunityPopover } from "@/components/explore/CommunityPopover";
+import { X } from "lucide-react";
+
 const Showcase = () => {
   useEffect(() => {
     document.title = "Showcase | Parrot";
@@ -10,6 +12,13 @@ const Showcase = () => {
   }, []);
 
   const [search, setSearch] = useState("");
+  const [communities, setCommunities] = useState<string[]>([
+    "All",
+  ]);
+
+  const addToCommunities = (newCommunities: string[]) => {
+    setCommunities(newCommunities);
+  }
 
   return (
     <div className="w-full pt-5">
@@ -43,8 +52,20 @@ const Showcase = () => {
         </div>
       </div>
       <div className="flex gap-3 items-center mb-8">
-        <SortByPopover />
-        <CommunityPopover />
+        <SortByPopover  />
+        <CommunityPopover handleFilter={addToCommunities}/>
+
+        {communities.map((community) => (
+          <div
+            key={community}
+            className="mt-3 bg-card-blue text-white text-xs font-montserrat font-semibold px-2 py-2 rounded-lg flex items-center gap-2"
+          >
+            <h4>{community}</h4>
+
+            <X size={15} className="cursor-pointer" onClick={()=> setCommunities(communities.filter(item => item !== community))}/>
+
+          </div>
+        ))}
       </div>
 
       <ShowcaseGrid />

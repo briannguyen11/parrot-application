@@ -83,28 +83,102 @@ const ShowcaseGrid = () => {
 
   const renderSkeletons = () => (
     <>
-      <div>
+      <div className="mb-3">
         <div className="aspect-spotlight bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
           <Skeleton className="w-[600px] h-[600px]" />
         </div>
+        <div className="flex items-center gap-4">
+          <Skeleton className="mt-3 h-10 w-10 rounded-full" />
+          <div>
+            <div className="mt-3 flex flex-col gap-2">
+              <Skeleton className="h-4 w-52" />
 
-        <Skeleton className="mt-3 h-10 w-10 rounded-full" />
+              <Skeleton className="h-4 w-24" />
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="aspect-spotlight bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
-        <Skeleton className="object-cover w-full h-full" />
+
+      <div className="mb-3">
+        <div className="aspect-spotlight bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
+          <Skeleton className="w-[600px] h-[600px]" />
+        </div>
+        <div className="flex items-center gap-4">
+          <Skeleton className="mt-3 h-10 w-10 rounded-full" />
+          <div>
+            <div className="mt-3 flex flex-col gap-2">
+              <Skeleton className="h-4 w-52" />
+
+              <Skeleton className="h-4 w-24" />
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="aspect-spotlight bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
-        <Skeleton className="object-cover w-full h-full" />
+
+      <div className="mb-3">
+        <div className="aspect-spotlight bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
+          <Skeleton className="w-[600px] h-[600px]" />
+        </div>
+        <div className="flex items-center gap-4">
+          <Skeleton className="mt-3 h-10 w-10 rounded-full" />
+          <div>
+            <div className="mt-3 flex flex-col gap-2">
+              <Skeleton className="h-4 w-52" />
+
+              <Skeleton className="h-4 w-24" />
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="aspect-spotlight bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
-        <Skeleton className="object-cover w-full h-full" />
+
+      <div className="mb-3">
+        <div className="aspect-spotlight bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
+          <Skeleton className="w-[600px] h-[600px]" />
+        </div>
+        <div className="flex items-center gap-4">
+          <Skeleton className="mt-3 h-10 w-10 rounded-full" />
+          <div>
+            <div className="mt-3 flex flex-col gap-2">
+              <Skeleton className="h-4 w-52" />
+
+              <Skeleton className="h-4 w-24" />
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="aspect-spotlight bg-gray-50 relative rounded-sm hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
-        <Skeleton className="object-cover w-full h-full" />
+
+      <div className="mb-3">
+        <div className="aspect-spotlight bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
+          <Skeleton className="w-[600px] h-[600px]" />
+        </div>
+        <div className="flex items-center gap-4">
+          <Skeleton className="mt-3 h-10 w-10 rounded-full" />
+          <div>
+            <div className="mt-3 flex flex-col gap-2">
+              <Skeleton className="h-4 w-52" />
+
+              <Skeleton className="h-4 w-24" />
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="aspect-spotlight bg-gray-50 relative rounded-sm hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
-        <Skeleton className="object-cover w-full h-full" />
+
+      <div className="mb-3">
+        <div className="aspect-spotlight bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
+          <Skeleton className="w-[600px] h-[600px]" />
+        </div>
+        <div className="flex items-center gap-4">
+          <Skeleton className="mt-3 h-10 w-10 rounded-full" />
+          <div>
+            <div className="mt-3 flex flex-col gap-2">
+              <Skeleton className="h-4 w-52" />
+
+              <Skeleton className="h-4 w-24" />
+            </div>
+          </div>
+        </div>
       </div>
+
     </>
   );
 
