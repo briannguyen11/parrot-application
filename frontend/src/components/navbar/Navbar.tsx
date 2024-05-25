@@ -1,18 +1,16 @@
 import { ProfileDropDown } from "./ProfileDropDown";
 import { SidebarPopup } from "../sidebar/SidebarPopup";
 import SearchBar from "./SearchBar";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SearchIcon from "../../assets/icons/search-icon.svg";
 
 import NotificationPopover from "./NotificationPopover";
-import Spritesheet from "../../assets/icons/spritesheet.svg";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const location = useLocation();
 
   return (
-    <div className="fixed top-0 left-0 w-full md:px-7 px-5 py-4 flex z-50 justify-between bg-white dark:bg-background h-[68px] ">
+    <div className="fixed top-0 left-0 w-full md:px-12 px-5 py-4 flex z-50 justify-between bg-white dark:bg-background h-[68px] ">
       <div className="flex gap-10 items-center">
         <div className="flex justify-center items-center gap-5">
           <SidebarPopup />
@@ -26,20 +24,20 @@ const Navbar = () => {
               alt="logo"
               className="w-6 h-6 object-cover select-none"
             />
-            <h1 className="text-xl font-medium text-primary lg:block hidden select-none">
+            <h1 className="text-xl font-semibold font-raleway text-primary lg:block hidden select-none">
               PARROT
             </h1>
           </div>
         </div>
 
         <SearchBar />
-        <div className="lg:flex gap-12 items-center hidden">
+        <div className="lg:flex gap-14 items-center hidden select-none">
 
        
-        <h2 onClick={()=>navigate('/showcase')} className="font-medium font-navbar text-sm hover:cursor-pointer">Explore</h2>
-        <h2 onClick={()=>navigate('/')} className="font-medium font-navbar text-sm hover:cursor-pointer">Find Teams</h2>
-        <h2 onClick={()=>navigate('/create')} className="font-medium font-navbar text-sm hover:cursor-pointer">Create Project</h2>
-        <h2 onClick={()=>navigate('/messages')} className="font-medium font-navbar text-sm hover:cursor-pointer">Messages</h2>
+        <h2 onClick={()=>navigate('/')} className="font-semibold font-raleway text-sm hover:cursor-pointer hover:text-primary-foreground">Explore</h2>
+        <h2 onClick={()=>navigate('/open-projects')} className="font-semibold font-raleway text-sm hover:cursor-pointer hover:text-primary-foreground">Find Teams</h2>
+        <h2 onClick={()=>navigate('/create')} className="font-semibold font-raleway text-sm hover:cursor-pointer hover:text-primary-foreground">Create Project</h2>
+        <h2 onClick={()=>navigate('/messages')} className="font-semibold font-raleway text-sm hover:cursor-pointer hover:text-primary-foreground">Messages</h2>
         </div>
       </div>
 

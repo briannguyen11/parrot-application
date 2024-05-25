@@ -4,7 +4,7 @@ import { Tooltip } from "@/components/Tooltip";
 import { useNavigate } from "react-router-dom";
 
 import Tag from "@/components/Tag";
-import FeedCard from "@/components/explore/FeedCard";
+import FeedCard from "@/components/open-projects/FeedCard";
 import TechStackInput from "@/components/TechStackInput";
 import api from "@/api";
 

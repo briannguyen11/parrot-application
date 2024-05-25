@@ -19,18 +19,18 @@ export const theme = {
   fontFamily: {
     body: ["system-ui", "sans-serif"],
     sidebar: ["system-ui", "sans-serif"],
-    navbar: ["Raleway", "sans-serif"],  
+    raleway: ["Raleway", "sans-serif"],
+    montserrat: ["Montserrat", "sans-serif"],
+  },
+  backgroundImage: {
+    "parrot-gradient":
+      "linear-gradient(to right, #1D425C, #C73B36, #E69215)",
   },
 
   extend: {
     boxShadow: {
       light: "0px 2px 14px 0px rgba(0, 0, 0, 0.08)",
       "light-hover": "0px 2px 14px 0px rgba(0, 0, 0, 0.14)",
-    },
-
-    backgroundImage: {
-      gradient: "url('/src/assets/images/gradient.png')",
-      "home-pattern": "url('/src/assets/icons/background.svg')",
     },
 
     width: {
@@ -51,7 +51,7 @@ export const theme = {
     },
 
     aspectRatio: {
-      spotlight: "4/3",
+      spotlight: "16/9",
     },
     colors: {
       border: "hsl(var(--border))",
@@ -61,7 +61,7 @@ export const theme = {
       foreground: "hsl(var(--foreground))",
       primary: {
         DEFAULT: "var(--primary)",
-        foreground: "hsl(var(--primary-foreground))",
+        foreground: "var(--primary-foreground)",
       },
       secondary: {
         DEFAULT: "hsl(var(--secondary))",

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Skeleton } from "../components/ui/skeleton";
-import FeedCard from "@/components/explore/FeedCard";
-import { FilterPopup } from "../components/explore/FilterPopup";
+import FeedCard from "@/components/open-projects/FeedCard";
+import { FilterPopup } from "../components/open-projects/FilterPopup";
 import { useEffect, useState, useRef, useCallback } from "react";
 import api from "@/api";
 
@@ -118,7 +118,7 @@ const Feed = () => {
     if (loading) {
       return (
         <>
-          <Skeleton className="w-full  max-w-screen-sm h-[300px]" />
+          <Skeleton className="w-full  max-w-[700px] h-[300px]" />
           <Skeleton className="h-[300px] w-full mb-5 rounded-xl" />
           <Skeleton className="h-[300px] w-full mb-5 rounded-xl" />
         </>
@@ -129,31 +129,28 @@ const Feed = () => {
 
   return (
     <div className="flex w-full items-start pt-5 justify-center gap-10">
-      <div className="flex flex-col gap-3 lg:ml-16 w-full max-w-screen-sm">
-        <div className="bg-green-600 p-2 pl-4 rounded-sm">
-          <div className="flex items-center gap-2">
-            <h3 className="text-sm text-white font-light">
-              Prompt of the day 🎉:
-            </h3>
-            <span className="text-sm text-white font-normal">
-              Design a dating app with one new feature!
-            </span>
-          </div>
-        </div>
+      <div className="flex flex-col gap-3 w-full max-w-[700px]">
         <div className="flex items-end justify-between">
           <div>
-            <h2 className="text-2xl font-semibold dark:text-primary">
-              Explore Projects
-            </h2>
-            <p className="font-normal text-sm text-gray-500">
-              Find projects for you to join
+            <h1 className="mt-4 text-3xl font-bold font-raleway text-primary">
+              Find your Team. <br className="inline-block md:hidden" />
+              <span className=" bg-parrot-gradient inline-block text-transparent bg-clip-text">
+                Actualize
+              </span>{" "}
+              your Ideas
+            </h1>
+            <p className="text-secondary font-normal mt-2 text-sm max-w-[550px]">
+              Find collaborators for your next project. Connect with passionate
+              individuals and work together to bring your vision to life.
             </p>
           </div>
 
-          <FilterPopup handleFilter={handleFilter} />
+          
         </div>
 
-        <div className="flex flex-col gap-7  lg:items-start items-center  max-w-screen-sm mb-10">
+        <FilterPopup handleFilter={handleFilter} />
+
+        <div className="flex flex-col gap-7  lg:items-start items-center  max-w-screen-[700px] mb-10">
           {renderSkeletons()}
 
           {!loading &&

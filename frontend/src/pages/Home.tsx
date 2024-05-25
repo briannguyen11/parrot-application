@@ -21,7 +21,7 @@ export default function Home() {
       <Navbar />
 
       <div className="mt-16 h-full ">
-        <div className="md:px-7 px-5 dark:bg-background bg-fixed flex flex-row h-full min-h-home">
+        <div className="md:px-12 px-5 dark:bg-background bg-fixed flex flex-row h-full min-h-home">
           
           <div className="w-full h-full flex justify-center">
             <Outlet />
