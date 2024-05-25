@@ -32,7 +32,7 @@ const Navbar = () => {
     };
   }, []);
 
-  const handleNavigate = (path : string) => {
+  const handleNavigate = (path: string) => {
     setLoading(true);
     navigate(path);
     setTimeout(() => {
@@ -41,10 +41,16 @@ const Navbar = () => {
   };
 
   return (
-    <div className={`fixed top-0 left-0 w-full md:px-12 px-5 py-4 flex z-50 justify-between bg-white dark:bg-background h-[68px] transition duration-1000 ease-in-out  ${border && "shadow-light"}`}>
+    <div
+      className={`fixed top-0 left-0 w-full md:px-12 px-5 py-4 flex z-50 justify-between bg-white dark:bg-background h-[68px] transition duration-1000 ease-in-out  ${
+        border && "shadow-light"
+      }`}
+    >
       {loading && (
-          <div className="absolute bottom-0 left-0 h-[3px] bg-navbar-gradient  animate-loading-bar"></div>
-        )}
+        <div
+          className={`absolute top-0 left-0 h-[3px] bg-navbar-gradient  animate-loading-bar`}
+        ></div>
+      )}
       <div className="flex gap-10 items-center">
         <div className="flex justify-center items-center gap-5">
           <SidebarPopup />
@@ -64,7 +70,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        <SearchBar handleNavigate = {handleNavigate}/>
+        <SearchBar handleNavigate={handleNavigate} />
         <div className="lg:flex gap-14 items-center hidden select-none">
           <h2
             onClick={() => handleNavigate("/")}
@@ -101,9 +107,13 @@ const Navbar = () => {
         />
 
         <NotificationPopover />
+    
+        
         <div className="hover:cursor-pointer ml-2 ">
           <ProfileDropDown />
         </div>
+
+        
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import FeedCard from "@/components/open-projects/FeedCard";
 import { FilterPopup } from "../components/open-projects/FilterPopup";
 import { useEffect, useState, useRef, useCallback } from "react";
 import api from "@/api";
+import { SearchIcon } from "lucide-react";
 
 const Feed = () => {
   const [loading, setLoading] = useState(true);
@@ -19,6 +20,8 @@ const Feed = () => {
 
   useEffect(() => {
     document.title = "Explore Projects | Parrot";
+
+    window.scrollTo({ top: 0, behavior: "instant" });
   }, []);
 
   // fetch projects from backend
@@ -126,6 +129,15 @@ const Feed = () => {
               individuals and work together to bring your vision to life.
             </p>
           </div>
+        </div>
+
+        <div className="border rounded-xl flex items-center gap-3">
+          <SearchIcon size={25} className="ml-3 stroke-gray-500" />
+          <input
+            type="text"
+            placeholder="Search for projects"
+            className="text-md text-secondary font-light pl-5 w-full bg-inherit rounded-2xl focus:outline-none p-2"
+          />
         </div>
 
         <FilterPopup handleFilter={handleFilter} />
