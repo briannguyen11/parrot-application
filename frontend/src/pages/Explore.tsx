@@ -51,16 +51,16 @@ const Showcase = () => {
           </button>
         </div>
       </div>
-      <div className="flex gap-3 items-center mb-8">
+      <div className="flex gap-3 items-center mb-8 w-full overflow-scroll ">
         <SortByPopover  />
         <CommunityPopover handleFilter={addToCommunities}/>
 
         {communities.map((community) => (
           <div
             key={community}
-            className="mt-3 bg-card-blue text-white text-xs font-montserrat font-semibold px-2 py-2 rounded-lg flex items-center gap-2"
+            className=" whitespace-nowrap mt-3 bg-card-blue text-white text-xs font-montserrat font-semibold px-2 py-2 rounded-lg flex items-center gap-2"
           >
-            <h4>{community}</h4>
+            <h4 className=" whitespace-nowrap">{community}</h4>
 
             <X size={15} className="cursor-pointer" onClick={()=> setCommunities(communities.filter(item => item !== community))}/>
 

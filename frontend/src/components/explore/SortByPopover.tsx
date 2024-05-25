@@ -40,7 +40,7 @@ export function SortByPopover({
       <DialogTrigger asChild>
         <div className="inline-block mt-3 hover:cursor-pointer border border-secondary-foreground rounded-lg items-center gap-2 p-2">
           <div className="flex items-center gap-2">
-            <p className="text-xs font-semibold text-primary font-montserrat">
+            <p className="text-xs font-semibold text-primary font-montserrat whitespace-nowrap">
               Sort By
             </p>
             <ChevronDown size={18} />
