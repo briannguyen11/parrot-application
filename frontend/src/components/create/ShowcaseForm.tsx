@@ -116,8 +116,18 @@ const ShowcaseForm = () => {
         photoData.append("photo", photos[i].photo);
         photoData.append("caption", photos[i].caption);
         photoData.append("order", (i + 1).toString());
+
+
+        const photoObj = {
+          project: res.data.id,
+          photo: photos[i].photo,
+          caption: photos[i].caption,
+          order: i + 1,
+        };
+
+        console.log(photoObj);
         photoRequests.push(
-          api.post("/api/showcase-projects/photos/", photoData)
+          api.post("/api/showcase-projects/photos/", photoObj)
         );
       }
       await Promise.all(photoRequests);
@@ -129,7 +139,7 @@ const ShowcaseForm = () => {
       });
       navigate("/showcase");
     } catch (error: any) {
-      console.error(error.response);
+      console.error(error);
     }
   };
 

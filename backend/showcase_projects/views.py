@@ -30,6 +30,25 @@ class ShowcaseProjectPagination(PageNumberPagination):
     max_page_size = 20
 
 
+class ShowcaseSearchViewSet(MixedPermissionsViewSet):
+    serializer_class = ShowcaseProjectSerializer
+    pagination_class = ShowcaseProjectPagination
+
+    def get_queryset(self):
+        queryset = ShowcaseProject.objects.prefetch_related(
+            Prefetch("tags"),
+            Prefetch("photos"),
+            Prefetch("likes"),
+            Prefetch("comments"),
+        )
+        search = self.request.query_params.get("query", None)
+        if search is not None:
+            queryset = queryset.filter(project_name__icontains=search) | queryset.filter(
+                description__icontains=search)
+        return queryset
+
+
+
 class ShowcaseProjectViewSet(MixedPermissionsViewSet):
     serializer_class = ShowcaseProjectSerializer
     pagination_class = ShowcaseProjectPagination

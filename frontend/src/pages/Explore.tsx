@@ -19,6 +19,7 @@ const Showcase = () => {
   const addToCommunities = (newCommunities: string[]) => {
     setCommunities(newCommunities);
   }
+  
 
   return (
     <div className="w-full pt-5">

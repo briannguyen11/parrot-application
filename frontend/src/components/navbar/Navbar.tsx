@@ -39,7 +39,7 @@ const Navbar = () => {
     navigate(path);
     setTimeout(() => {
       setLoading(false);
-    }, 1000); // Adjust the duration of the animation
+    }, 600); // Adjust the duration of the animation
   };
 
   const renderNavbar = () => {
