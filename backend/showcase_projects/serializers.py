@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import ShowcaseProject, ShowcaseProjectSave, ShowcaseProjectTag, ShowcaseProjectPhoto, Like, Comment, CommentLike
+from profiles.models import Profiles
 
 
 class ProjectDetailsMixin:
@@ -12,6 +13,12 @@ class ProjectDetailsMixin:
                 project_serializer = ShowcaseProjectSerializer(project)
                 data["project"] = project_serializer.data
         return data
+    
+
+class ProfileInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profiles
+        fields = ["first_name", "last_name", "profile_picture"]
 
 
 class ShowcaseProjectTagSerializer(serializers.ModelSerializer):
@@ -41,22 +48,24 @@ class CommentLikeSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    profile = ProfileInfoSerializer(source="user.profile", read_only=True)
     comment_likes = CommentLikeSerializer(many=True, read_only=True)
     class Meta:
         model = Comment
-        fields = ["id", "user", "project", "content", "comment_likes", "created_date"]
-        read_only_fields = ["user", "comment_likes"]
+        fields = ["id", "user", "profile", "project", "content", "comment_likes", "created_date"]
+        read_only_fields = ["user", "profile", "comment_likes"]
 
 
 class ShowcaseProjectSerializer(serializers.ModelSerializer):
+    profile = ProfileInfoSerializer(source="user.profile", read_only=True)
     tags = ShowcaseProjectTagSerializer(many=True, read_only=True)
     photos = ShowcaseProjectPhotoSerializer(many=True, read_only=True)
     likes = LikeSerializer(many=True, read_only=True)
     comments = CommentSerializer(many=True, read_only=True)
     class Meta:
         model = ShowcaseProject
-        fields = ["id", "user", "project_name", "description", "tags", "photos", "likes", "comments", "post_date"]
-        read_only_fields = ["user", "tags", "photos", "likes", "comments"]
+        fields = ["id", "user", "profile", "project_name", "description", "tags", "photos", "likes", "comments", "post_date"]
+        read_only_fields = ["user", "profile", "tags", "photos", "likes", "comments"]
 
 
 class ShowcaseProjectSaveSerializer(ProjectDetailsMixin, serializers.ModelSerializer):

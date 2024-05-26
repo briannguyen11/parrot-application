@@ -82,6 +82,7 @@ class ProfilesSerializer(serializers.ModelSerializer):
                 )
         return data
 
+
 class ProfilesRestrictedSerializer(serializers.ModelSerializer): 
     open_projects = OpenProjectRestrictedSerializer(many=True, read_only=True, source="user.open_projects")
     showcase_projects = ShowcaseProjectSerializer(many=True, read_only=True, source="user.showcase_projects")

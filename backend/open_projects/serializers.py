@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import OpenProject, OpenProjectApply, OpenProjectSave, OpenProjectTag
+from profiles.models import Profiles
 
 
 class ProjectDetailsMixin:
@@ -12,6 +13,12 @@ class ProjectDetailsMixin:
                 project_serializer = OpenProjectSerializer(project)
                 data["project"] = project_serializer.data
         return data
+    
+
+class ProfileInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profiles
+        fields = ["first_name", "last_name", "profile_picture"]
 
 
 class OpenProjectTagSerializer(serializers.ModelSerializer):
@@ -21,12 +28,14 @@ class OpenProjectTagSerializer(serializers.ModelSerializer):
 
 
 class OpenProjectSerializer(serializers.ModelSerializer):
+    profile = ProfileInfoSerializer(source="user.profile", read_only=True)
     tags = OpenProjectTagSerializer(many=True, read_only=True)
     class Meta:
         model = OpenProject
         fields = [
             "id",
             "user",
+            "profile",
             "project_name",
             "description",
             "level",
@@ -36,7 +45,7 @@ class OpenProjectSerializer(serializers.ModelSerializer):
             "group_size",
             "tags"
         ]
-        read_only_fields = ["user", "tags"]
+        read_only_fields = ["user", "profile", "tags"]
 
 
 class OpenProjectRestrictedSerializer(serializers.ModelSerializer):
