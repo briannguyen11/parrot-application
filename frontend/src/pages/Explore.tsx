@@ -1,9 +1,26 @@
 import ShowcaseGrid from "../components/explore/ShowcaseGrid";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { SearchIcon } from "lucide-react";
 import { SortByPopover } from "@/components/explore/SortByPopover";
 import { CommunityPopover } from "@/components/explore/CommunityPopover";
 import { X } from "lucide-react";
+import api from "@/api";
+
+interface Photo {
+  photo: string;
+  caption: string;
+  id: number;
+  project: number;
+}
+
+interface ShowcaseProject {
+  id: number;
+  project_name: string;
+  description: string;
+  photos: Photo[];
+  user_id: string;
+  post_date: string;
+}
 
 const Showcase = () => {
   useEffect(() => {
@@ -12,14 +29,47 @@ const Showcase = () => {
   }, []);
 
   const [search, setSearch] = useState("");
-  const [communities, setCommunities] = useState<string[]>([
-    "All",
-  ]);
+  const [communities, setCommunities] = useState<string[]>(["All"]);
+  const [nextPage, setNextPage] = useState<string | null>("");
+  const [loading, setLoading] = useState(true);
+  const [projects, setProjects] = useState<ShowcaseProject[]>([]);
 
   const addToCommunities = (newCommunities: string[]) => {
     setCommunities(newCommunities);
-  }
-  
+  };
+
+  const fetchProjects = async () => {
+    setLoading(true);
+    try {
+      let link = "/api/showcase-projects/projects/";
+      if (search.length > 0) {
+        link = `/api/showcase-projects/search/?query=${search}`;
+      }
+      const res = await api.get(link);
+      setProjects(res.data.results);
+      setNextPage(res.data.next);
+      setLoading(false);
+    } catch (error: unknown) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  const fetchMoreProjects = useCallback(async () => {
+    if (!nextPage) return;
+
+    try {
+      const res = await api.get(nextPage);
+      const newProjects = [...projects, ...res.data.results];
+      setProjects(newProjects);
+      setNextPage(res.data.next);
+    } catch (error: unknown) {
+      console.error(error);
+    }
+  }, [nextPage, projects]);
 
   return (
     <div className="w-full pt-5">
@@ -45,16 +95,21 @@ const Showcase = () => {
             className="text-md font-light pl-5 w-full bg-inherit rounded-2xl focus:outline-none "
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                fetchProjects();
+              }
+            }}
           />
 
-          <button className="p-2 px-5 bg-black text-white rounded-2xl">
+          <button onClick={()=>fetchProjects()} className="p-2 px-5 bg-black text-white rounded-2xl">
             Search
           </button>
         </div>
       </div>
       <div className="flex gap-3 items-center mb-8 w-full overflow-scroll ">
-        <SortByPopover  />
-        <CommunityPopover handleFilter={addToCommunities}/>
+        <SortByPopover />
+        <CommunityPopover handleFilter={addToCommunities} />
 
         {communities.map((community) => (
           <div
@@ -63,13 +118,23 @@ const Showcase = () => {
           >
             <h4 className=" whitespace-nowrap">{community}</h4>
 
-            <X size={15} className="cursor-pointer" onClick={()=> setCommunities(communities.filter(item => item !== community))}/>
-
+            <X
+              size={15}
+              className="cursor-pointer"
+              onClick={() =>
+                setCommunities(communities.filter((item) => item !== community))
+              }
+            />
           </div>
         ))}
       </div>
 
-      <ShowcaseGrid />
+      <ShowcaseGrid
+        projects={projects}
+        loading={loading}
+        nextPage={nextPage}
+        fetchMoreProjects={fetchMoreProjects}
+      />
     </div>
   );
 };

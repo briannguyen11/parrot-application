@@ -1,7 +1,6 @@
 import ShowcaseCard from "./ShowcaseCard";
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useRef} from "react";
 import { Skeleton } from "../ui/skeleton";
-import api from "@/api";
 
 interface Photo {
   photo: string;
@@ -19,41 +18,17 @@ interface ShowcaseProject {
   post_date: string;
 }
 
-const ShowcaseGrid = () => {
-  const [loading, setLoading] = useState(true);
-  const [projects, setProjects] = useState<ShowcaseProject[]>([]);
-  const [nextPage, setNextPage] = useState<string | null>("");
+const ShowcaseGrid = ({ projects, fetchMoreProjects, loading, nextPage }: {
+  projects: ShowcaseProject[];
+  fetchMoreProjects: () => void;
+  loading: boolean;
+  nextPage: boolean;
+}) => {
 
   const observerRef = useRef<IntersectionObserver | null>(null);
   const triggerRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const res = await api.get("/api/showcase-projects/projects/");
-        setProjects(res.data.results);
-        setNextPage(res.data.next);
-        setLoading(false);
-      } catch (error: unknown) {
-        console.log(error);
-      }
-    };
 
-    fetchProjects();
-  }, []);
-
-  const fetchMoreProjects = useCallback(async () => {
-    if (!nextPage) return;
-
-    try {
-      const res = await api.get(nextPage);
-      const newProjects = [...projects, ...res.data.results];
-      setProjects(newProjects);
-      setNextPage(res.data.next);
-    } catch (error: unknown) {
-      console.error(error);
-    }
-  }, [nextPage, projects]);
 
   useEffect(() => {
     if (loading) return;
@@ -178,7 +153,6 @@ const ShowcaseGrid = () => {
           </div>
         </div>
       </div>
-
     </>
   );
 
@@ -188,7 +162,7 @@ const ShowcaseGrid = () => {
       {!loading &&
         projects &&
         projects.length > 0 &&
-        projects.map((project) => (
+        projects.map((project : ShowcaseProject) => (
           <ShowcaseCard
             key={project.id}
             projectId={project.id}
