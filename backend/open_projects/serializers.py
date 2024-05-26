@@ -39,6 +39,12 @@ class OpenProjectSerializer(serializers.ModelSerializer):
         read_only_fields = ["user", "tags"]
 
 
+class OpenProjectRestrictedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OpenProject
+        exclude = ["user", "status"]
+
+
 class OpenProjectApplySerializer(ProjectDetailsMixin, serializers.ModelSerializer):
     class Meta:
         model = OpenProjectApply

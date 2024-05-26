@@ -12,7 +12,7 @@ class ProjectDetailsMixin:
                 project_serializer = ShowcaseProjectSerializer(project)
                 data["project"] = project_serializer.data
         return data
-    
+
 
 class ShowcaseProjectTagSerializer(serializers.ModelSerializer):
     class Meta:

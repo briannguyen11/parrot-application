@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from open_projects.serializers import OpenProjectSerializer, OpenProjectApplySerializer, OpenProjectSaveSerializer
+from open_projects.serializers import OpenProjectSerializer, OpenProjectApplySerializer, OpenProjectSaveSerializer, OpenProjectRestrictedSerializer
 from showcase_projects.serializers import ShowcaseProjectSerializer, ShowcaseProjectSaveSerializer, LikeSerializer
 from .models import Profiles
 
@@ -24,8 +24,6 @@ class BaseProfilesSerializer(serializers.ModelSerializer):
         read_only_fields = ["user"]
 
 
-
-
 class ProfilesSerializer(serializers.ModelSerializer): 
     open_projects = OpenProjectSerializer(many=True, read_only=True, source="user.open_projects")
     applied_open_projects = OpenProjectApplySerializer(many=True, read_only=True, source="user.applied_open_projects")
@@ -33,6 +31,7 @@ class ProfilesSerializer(serializers.ModelSerializer):
     showcase_projects = ShowcaseProjectSerializer(many=True, read_only=True, source="user.showcase_projects")
     saved_showcase_projects = ShowcaseProjectSaveSerializer(many=True, read_only=True, source="user.saved_showcase_projects")
     likes = LikeSerializer(many=True, read_only=True, source="user.likes")
+
     class Meta:
         model = Profiles
         fields = [
@@ -82,3 +81,29 @@ class ProfilesSerializer(serializers.ModelSerializer):
                     "Resume size should be less than 10 MB."
                 )
         return data
+
+class ProfilesRestrictedSerializer(serializers.ModelSerializer): 
+    open_projects = OpenProjectRestrictedSerializer(many=True, read_only=True, source="user.open_projects")
+    showcase_projects = ShowcaseProjectSerializer(many=True, read_only=True, source="user.showcase_projects")
+
+    class Meta:
+        model = Profiles
+        fields = [
+            "id",
+            "user",
+            "first_name",
+            "last_name",
+            "school",
+            "major",
+            "bio",
+            "profile_picture",
+            "linkedin",
+            "github",
+            "open_projects",
+            "showcase_projects",
+        ]
+        read_only_fields = [
+            "user", 
+            "open_projects",
+            "showcase_projects",
+        ]
