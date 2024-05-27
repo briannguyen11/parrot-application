@@ -121,15 +121,15 @@ export function ProfileDropDown() {
         <DropdownMenuContent className="lg:mr-10 mr-5 mt-3 w-56 ">
           <DropdownMenuItem
             className="hover:cursor-pointer"
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/sign-in")}
           >
             <LogIn className="mr-2 h-4 w-4" />
-            <span>Log In</span>
+            <span>Sign In</span>
           </DropdownMenuItem>
 
           <DropdownMenuItem
             className="hover:cursor-pointer"
-            onClick={() => navigate("/register")}
+            onClick={() => navigate("/sign-up")}
           >
             <UserPlus className="mr-2 h-4 w-4" />
             <span>Sign Up</span>

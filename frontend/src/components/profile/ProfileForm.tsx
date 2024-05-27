@@ -55,8 +55,8 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
       setProfile(res.data);
       updatePfp(res.data.profile_picture);
       setUpdateProfile(false);
-    } catch (error: any) {
-      console.error(error.response);
+    } catch (error: unknown) {
+      console.error(error);
     }
   };
 

@@ -23,8 +23,7 @@ export const theme = {
     montserrat: ["Montserrat", "sans-serif"],
   },
   backgroundImage: {
-    "parrot-gradient":
-      "linear-gradient(to right, #1D425C, #C73B36, #E69215)",
+    "parrot-gradient": "linear-gradient(to right, #1D425C, #C73B36, #E69215)",
 
     "navbar-gradient":
       "linear-gradient(to right, #1D425C, #C73B36, #E69215, #F9D423)",
@@ -62,6 +61,7 @@ export const theme = {
       ring: "hsl(var(--ring))",
       background: "var(--background)",
       foreground: "hsl(var(--foreground))",
+      parrotRed: "#C73B36",
       primary: {
         DEFAULT: "var(--primary)",
         foreground: "var(--primary-foreground)",
@@ -116,16 +116,15 @@ export const theme = {
         from: { height: "var(--radix-accordion-content-height)" },
         to: { height: "0" },
       },
-      'loading-bar': {
-        '0%': { width: '0%' },
-        '100%': { width: '100%' },
+      "loading-bar": {
+        "0%": { width: "0%" },
+        "100%": { width: "100%" },
       },
     },
     animation: {
       "accordion-down": "accordion-down 0.2s ease-out",
       "accordion-up": "accordion-up 0.2s ease-out",
-      'loading-bar': 'loading-bar 0.6s ease-out',
-      
+      "loading-bar": "loading-bar 0.6s ease-out",
     },
 
     screens: {

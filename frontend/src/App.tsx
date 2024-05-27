@@ -5,8 +5,8 @@ import Profile from "./pages/Profile";
 import Onboard from "./pages/Onboard";
 import Wait from "./pages/Wait";
 import NotFound from "./pages/NotFound";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 import OpenProjectInfo from "./pages/OpenProjectInfo";
 import ShowcaseProject from "./pages/ShowcaseProject";
 import OpenProjectPage from "./pages/OpenProjectPage";
@@ -28,7 +28,8 @@ import Admin from "./pages/Admin";
 // clear local storage before registering
 function RegisterAndLogout() {
   localStorage.clear();
-  return <Register />;
+  sessionStorage.clear();
+  return <SignUp />;
 }
 
 const router = createBrowserRouter(
@@ -89,8 +90,8 @@ const router = createBrowserRouter(
         }
       />
 
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<RegisterAndLogout />} />
+      <Route path="/sign-in" element={<SignIn />} />
+      <Route path="/sign-up" element={<RegisterAndLogout />} />
       <Route path="/settings" element={<Settings />} />
       <Route
         path="/admin"
