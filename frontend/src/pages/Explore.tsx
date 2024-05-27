@@ -100,12 +100,12 @@ const Showcase = () => {
           individuals.
         </p>
 
-        <div className="mt-4 flex items-center text-sm font-light pl-5 lg:w-full p-2 bg-inherit rounded-2xl focus:outline-none border">
+        <div className="mt-4 flex items-center text-sm font-light pl-5 lg:w-full p-2 bg-inherit rounded-full focus:outline-none border">
           <SearchIcon size={25} />
           <input
             type="text"
             placeholder="Search"
-            className="md:text-sm text-base font-light pl-5 w-full bg-inherit rounded-2xl focus:outline-none "
+            className="md:text-sm text-base font-light pl-5 w-full bg-inherit rounded-full focus:outline-none "
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onKeyPress={(e) => {

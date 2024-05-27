@@ -4,6 +4,7 @@ import PersonIcon from "../../assets/icons/person.svg";
 import { useNavigate } from "react-router-dom";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import LevelIcon from "../../assets/icons/steps.svg";
+import { MinProfileData } from "../interfaces";
 
 interface tag {
   tag: string;
@@ -21,6 +22,7 @@ type FeedCardProps = {
   user: string;
   tags?: tag[];
   previewTags?: string[];
+  profile: MinProfileData;
 };
 
 const FeedCard: React.FC<FeedCardProps> = ({
@@ -33,6 +35,7 @@ const FeedCard: React.FC<FeedCardProps> = ({
   user,
   tags,
   previewTags,
+  profile,
 }) => {
   const timeAgo =
     "posted " +
@@ -99,17 +102,17 @@ const FeedCard: React.FC<FeedCardProps> = ({
       </p>
 
       <div className="mt-6 flex items-center gap-x-3 border-b pb-4">
-        <img src={PersonIcon} alt="profile" className="w-7 h-7 rounded-full" />
+        <img src={profile.profile_picture || PersonIcon} alt="profile" className="w-7 h-7 rounded-full" />
 
         <div className="flex items-center gap-3 whitespace-nowrap overflow-scroll no-scrollbar">
           <h4 className="text-sm  font-medium text-secondary">
-            Query Name using user_id = {user}
+            {profile.first_name} {profile.last_name}
           </h4>
 
           <p className="text-md font-light text-secondary-foreground">|</p>
 
           <p className="text-sm font-light text-secondary-foreground">
-            {"Fetch Bio using user_id and put it here"}
+            {"Profile Header (in development)"}
           </p>
         </div>
       </div>

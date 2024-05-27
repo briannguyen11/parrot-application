@@ -81,9 +81,8 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
   return (
     <div
       className="relative"
-      onClick={() => navigate("/showcase-project/" + projectId)}
     >
-      <div className="aspect-spotlight relative hover:cursor-pointer hover:scale-103 transition duration-300 ease-in-out select-none">
+      <div  onClick={() => navigate("/showcase-project/" + projectId)} className="aspect-spotlight relative hover:cursor-pointer hover:scale-103 transition duration-300 ease-in-out select-none">
         {preloadedImages.length > 0 ? (
           <img
             src={preloadedImages[photoIndex]}

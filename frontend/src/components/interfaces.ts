@@ -12,6 +12,14 @@ export interface ProfileData {
   github: string;
 }
 
+
+// For use in open project cards
+export interface MinProfileData{
+  first_name: string;
+  last_name: string;
+  profile_picture: string;
+}
+
 export interface PhotoData {
   photo: string;
   caption: string;
