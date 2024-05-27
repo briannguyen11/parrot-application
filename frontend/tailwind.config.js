@@ -27,7 +27,7 @@ export const theme = {
       "linear-gradient(to right, #1D425C, #C73B36, #E69215)",
 
     "navbar-gradient":
-      "linear-gradient(to right, #C73B36, #E69215, #F9D423)",
+      "linear-gradient(to right, #1D425C, #C73B36, #E69215, #F9D423)",
   },
 
   extend: {

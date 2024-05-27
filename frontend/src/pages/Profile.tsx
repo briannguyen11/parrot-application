@@ -21,14 +21,15 @@ const Profile = () => {
   const [openProjects, setOpenProjects] = useState<OpenData[]>([]);
   const [showcaseProjects, setShowcaseProjects] = useState<ShowcaseData[]>([]);
   const [applyProjects, setApplyProjects] = useState<ApplyData[]>([]);
-  const [liked, setLiked] = useState([]);
-  const [savedOpen, setSavedOpen] = useState([]);
-  const [savedShowcase, setSavedShowcase] = useState([]);
+  // const [liked, setLiked] = useState([]);
+  // const [savedOpen, setSavedOpen] = useState([]);
+  // const [savedShowcase, setSavedShowcase] = useState([]);
 
   useEffect(() => {
     document.title = "View Profile";
 
     const fetchProfile = async () => {
+      // eslint-disable-next-line no-useless-catch
       try {
         const res = await api.get("/api/profiles/");
         console.log(res);
@@ -71,13 +72,13 @@ const Profile = () => {
         setApplyProjects(res.data[0].applied_open_projects);
 
         // set liked
-        setLiked(res.data[0].likes);
+        // setLiked(res.data[0].likes);
 
-        // set saved open projects
-        setSavedOpen(res.data[0].saved_open_projects);
+        // // set saved open projects
+        // setSavedOpen(res.data[0].saved_open_projects);
 
-        // set saved showcase projects
-        setSavedShowcase(res.data[0].saved_showcase_projects);
+        // // set saved showcase projects
+        // setSavedShowcase(res.data[0].saved_showcase_projects);
 
         setLoading(false);
       } catch (error) {

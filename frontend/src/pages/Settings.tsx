@@ -1,7 +1,7 @@
 import Navbar from "@/components/navbar/Navbar";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Switch } from "@/components/ui/switch";
+
 
 const Settings = () => {
   const [darkMode, setDarkMode] = useState(false);

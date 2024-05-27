@@ -54,7 +54,7 @@ const Messages = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [formValue, setFormValue] = useState("");
   const [loading, setLoading] = useState(true);
-  const dummy = useRef();
+  const dummy = useRef<HTMLSpanElement>(null);
   const [lastDoc, setLastDoc] = useState<DocumentData | null>(null);
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
 

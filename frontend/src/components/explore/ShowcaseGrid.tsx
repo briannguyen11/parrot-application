@@ -22,7 +22,7 @@ const ShowcaseGrid = ({ projects, fetchMoreProjects, loading, nextPage }: {
   projects: ShowcaseProject[];
   fetchMoreProjects: () => void;
   loading: boolean;
-  nextPage: boolean;
+  nextPage: string | null;
 }) => {
 
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -51,6 +51,7 @@ const ShowcaseGrid = ({ projects, fetchMoreProjects, loading, nextPage }: {
 
     return () => {
       if (observerRef.current && triggerRef.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         observerRef.current.unobserve(triggerRef.current);
       }
     };

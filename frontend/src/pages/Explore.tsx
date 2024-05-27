@@ -108,7 +108,7 @@ const Showcase = () => {
         </div>
       </div>
       <div className="flex gap-3 items-center mb-8 w-full overflow-scroll ">
-        <SortByPopover />
+        <SortByPopover handleFilter={()=>console.log("filter")} />
         <CommunityPopover handleFilter={addToCommunities} />
 
         {communities.map((community) => (
