@@ -9,10 +9,10 @@
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
-    --card-red: 4 67% 65%;
-    --card-purple: 241 73% 74%;
+    --card-red: #C73B36;
+    --card-purple: #443647;
     --card-yellow: #E69215;
-    --card-blue: #2a6894;
+    --card-blue: #1D425C;
     --card-green: #4D6631;
 
     --card-hover: rgba(0, 0, 0, 0.297);

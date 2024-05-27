@@ -21,6 +21,19 @@ interface ShowcaseProject {
   user_id: string;
   post_date: string;
 }
+const colorMap: { [key: string]: string } = {
+  'all': "bg-card-red",
+  'photography': "bg-card-purple",
+  'design': "bg-card-yellow",
+  'computer science' : "bg-card-blue",
+  'electrical engineering': "bg-card-green",
+};
+
+const getColor = (name: string) => {
+  const technology = name.toLowerCase();
+  return colorMap[technology] || "bg-gray-400";
+};
+
 
 const Showcase = () => {
   useEffect(() => {
@@ -92,7 +105,7 @@ const Showcase = () => {
           <input
             type="text"
             placeholder="Search"
-            className="text-md font-light pl-5 w-full bg-inherit rounded-2xl focus:outline-none "
+            className="md:text-sm text-base font-light pl-5 w-full bg-inherit rounded-2xl focus:outline-none "
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onKeyPress={(e) => {
@@ -114,7 +127,7 @@ const Showcase = () => {
         {communities.map((community) => (
           <div
             key={community}
-            className=" whitespace-nowrap mt-3 bg-card-blue text-white text-xs font-montserrat font-semibold px-2 py-2 rounded-lg flex items-center gap-2"
+            className={`whitespace-nowrap mt-3 ${getColor(community)} text-white text-xs font-montserrat font-semibold px-2 py-2 rounded-lg flex items-center gap-2`}
           >
             <h4 className=" whitespace-nowrap">{community}</h4>
 

@@ -25,6 +25,8 @@ export function CommunityPopover({ handleFilter }: CommunityPopoverProps) {
     setCommunities([]);
   };
 
+  
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -53,7 +55,7 @@ export function CommunityPopover({ handleFilter }: CommunityPopoverProps) {
                   setCommunities([...communities, "All"]);
                 }
               }}
-              className="rounded-lg p-2 w-full bg-red-500 text-sm text-white"
+              className="rounded-lg p-2 w-full bg-card-red text-sm text-white"
             >
               All {communities.includes("All") ? "✓" : ""}
             </button>
@@ -68,7 +70,7 @@ export function CommunityPopover({ handleFilter }: CommunityPopoverProps) {
                   setCommunities([...communities, "Computer Science"]);
                 }
               }}
-              className="rounded-lg p-2 w-full bg-blue-500 text-sm text-white"
+              className="rounded-lg p-2 w-full bg-card-blue text-sm text-white"
             >
               Computer Science{" "}
               {communities.includes("Computer Science") ? "✓" : ""}
@@ -84,7 +86,7 @@ export function CommunityPopover({ handleFilter }: CommunityPopoverProps) {
                   setCommunities([...communities, "Electrical Engineering"]);
                 }
               }}
-              className="rounded-lg p-2 w-full bg-green-500 text-sm text-white"
+              className="rounded-lg p-2 w-full bg-card-green text-sm text-white"
             >
               Electrical Engineering{" "}
               {communities.includes("Electrical Engineering") ? "✓" : ""}
@@ -98,7 +100,7 @@ export function CommunityPopover({ handleFilter }: CommunityPopoverProps) {
                   setCommunities([...communities, "Design"]);
                 }
               }}
-              className="rounded-lg p-2 w-full bg-yellow-500 text-sm text-white"
+              className="rounded-lg p-2 w-full bg-card-yellow text-sm text-white"
             >
               Design {communities.includes("Design") ? "✓" : ""}
             </button>
@@ -113,7 +115,7 @@ export function CommunityPopover({ handleFilter }: CommunityPopoverProps) {
                   setCommunities([...communities, "Photography"]);
                 }
               }}
-              className="rounded-lg p-2 w-full bg-pink-500 text-sm text-white"
+              className="rounded-lg p-2 w-full bg-card-purple text-sm text-white"
             >
               Photography {communities.includes("Photography") ? "✓" : ""}
             </button>
@@ -124,7 +126,7 @@ export function CommunityPopover({ handleFilter }: CommunityPopoverProps) {
           <DialogTrigger className="inline-block" asChild>
             <button
               onClick={() => handleBlock()}
-              className="bg-border hover:bg-gray-300 border border-border text-sm text-primary font-raleway rounded-lg inline-block h-10 p-2 transition duration-300 ease-in-out"
+              className=" font-semibold bg-border hover:bg-gray-300 border border-border text-sm text-primary font-raleway rounded-lg inline-block h-10 p-2 transition duration-300 ease-in-out"
             >
               Save Changes
             </button>

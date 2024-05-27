@@ -64,12 +64,12 @@ const Navbar = () => {
             </div>
           </div>
 
-          <div className="bg-gray-200 rounded-2xl w-96 lg:w-64 items-center md:flex hidden">
+          <div className="bg-gray-200 rounded-2xl w-96 lg:w-72 items-center md:flex hidden">
             <img src={SearchIcon2} alt="search" className="w-5 h-5 ml-3  " />
             <input
               type="text"
               placeholder="Search"
-              className="text-sm font-light pl-5 w-full p-2 bg-inherit rounded-full focus:outline-none"
+              className="md:text-sm text-base font-light pl-5 w-full p-2 bg-inherit rounded-full focus:outline-none"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               onKeyPress={(e) => {
@@ -79,7 +79,7 @@ const Navbar = () => {
               }}
             />
           </div>
-          <div className="lg:flex xl:gap-14 gap-10 items-center hidden select-none">
+          <div className="lg:flex xl:gap-20 gap-14 items-center hidden select-none">
             <h2
               onClick={() => handleNavigate("/")}
               className="font-semibold font-raleway text-sm hover:cursor-pointer hover:text-primary-foreground whitespace-nowrap"
@@ -99,12 +99,7 @@ const Navbar = () => {
             >
               Create Project
             </h2>
-            <h2
-              onClick={() => handleNavigate("/messages")}
-              className="font-semibold font-raleway text-sm hover:cursor-pointer hover:text-primary-foreground whitespace-nowrap"
-            >
-              Messages
-            </h2>
+         
           </div>
         </div>
 
@@ -137,8 +132,8 @@ const Navbar = () => {
       {showSearch && (
         <div className="w-full flex items-center gap-x-5">
           <ArrowLeft
-            width={20}
-            height={20}
+            width={22}
+            height={22}
             className="hover:cursor-pointer"
             onClick={() => setShowSearch(false)}
           />
@@ -146,7 +141,7 @@ const Navbar = () => {
             <SearchIcon width={20} height={20} className="ml-5" />
             <input
               type="text"
-              className="w-full focus:outline-none rounded-full pl-4 text-sm font-montserrat text-primary font-medium"
+              className="w-full focus:outline-none rounded-full pl-4 text-base font-montserrat text-primary font-medium"
               placeholder="Search"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
