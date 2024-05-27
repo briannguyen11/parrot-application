@@ -1,6 +1,6 @@
 from django.db.models import Prefetch
 from rest_framework import viewsets, permissions
-from backend.views import MixedPermissionsViewSet
+from backend.views import MixedPermissionsViewSet, OwnerPermissionMixin
 from .serializers import (
     ShowcaseProjectSerializer,
     ShowcaseProjectSaveSerializer,
@@ -83,7 +83,7 @@ class ShowcaseProjectViewSet(MixedPermissionsViewSet):
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ShowcaseProjectSaveViewSet(viewsets.ModelViewSet):
+class ShowcaseProjectSaveViewSet(OwnerPermissionMixin, viewsets.ModelViewSet):
     serializer_class = ShowcaseProjectSaveSerializer
     permission_classes = [permissions.IsAuthenticated]
 

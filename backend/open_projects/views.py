@@ -1,6 +1,6 @@
 from django.db.models import Prefetch
 from rest_framework import viewsets, permissions
-from backend.views import MixedPermissionsViewSet
+from backend.views import MixedPermissionsViewSet, OwnerPermissionMixin
 from .serializers import (
     OpenProjectSerializer,
     OpenProjectApplySerializer,
@@ -89,7 +89,7 @@ class AdminOpenProjectViewSet(viewsets.ModelViewSet):
             )
 
 
-class OpenProjectApplyViewSet(viewsets.ModelViewSet):
+class OpenProjectApplyViewSet(OwnerPermissionMixin, viewsets.ModelViewSet):
     serializer_class = OpenProjectApplySerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -104,7 +104,7 @@ class OpenProjectApplyViewSet(viewsets.ModelViewSet):
         return queryset
 
 
-class OpenProjectSaveViewSet(viewsets.ModelViewSet):
+class OpenProjectSaveViewSet(OwnerPermissionMixin, viewsets.ModelViewSet):
     serializer_class = OpenProjectSaveSerializer
     permission_classes = [permissions.IsAuthenticated]
 

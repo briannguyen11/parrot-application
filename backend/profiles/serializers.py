@@ -65,7 +65,7 @@ class ProfilesSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         # Check if profile_picture is provided
-        if "profile_picture" in data:
+        if "profile_picture" in data and data["profile_picture"]:
             profile_picture = data["profile_picture"]
             # Validate profile_picture field
             if profile_picture.size > 10 * 1024 * 1024:  # Example: Limit size to 10 MB
@@ -73,7 +73,7 @@ class ProfilesSerializer(serializers.ModelSerializer):
                     "Profile picture size should be less than 10 MB."
                 )
         # Check if resume is provided
-        if "resume" in data:
+        if "resume" in data and data["resume"]:
             resume = data["resume"]
             # Validate resume field
             if resume.size > 10 * 1024 * 1024:  # Example: Limit size to 10 MB
@@ -98,6 +98,7 @@ class ProfilesRestrictedSerializer(serializers.ModelSerializer):
             "major",
             "bio",
             "profile_picture",
+            "resume",
             "linkedin",
             "github",
             "open_projects",

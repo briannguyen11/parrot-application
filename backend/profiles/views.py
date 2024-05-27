@@ -5,7 +5,7 @@ from open_projects.models import OpenProject, OpenProjectApply, OpenProjectSave
 from showcase_projects.models import ShowcaseProject, ShowcaseProjectSave, Like
 from .serializers import ProfilesSerializer, ProfilesRestrictedSerializer, BaseProfilesSerializer
 from .models import Profiles
-from backend.views import MixedPermissionsViewSet
+from backend.views import MixedPermissionsViewSet, OwnerPermissionMixin
 
 
 # This viewset is used to search for profiles
@@ -39,7 +39,7 @@ class PublicProfilesViewSet(MixedPermissionsViewSet):
         return queryset
 
 
-class PrivateProfilesViewSet(viewsets.ModelViewSet):
+class PrivateProfilesViewSet(OwnerPermissionMixin, viewsets.ModelViewSet):
     serializer_class = ProfilesSerializer
     permission_classes = [permissions.IsAuthenticated]
 
