@@ -32,7 +32,6 @@ const FeedCard: React.FC<FeedCardProps> = ({
   post_date,
   level,
   group_size,
-  user,
   tags,
   previewTags,
   profile,
