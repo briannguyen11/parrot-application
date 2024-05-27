@@ -5,6 +5,7 @@ import { SortByPopover } from "@/components/explore/SortByPopover";
 import { CommunityPopover } from "@/components/explore/CommunityPopover";
 import { X } from "lucide-react";
 import api from "@/api";
+import LoadingIcon from "../assets/icons/loading.svg";
 
 interface Photo {
   photo: string;
@@ -22,18 +23,17 @@ interface ShowcaseProject {
   post_date: string;
 }
 const colorMap: { [key: string]: string } = {
-  'all': "bg-card-red",
-  'photography': "bg-card-purple",
-  'design': "bg-card-yellow",
-  'computer science' : "bg-card-blue",
-  'electrical engineering': "bg-card-green",
+  all: "bg-card-red",
+  photography: "bg-card-purple",
+  design: "bg-card-yellow",
+  "computer science": "bg-card-blue",
+  "electrical engineering": "bg-card-green",
 };
 
 const getColor = (name: string) => {
   const technology = name.toLowerCase();
   return colorMap[technology] || "bg-gray-400";
 };
-
 
 const Showcase = () => {
   useEffect(() => {
@@ -101,7 +101,17 @@ const Showcase = () => {
         </p>
 
         <div className="mt-4 flex items-center text-sm font-light pl-5 lg:w-full p-2 bg-inherit rounded-full focus:outline-none border">
-          <SearchIcon size={25} />
+          {!loading ? (
+            <SearchIcon size={25} className="mr-[5px]" />
+          ) : (
+            <div className="animate-spin rounded-full w-8 h-8 overflow-hidden">
+              <img
+                src={LoadingIcon}
+                alt="logo"
+                className="w-full h-full object-cover select-none"
+              />
+            </div>
+          )}
           <input
             type="text"
             placeholder="Search"
@@ -114,20 +124,34 @@ const Showcase = () => {
               }
             }}
           />
+          {/* {loading && (
+            <div className="animate-spin rounded-full mr-5 overflow-auto">
+              <img
+                src={LoadingIcon}
+                alt="logo"
+                className="w-6 h-6 object-cover select-none"
+              />
+            </div>
+          )} */}
 
-          <button onClick={()=>fetchProjects()} className="p-2 px-5 bg-black text-white rounded-2xl">
+          <button
+            onClick={() => fetchProjects()}
+            className="p-2 px-5 bg-black text-white rounded-2xl"
+          >
             Search
           </button>
         </div>
       </div>
       <div className="flex gap-3 items-center mb-8 w-full overflow-scroll ">
-        <SortByPopover handleFilter={()=>console.log("filter")} />
+        <SortByPopover handleFilter={() => console.log("filter")} />
         <CommunityPopover handleFilter={addToCommunities} />
 
         {communities.map((community) => (
           <div
             key={community}
-            className={`whitespace-nowrap mt-3 ${getColor(community)} text-white text-xs font-montserrat font-semibold px-2 py-2 rounded-lg flex items-center gap-2`}
+            className={`whitespace-nowrap mt-3 ${getColor(
+              community
+            )} text-white text-xs font-montserrat font-semibold px-2 py-2 rounded-lg flex items-center gap-2`}
           >
             <h4 className=" whitespace-nowrap">{community}</h4>
 

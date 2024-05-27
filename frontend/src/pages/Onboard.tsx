@@ -46,6 +46,7 @@ const Onboard = () => {
       console.log(res);
       updatePfp(res.data.profile_picture);
       navigate("/");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.log(error.response);
       alert("Profile already exists");
