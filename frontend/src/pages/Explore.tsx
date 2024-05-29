@@ -45,6 +45,7 @@ const Showcase = () => {
   const [communities, setCommunities] = useState<string[]>(["All"]);
   const [nextPage, setNextPage] = useState<string | null>("");
   const [loading, setLoading] = useState(true);
+  const [initialLoad, setInitialLoad] = useState(true);
   const [projects, setProjects] = useState<ShowcaseProject[]>([]);
 
   const addToCommunities = (newCommunities: string[]) => {
@@ -62,6 +63,7 @@ const Showcase = () => {
       setProjects(res.data.results);
       setNextPage(res.data.next);
       setLoading(false);
+      setInitialLoad(false);
     } catch (error: unknown) {
       console.log(error);
     }
@@ -101,17 +103,8 @@ const Showcase = () => {
         </p>
 
         <div className="mt-4 flex items-center text-sm font-light pl-5 lg:w-full p-2 bg-inherit rounded-full focus:outline-none border">
-          {!loading ? (
-            <SearchIcon size={25} className="mr-[5px]" />
-          ) : (
-            <div className="animate-spin rounded-full w-8 h-8 overflow-hidden">
-              <img
-                src={LoadingIcon}
-                alt="logo"
-                className="w-full h-full object-cover select-none"
-              />
-            </div>
-          )}
+          <SearchIcon size={25} />
+
           <input
             type="text"
             placeholder="Search"
@@ -134,9 +127,21 @@ const Showcase = () => {
             </div>
           )} */}
 
+          {loading && !initialLoad ? (
+            <div className="animate-spin rounded-full w-8 h-8 overflow-hidden mr-5">
+              <img
+                src={LoadingIcon}
+                alt="logo"
+                className="w-full h-full object-cover select-none"
+              />
+            </div>
+          ) : (
+            <div className="rounded-full w-8 h-8 overflow-hidden mr-5"></div>
+          )}
+
           <button
             onClick={() => fetchProjects()}
-            className="p-2 px-5 bg-black text-white rounded-2xl"
+            className="p-2 px-5 bg-black text-white rounded-full"
           >
             Search
           </button>
