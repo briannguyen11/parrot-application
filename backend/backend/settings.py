@@ -68,8 +68,6 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ],
-
-  
 }
 
 # Authentication backend
@@ -77,10 +75,6 @@ REST_FRAMEWORK = {
 AUTHENTICATION_BACKENDS = [
     "accounts.backends.model_backend.ModelBackend",
 ]
-
-# Sendgrid Settings (Email)
-SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
-DEFAULT_FROM_EMAIL = "no-reply@parrotprojects.io"
 
 
 # Application definition

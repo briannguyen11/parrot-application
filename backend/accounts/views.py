@@ -6,8 +6,6 @@ from rest_framework import status
 from rest_framework.views import APIView
 from .models import User
 from .serializers import UserSerializer
-from .firebase_auth.firebase_authentication import auth as firebase_admin_auth
-from .utils.email_verification import send_verification_email
 from rest_framework.permissions import AllowAny
 from backend.settings import auth
 from firebase_admin import auth as firebase_auth
@@ -88,6 +86,62 @@ class AuthSignIn(APIView):
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
+
+
+class GoogleSignIn(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
+    def post(self, request: Request):
+        data = request.data
+        id_token = data.get("id_token")
+        if not id_token:
+            return Response(
+                {"message": "ID Token required"}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            decoded_token = firebase_auth.verify_id_token(id_token)
+            uid = decoded_token["uid"]
+
+            try:
+                # sign in existing user
+                user = User.objects.get(firebase_uid=uid)
+                serializer = UserSerializer(user)
+                data = serializer.data
+                response = {
+                    "message": "User logged in successfully.",
+                    "data": data,
+                }
+                return Response(response, status=status.HTTP_200_OK)
+            except User.DoesNotExist:
+                # create new user
+                email = decoded_token["email"]
+                user_data = {
+                    "firebase_uid": uid,
+                    "email": email,
+                    "is_active": True,
+                    "password": "fakepassword",  # TODO: remove when table is updated
+                }
+
+                try:
+                    # save to DB
+                    serializer = UserSerializer(data=user_data)
+                    if serializer.is_valid():
+                        serializer.save()
+                        data = serializer.data
+                        response = {
+                            "message": "User created successfully.",
+                            "data": data,
+                        }
+                        return Response(response, status=status.HTTP_201_CREATED)
+                    else:
+                        errors = serializer.errors
+                        return Response(errors, status=status.HTTP_400_BAD_REQUEST)
+                except Exception as e:
+                    return Response({"message": "Could not create user."}, status=400)
         except Exception as e:
             return Response({"error": str(e)}, status=500)
 

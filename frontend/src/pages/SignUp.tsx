@@ -6,9 +6,9 @@ import {
   createUserWithEmailAndPassword,
   UserCredential,
 } from "firebase/auth";
-
 import { Button } from "@/components/ui/button";
-import GoogleIcon from "@/assets/icons/google-color-svgrepo-com.svg";
+
+import GoogleSignIn from "@/auth/GoogleSignIn";
 import api from "../api";
 
 const SignUp = () => {
@@ -199,6 +199,7 @@ const SignUp = () => {
           >
             <input
               type="text"
+              name="email"
               value={email}
               placeholder="Email Address"
               className="text-sm border border-border border-black rounded-sm text-sm outline-none w-full p-2"
@@ -207,6 +208,7 @@ const SignUp = () => {
             />
             <input
               type="password"
+              name="passowrd"
               value={password}
               placeholder="Password"
               className="text-sm border border-border border-black rounded-sm text-sm outline-none w-full p-2"
@@ -215,6 +217,7 @@ const SignUp = () => {
             />
             <input
               type="password"
+              name="confirmPassword"
               value={confirmPassword}
               placeholder="Confirm Password"
               className="text-sm border border-border border-black rounded-sm text-sm outline-none w-full p-2"
@@ -229,10 +232,7 @@ const SignUp = () => {
             </Button>
           </form>
           <p className="text-sm font-semibold">Or</p>
-          <Button className="border border-border border-black bg-white rounded-sm flex gap-2 w-full">
-            <img src={GoogleIcon} alt="GoogleIcon" className="w-5 h-5" />
-            <p>Continue with Google</p>
-          </Button>
+          <GoogleSignIn />
         </div>
       </div>
     </div>

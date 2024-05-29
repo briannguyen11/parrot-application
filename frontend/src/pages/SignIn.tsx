@@ -18,7 +18,7 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "Login | Parrot";
+    document.title = "Sign In | Parrot";
   }, []);
 
   const handleSignIn = async (e: React.FormEvent) => {
@@ -49,18 +49,19 @@ const SignIn = () => {
         // tokens verified, set storage and clear fields
         sessionStorage.setItem(ACCESS_TOKEN, idToken);
         sessionStorage.setItem(REFRESH_TOKEN, refreshToken);
+
         loggedIn();
         setEmail("");
         setPassword("");
-      }
 
-      // if user has profile, set pfp and go to home othwerise onboard
-      const profile = await api.get("/api/profiles/");
-      if (profile.data.length !== 0) {
-        updatePfp(profile.data[0].profile_picture);
-        navigate("/");
-      } else {
-        navigate("/onboard");
+        // if user has profile, set pfp and go to home othwerise onboard
+        const profile = await api.get("/api/profiles/");
+        if (profile.data.length !== 0) {
+          updatePfp(profile.data[0].profile_picture);
+          navigate("/");
+        } else {
+          navigate("/onboard");
+        }
       }
     } catch (error: unknown) {
       setError("Invalid email or password.");
@@ -114,6 +115,7 @@ const SignIn = () => {
           >
             <input
               type="text"
+              name="email"
               value={email}
               placeholder="Email Address"
               className="text-sm border border-border border-black rounded-sm textsm outline-none w-full p-2"
@@ -122,6 +124,7 @@ const SignIn = () => {
             />
             <input
               type="password"
+              name="password"
               value={password}
               placeholder="Password"
               className="text-sm border border-border border-black rounded-sm textsm outline-none w-full p-2"
