@@ -7,23 +7,19 @@ import { useAuth } from "@/auth/AuthWrapper";
 import { Button } from "@/components/ui/button";
 
 import GoogleSignIn from "@/auth/GoogleSignIn";
+
 import api from "../api";
 
 const SignIn = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
   const { loggedIn, updatePfp } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     document.title = "Login | Parrot";
   }, []);
-
-  const renderError = (error: string) => {
-    if (error === "Firebase: Error (auth/invalid-credential).") {
-      alert("Invalid Email or Password");
-    }
-  };
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,6 +31,11 @@ const SignIn = () => {
         email,
         password
       );
+
+      if (!credentials.user.emailVerified) {
+        setError("Please verify email before signing in.");
+        return;
+      }
 
       // sign in passed, extract tokens
       const idToken = await credentials.user.getIdToken();
@@ -62,17 +63,31 @@ const SignIn = () => {
         navigate("/onboard");
       }
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        renderError(error.message);
-      }
+      setError("Invalid email or password.");
       setEmail("");
       setPassword("");
     }
   };
 
+  const renderError = () => {
+    setTimeout(() => {
+      setError(null);
+    }, 3000);
+
+    return (
+      <div className="flex flex-inline gap-2 items-center border border-1 border-parrotYellow p-2 rounded-sm mb-4">
+        <p className="w-4 h-4 bg-parrotYellow rounded-full text-xs text-center text-white font-bold">
+          !
+        </p>
+        <p className="text-sm font-normal text-parrotYellow">{error}</p>
+      </div>
+    );
+  };
+
   return (
     <div className="w-full h-full flex items-center justify-center">
       <div className="sm:w-[400px] w-full m-8 flex flex-col items-center">
+        {error && renderError()}
         <img
           src="../../icon.svg"
           alt="logo"
@@ -97,7 +112,6 @@ const SignIn = () => {
             onSubmit={handleSignIn}
             className="w-full flex flex-col space-y-4 items-center"
           >
-            {" "}
             <input
               type="text"
               value={email}
@@ -114,7 +128,10 @@ const SignIn = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <Button className="text-white bg-parrotRed w-full" type="submit">
+            <Button
+              className="text-white bg-parrotRed w-full hover:bg-black"
+              type="submit"
+            >
               Sign In
             </Button>
           </form>

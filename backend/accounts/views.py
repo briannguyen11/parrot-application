@@ -13,63 +13,6 @@ from backend.settings import auth
 from firebase_admin import auth as firebase_auth
 
 
-class AuthCreateNewUserView(APIView):
-
-    permission_classes = [AllowAny]
-    authentication_classes = []
-
-    def post(self, request, format=None):
-        data = request.data
-        email = data.get("email")
-        password = data.get("password")
-
-        try:
-            # Create user on firebase
-            user = auth.create_user_with_email_and_password(email, password)
-            uid = user["localId"]
-            data["firebase_uid"] = uid
-            data["is_active"] = True
-
-            # Send email verification link
-            try:
-                send_verification_email(email)
-            except Exception as e:
-                # delete user from firebase if email verification link could not be sent
-                firebase_admin_auth.delete_user(uid)
-                print(str(e))
-                bad_response = {"status": "failed", "message": str(e)}
-
-                return Response(bad_response, status=status.HTTP_400_BAD_REQUEST)
-
-            # Save to DB
-            serializer = UserSerializer(data=data)
-            print(serializer)
-            print(serializer.data)
-            if serializer.is_valid():
-                serializer.save()
-                data = serializer.data
-                response = {
-                    "status": "success",
-                    "message": "User created successfully.",
-                    "data": data,
-                }
-                return Response(response, status=status.HTTP_201_CREATED)
-            else:
-                auth.delete_user_account(user["idToken"])
-                bad_response = {
-                    "status": "failed",
-                    "message": "User signup failed.",
-                    "data": serializer.errors,
-                }
-                return Response(bad_response, status=status.HTTP_400_BAD_REQUEST)
-        except Exception:
-            bad_response = {
-                "status": "failed",
-                "message": "User with this email already exists.",
-            }
-            return Response(bad_response, status=status.HTTP_400_BAD_REQUEST)
-
-
 class AuthSignUp(APIView):
     permission_classes = [AllowAny]
     authentication_classes = []
@@ -89,15 +32,13 @@ class AuthSignUp(APIView):
             user_data = {
                 "firebase_uid": uid,
                 "email": email,
-                "is_active": True,  # Assuming you want to set this as True by default
-                "password": "fakepassword",
+                "is_active": True,
+                "password": "fakepassword",  # TODO: remove when table is updated
             }
-            print("hello2")
 
             try:
                 # Save to DB
                 serializer = UserSerializer(data=user_data)
-                print("hello3")
                 if serializer.is_valid():
                     serializer.save()
                     data = serializer.data
@@ -105,13 +46,10 @@ class AuthSignUp(APIView):
                         "message": "User created successfully.",
                         "data": data,
                     }
-                    print("hello4")
                     return Response(response, status=status.HTTP_201_CREATED)
                 else:
                     errors = serializer.errors
-                    return Response(
-                        serializer.errors, status=status.HTTP_400_BAD_REQUEST
-                    )
+                    return Response(errors, status=status.HTTP_400_BAD_REQUEST)
             except Exception as e:
                 return Response({"message": "Could not create user."}, status=400)
 
@@ -152,23 +90,6 @@ class AuthSignIn(APIView):
 
         except Exception as e:
             return Response({"error": str(e)}, status=500)
-
-
-class AuthResendEmail(APIView):
-    permission_classes = [AllowAny]
-
-    def post(self, request):
-        try:
-            email = request.data.get("email")
-            send_verification_email(email)
-            return Response(
-                {"success": "new email link sent"}, status=status.HTTP_200_OK
-            )
-        except Exception:
-            return Response(
-                {"error": "failed to send email link"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
 
 
 class RefreshTokenView(APIView):

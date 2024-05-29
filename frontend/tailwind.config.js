@@ -62,6 +62,10 @@ export const theme = {
       background: "var(--background)",
       foreground: "hsl(var(--foreground))",
       parrotRed: "#C73B36",
+      parrotGreen: "#4D6631",
+      parrotYellow: "#E69215",
+      parrotBlue: "#1D425C",
+      parrotPurple: "#443647",
       primary: {
         DEFAULT: "var(--primary)",
         foreground: "var(--primary-foreground)",
