@@ -1,8 +1,4 @@
 .env
 venv
 .DS_Store
-migrations
-**/__pycache__/migrations
 __pycache__
-profile_pics
-resumes

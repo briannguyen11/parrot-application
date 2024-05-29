@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
-import { ACCESS_TOKEN, EMAIL, REFRESH_TOKEN } from "@/constants";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants";
 import { useAuth } from "@/auth/AuthWrapper";
 import { Button } from "@/components/ui/button";
 
-import GoogleIcon from "@/assets/icons/google-color-svgrepo-com.svg";
+import GoogleSignIn from "@/auth/GoogleSignIn";
 import api from "../api";
 
 const SignIn = () => {
@@ -19,46 +19,57 @@ const SignIn = () => {
     document.title = "Login | Parrot";
   }, []);
 
-  const handleSignIn = async () => {
+  const renderError = (error: string) => {
+    if (error === "Firebase: Error (auth/invalid-credential).") {
+      alert("Invalid Email or Password");
+    }
+  };
+
+  const handleSignIn = async (e: React.FormEvent) => {
+    e.preventDefault();
+
     try {
-      const res = await api.post("/api/users/auth/login/", {
-        email: email,
-        password: password,
+      const auth = getAuth();
+      const credentials = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      // sign in passed, extract tokens
+      const idToken = await credentials.user.getIdToken();
+      const refreshToken = credentials.user.refreshToken;
+
+      // verify tokens with backend
+      const res = await api.post("/api/users/auth/sign-in/", {
+        id_token: idToken,
       });
-      const accessToken = res.data.data.firebase_access_token;
-      const refreshToken = res.data.data.firebase_refresh_token;
-
-      // check if user email verified
-      const decoded: { email_verified: boolean } = jwtDecode(accessToken);
-      const verified: boolean = decoded.email_verified;
-
-      if (verified) {
-        sessionStorage.setItem(ACCESS_TOKEN, accessToken);
+      if (res.status === 200) {
+        // tokens verified, set storage and clear fields
+        sessionStorage.setItem(ACCESS_TOKEN, idToken);
         sessionStorage.setItem(REFRESH_TOKEN, refreshToken);
-        sessionStorage.setItem(EMAIL, email);
-
         loggedIn();
         setEmail("");
         setPassword("");
-
-        const profile = await api.get("/api/profiles/");
-        if (profile.data.length !== 0) {
-          // if user has profile, set pfp and go to home
-          updatePfp(profile.data[0].profile_picture);
-          navigate("/");
-        } else {
-          // no profile, go to onboard
-          navigate("/onboard");
-        }
-      } else {
-        alert("Email not verified yet!");
-        navigate("/");
       }
-    } catch (error: any) {
-      const errorMessage: string = error.response.data.message;
-      alert(errorMessage);
+
+      // if user has profile, set pfp and go to home othwerise onboard
+      const profile = await api.get("/api/profiles/");
+      if (profile.data.length !== 0) {
+        updatePfp(profile.data[0].profile_picture);
+        navigate("/");
+      } else {
+        navigate("/onboard");
+      }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        renderError(error.message);
+      }
+      setEmail("");
+      setPassword("");
     }
   };
+
   return (
     <div className="w-full h-full flex items-center justify-center">
       <div className="sm:w-[400px] w-full m-8 flex flex-col items-center">
@@ -82,31 +93,33 @@ const SignIn = () => {
               Sign Up
             </p>
           </div>
-          <input
-            type="text"
-            value={email}
-            placeholder="Email Address"
-            className="text-sm border border-border border-black rounded-sm textsm outline-none w-full p-2"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            value={password}
-            placeholder="Password"
-            className="text-sm border border-border border-black rounded-sm textsm outline-none w-full p-2"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button
-            className="text-white bg-parrotRed w-full"
-            onClick={() => handleSignIn()}
+          <form
+            onSubmit={handleSignIn}
+            className="w-full flex flex-col space-y-4 items-center"
           >
-            Login
-          </Button>
+            {" "}
+            <input
+              type="text"
+              value={email}
+              placeholder="Email Address"
+              className="text-sm border border-border border-black rounded-sm textsm outline-none w-full p-2"
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <input
+              type="password"
+              value={password}
+              placeholder="Password"
+              className="text-sm border border-border border-black rounded-sm textsm outline-none w-full p-2"
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <Button className="text-white bg-parrotRed w-full" type="submit">
+              Sign In
+            </Button>
+          </form>
           <p className="text-sm font-semibold">Or</p>
-          <Button className="border border-border border-black bg-white rounded-sm flex gap-2 w-full">
-            <img src={GoogleIcon} alt="GoogleIcon" className="w-5 h-5" />
-            <p>Continue with Google</p>
-          </Button>
+          <GoogleSignIn />
         </div>
       </div>
     </div>

@@ -1,8 +1,12 @@
-import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { EMAIL } from "@/constants";
+import {
+  getAuth,
+  sendEmailVerification,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
 
+import { Button } from "@/components/ui/button";
 import GoogleIcon from "@/assets/icons/google-color-svgrepo-com.svg";
 import api from "../api";
 
@@ -12,27 +16,91 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const navigate = useNavigate();
 
-  const handleSignUp = async () => {
-    if (password === confirmPassword) {
-      try {
-        const res = await api.post("/api/users/auth/register/", {
-          email: email,
-          password: password,
-        });
-        sessionStorage.setItem(EMAIL, res.data.data.email);
-        navigate("/wait");
-      } catch (error) {
-        alert(error);
+  const checkPassword = (password: string): string => {
+    const errors: string[] = [];
+
+    // Check if password is less than 8 characters
+    if (password.length < 8) {
+      errors.push("Password must be at least 8 characters long.");
+    }
+    // Check if password contains at least one uppercase letter
+    if (!/[A-Z]/.test(password)) {
+      errors.push("Password must contain at least one uppercase letter.");
+    }
+    // Check if password contains at least one lowercase letter
+    if (!/[a-z]/.test(password)) {
+      errors.push("Password must contain at least one lowercase letter.");
+    }
+    // Check if password contains at least one digit
+    if (!/\d/.test(password)) {
+      errors.push("Password must contain at least one digit.");
+    }
+    // Check if password contains at least one special character
+    if (!/[!@#$%^&*()_+{}[\]:;<>,.?~\\-]/.test(password)) {
+      errors.push("Password must contain at least one special character.");
+    }
+    if (errors.length > 0) {
+      return errors.join("\n");
+    }
+
+    return "success";
+  };
+
+  const renderError = (error: string) => {
+    if (error === "Firebase: Error (auth/email-already-in-use).") {
+      alert("Account already exists.");
+    }
+  };
+  const handleSignUp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const check = checkPassword(password);
+    if (check === "success") {
+      if (password === confirmPassword) {
+        try {
+          const auth = getAuth();
+
+          // create user with email and password
+          const credentials = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+
+          // send email verification
+          await sendEmailVerification(credentials.user);
+
+          // Check if the user's email is already verified
+          console.log(credentials.user.emailVerified);
+          // Get ID token
+          const idToken = await credentials.user.getIdToken();
+
+          // Send ID token to backend API
+          const res = await api.post("/api/users/auth/sign-up/", {
+            id_token: idToken,
+          });
+          console.log(res);
+
+          // Navigate to a new page
+          navigate("/sign-in");
+        } catch (error: unknown) {
+          if (error instanceof Error) {
+            renderError(error.message);
+          }
+        }
+      } else {
+        alert("Passwords do not match!");
+        setPassword("");
+        setConfirmPassword("");
       }
     } else {
-      alert("Passwords do not match!");
+      alert(check);
       setPassword("");
       setConfirmPassword("");
     }
   };
 
   useEffect(() => {
-    document.title = "Register | Parrot";
+    document.title = "Sign Up | Parrot";
   }, []);
 
   return (
@@ -58,33 +126,38 @@ const SignUp = () => {
               Sign Up
             </p>
           </div>
-          <input
-            type="text"
-            value={email}
-            placeholder="Email Address"
-            className="text-sm border border-border border-black rounded-sm textsm outline-none w-full p-2"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            value={password}
-            placeholder="Password"
-            className="text-sm border border-border border-black rounded-sm textsm outline-none w-full p-2"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <input
-            type="password"
-            value={confirmPassword}
-            placeholder="Confirm Password"
-            className="text-sm border border-border border-black rounded-sm textsm outline-none w-full p-2"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button
-            className="text-white bg-parrotRed w-full"
-            onClick={() => handleSignUp()}
+          <form
+            onSubmit={handleSignUp}
+            className="w-full flex flex-col space-y-4 items-center"
           >
-            Login
-          </Button>
+            <input
+              type="text"
+              value={email}
+              placeholder="Email Address"
+              className="text-sm border border-border border-black rounded-sm text-sm outline-none w-full p-2"
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <input
+              type="password"
+              value={password}
+              placeholder="Password"
+              className="text-sm border border-border border-black rounded-sm text-sm outline-none w-full p-2"
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <input
+              type="password"
+              value={confirmPassword}
+              placeholder="Confirm Password"
+              className="text-sm border border-border border-black rounded-sm text-sm outline-none w-full p-2"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+            <Button type="submit" className="text-white bg-parrotRed w-full">
+              Create Account
+            </Button>
+          </form>
           <p className="text-sm font-semibold">Or</p>
           <Button className="border border-border border-black bg-white rounded-sm flex gap-2 w-full">
             <img src={GoogleIcon} alt="GoogleIcon" className="w-5 h-5" />
