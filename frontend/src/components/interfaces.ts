@@ -14,9 +14,8 @@ export interface ProfileData {
   banner: string;
 }
 
-
 // For use in open project cards
-export interface MinProfileData{
+export interface MinProfileData {
   first_name: string;
   last_name: string;
   profile_picture: string;
@@ -45,10 +44,18 @@ export interface SaveData {
   project: number;
 }
 
+export interface CommentLikesData {
+  id: number;
+  comment_id: number;
+  user_id: string;
+}
+
 export interface CommentData {
   id: number;
   project: number;
   comment: string;
+  created_date: string;
+  commentLikes: CommentLikesData[];
 }
 
 export interface ShowcaseData {
