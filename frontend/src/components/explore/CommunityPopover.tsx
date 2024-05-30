@@ -55,7 +55,7 @@ export function CommunityPopover({ handleFilter }: CommunityPopoverProps) {
                   setCommunities([...communities, "All"]);
                 }
               }}
-              className="rounded-lg p-2 w-full bg-card-red text-sm text-white"
+              className="rounded-lg p-2 w-full bg-parrot-red text-sm text-white"
             >
               All {communities.includes("All") ? "✓" : ""}
             </button>
@@ -70,7 +70,7 @@ export function CommunityPopover({ handleFilter }: CommunityPopoverProps) {
                   setCommunities([...communities, "Computer Science"]);
                 }
               }}
-              className="rounded-lg p-2 w-full bg-card-blue text-sm text-white"
+              className="rounded-lg p-2 w-full bg-parrot-blue text-sm text-white"
             >
               Computer Science{" "}
               {communities.includes("Computer Science") ? "✓" : ""}
@@ -86,7 +86,7 @@ export function CommunityPopover({ handleFilter }: CommunityPopoverProps) {
                   setCommunities([...communities, "Electrical Engineering"]);
                 }
               }}
-              className="rounded-lg p-2 w-full bg-card-green text-sm text-white"
+              className="rounded-lg p-2 w-full bg-parrot-green text-sm text-white"
             >
               Electrical Engineering{" "}
               {communities.includes("Electrical Engineering") ? "✓" : ""}
@@ -100,7 +100,7 @@ export function CommunityPopover({ handleFilter }: CommunityPopoverProps) {
                   setCommunities([...communities, "Design"]);
                 }
               }}
-              className="rounded-lg p-2 w-full bg-card-yellow text-sm text-white"
+              className="rounded-lg p-2 w-full bg-parrot-yellow text-sm text-white"
             >
               Design {communities.includes("Design") ? "✓" : ""}
             </button>
@@ -115,7 +115,7 @@ export function CommunityPopover({ handleFilter }: CommunityPopoverProps) {
                   setCommunities([...communities, "Photography"]);
                 }
               }}
-              className="rounded-lg p-2 w-full bg-card-purple text-sm text-white"
+              className="rounded-lg p-2 w-full bg-parrot-purple text-sm text-white"
             >
               Photography {communities.includes("Photography") ? "✓" : ""}
             </button>

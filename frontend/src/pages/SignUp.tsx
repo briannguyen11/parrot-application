@@ -111,11 +111,11 @@ const SignUp = () => {
       message = "Account already exists.";
     }
     return (
-      <div className="flex flex-inline gap-2 items-center border border-1 border-parrotYellow p-2 rounded-sm mb-4">
-        <p className="w-4 h-4 bg-parrotYellow rounded-full text-xs text-center text-white font-bold">
+      <div className="flex flex-inline gap-2 items-center border border-1 border-parrot-yellow p-2 rounded-sm mb-4">
+        <p className="w-4 h-4 bg-parrot-yellow rounded-full text-xs text-center text-white font-bold">
           !
         </p>
-        <p className="text-xs font-normal text-parrotYellow">
+        <p className="text-xs font-normal text-parrot-yellow">
           {message &&
             message.split("\n").map((line, index) => (
               <React.Fragment key={index}>
@@ -143,7 +143,7 @@ const SignUp = () => {
 
   const renderEmailPopup = () => {
     return (
-      <div className="flex flex-col space-y-2 items-center bg-parrotYellow px-4 py-2  rounded-sm mb-4">
+      <div className="flex flex-col space-y-2 items-center bg-parrot-yellow px-4 py-2  rounded-sm mb-4">
         <p className="text-sm font-semibold text-white">Verify Your Email</p>
         <p className="text-xs font-normal text-white">
           A link has been sent to verify your email.
@@ -156,7 +156,7 @@ const SignUp = () => {
             Resend link
           </button>
         ) : (
-          <p className="text-xs font-semibold text-parrotGreen">Link sent!</p>
+          <p className="text-xs font-semibold text-parrot-green">Link sent!</p>
         )}
         <button
           className="bg-black text white px-2 py-2 text-xs text-white w-full rounded-sm"
@@ -226,7 +226,7 @@ const SignUp = () => {
             />
             <Button
               type="submit"
-              className="text-white bg-parrotRed w-full hover:bg-black"
+              className="text-white bg-parrot-red w-full hover:bg-black"
             >
               Create Account
             </Button>

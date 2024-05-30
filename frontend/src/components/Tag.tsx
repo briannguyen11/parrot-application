@@ -1,13 +1,11 @@
 const Tag = ({ name }: { name: string }) => {
   const colorMap: { [key: string]: string } = {
-    python: "bg-card-red",
-    java: "bg-card-purple",
-    javascript: "bg-card-yellow",
-    react : "bg-card-blue",
-    django: "bg-card-green",
-    'node.js': "bg-card-yellow"
-    
-    // Add more technology-color mappings here
+    python: "bg-parrot-red",
+    java: "bg-parrot-purple",
+    javascript: "bg-parrot-yellow",
+    react: "bg-parrot-blue",
+    django: "bg-parrot-green",
+    "node.js": "bg-parrot-yellow",
   };
 
   const getColor = (name: string) => {
@@ -18,7 +16,9 @@ const Tag = ({ name }: { name: string }) => {
   return (
     <div>
       <h3
-        className={`inline-block text-sm text-white rounded-lg py-2 px-4 ${getColor(name)}`}
+        className={`inline-block text-sm text-white rounded-lg py-2 px-4 ${getColor(
+          name
+        )}`}
       >
         {name}
       </h3>

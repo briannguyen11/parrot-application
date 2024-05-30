@@ -23,11 +23,11 @@ interface ShowcaseProject {
   post_date: string;
 }
 const colorMap: { [key: string]: string } = {
-  all: "bg-card-red",
-  photography: "bg-card-purple",
-  design: "bg-card-yellow",
-  "computer science": "bg-card-blue",
-  "electrical engineering": "bg-card-green",
+  all: "bg-parrot-red",
+  photography: "bg-parrot-purple",
+  design: "bg-parrot-yellow",
+  "computer science": "bg-parrot-blue",
+  "electrical engineering": "bg-parrot-green",
 };
 
 const getColor = (name: string) => {

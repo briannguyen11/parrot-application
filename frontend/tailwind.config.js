@@ -61,11 +61,18 @@ export const theme = {
       ring: "hsl(var(--ring))",
       background: "var(--background)",
       foreground: "hsl(var(--foreground))",
-      parrotRed: "#C73B36",
-      parrotGreen: "#4D6631",
-      parrotYellow: "#E69215",
-      parrotBlue: "#1D425C",
-      parrotPurple: "#443647",
+      
+
+      parrot: {
+        red: "var(--card-red)",
+        purple: "var(--card-purple)",
+        yellow: "var(--card-yellow)",
+        blue: "var(--card-blue)",
+        green: "var(--card-green)",
+
+      },
+
+
       primary: {
         DEFAULT: "var(--primary)",
         foreground: "var(--primary-foreground)",
@@ -94,11 +101,7 @@ export const theme = {
         DEFAULT: "hsl(var(--card))",
         foreground: "hsl(var(--card-foreground))",
         hover: "var(--card-hover)",
-        red: "var(--card-red)",
-        purple: "var(--card-purple)",
-        yellow: "var(--card-yellow)",
-        blue: "var(--card-blue)",
-        green: "var(--card-green)",
+    
       },
 
       sidebar: {

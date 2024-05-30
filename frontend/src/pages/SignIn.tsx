@@ -18,7 +18,7 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "Sign In | Parrot";
+    document.title = "Sign In | parrot";
   }, []);
 
   const handleSignIn = async (e: React.FormEvent) => {
@@ -76,11 +76,11 @@ const SignIn = () => {
     }, 3000);
 
     return (
-      <div className="flex flex-inline gap-2 items-center border border-1 border-parrotYellow p-2 rounded-sm mb-4">
-        <p className="w-4 h-4 bg-parrotYellow rounded-full text-xs text-center text-white font-bold">
+      <div className="flex flex-inline gap-2 items-center border border-1 border-parrot-yellow p-2 rounded-sm mb-4">
+        <p className="w-4 h-4 bg-parrot-yellow rounded-full text-xs text-center text-white font-bold">
           !
         </p>
-        <p className="text-sm font-normal text-parrotYellow">{error}</p>
+        <p className="text-sm font-normal text-parrot-yellow">{error}</p>
       </div>
     );
   };
@@ -132,7 +132,7 @@ const SignIn = () => {
               required
             />
             <Button
-              className="text-white bg-parrotRed w-full hover:bg-black"
+              className="text-white bg-parrot-red w-full hover:bg-black"
               type="submit"
             >
               Sign In
