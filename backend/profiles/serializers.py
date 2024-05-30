@@ -14,7 +14,7 @@ class BaseProfilesSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "username",
-            "header"
+            "header",
             "school",
             "major",
             "bio",
