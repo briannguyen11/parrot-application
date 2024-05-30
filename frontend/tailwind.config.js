@@ -64,11 +64,11 @@ export const theme = {
       
 
       parrot: {
-        red: "var(--card-red)",
-        purple: "var(--card-purple)",
-        yellow: "var(--card-yellow)",
-        blue: "var(--card-blue)",
-        green: "var(--card-green)",
+        red: "var(--parrot-red)",
+        purple: "var(--parrot-purple)",
+        yellow: "var(--parrot-yellow)",
+        blue: "var(--parrot-blue)",
+        green: "var(--parrot-green)",
 
       },
 

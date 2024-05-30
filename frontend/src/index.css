@@ -9,11 +9,11 @@
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
-    --card-red: #C73B36;
-    --card-purple: #443647;
-    --card-yellow: #E69215;
-    --card-blue: #1D425C;
-    --card-green: #4D6631;
+    --parrot-red: #C73B36;
+    --parrot-purple: #443647;
+    --parrot-yellow: #E69215;
+    --parrot-blue: #1D425C;
+    --parrot-green: #4D6631;
 
     --card-hover: rgba(0, 0, 0, 0.297);
 
