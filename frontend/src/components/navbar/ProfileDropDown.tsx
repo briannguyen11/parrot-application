@@ -29,20 +29,20 @@ import { useAuth } from "../../auth/AuthWrapper";
 
 export function ProfileDropDown() {
   const navigate = useNavigate();
-  const { isLoggedIn, pfp, loggedOut, updatePfp } = useAuth();
+  const { isLoggedIn, loggedInPfp, loggedOut, setUserPfp } = useAuth();
 
   const auth = isLoggedIn;
 
   const handleLogout = () => {
     sessionStorage.clear();
-    updatePfp(null);
+    setUserPfp(null);
     loggedOut();
     navigate("/");
   };
 
   const renderPfp = () => {
-    if (pfp) {
-      return pfp;
+    if (loggedInPfp) {
+      return loggedInPfp;
     } else {
       return ProfilePicture;
     }

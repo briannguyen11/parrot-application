@@ -13,14 +13,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
   projectId,
   setComments,
 }) => {
-  const { pfp } = useAuth();
+  const { loggedInPfp } = useAuth();
   const [comment, setComment] = useState<string>("");
-
-  const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const textarea = e.target;
-    textarea.style.height = "h-6";
-    textarea.style.height = textarea.scrollHeight + "px";
-  };
 
   const handleSubmit = async () => {
     const data = {
@@ -37,11 +31,11 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   return (
-    <>
+    <div className="flex-col">
       <div className="flex flex-inline gap-2 items-center">
-        {pfp ? (
+        {loggedInPfp ? (
           <img
-            src={pfp}
+            src={loggedInPfp}
             alt="Profile Picture"
             className="w-10 h-10 rounded-full"
           />
@@ -49,15 +43,15 @@ const CommentInput: React.FC<CommentInputProps> = ({
           <img src={PersonIcon} alt="Profile Picture" className="w-10 h-10" />
         )}
         <textarea
-          className="text-sm w-full outline-none bg-transparent border-b-2 border-slate-200 focus:border-b-2 focus:border-black resize-none h-6 overflow-hidden"
+          className={`text-sm w-full outline-none bg-transparent border-b-2 border-slate-200 focus:border-b-2 focus:border-black resize-none h-auto`}
           placeholder="Add a comment..."
           value={comment}
-          onInput={handleInput}
           onChange={(e) => setComment(e.target.value)}
+          rows={2} //TODO: make dynamic
         />
       </div>
       {comment.length > 0 && (
-        <div className="flex flex-inline gap-2 ml-auto">
+        <div className="flex flex-inline gap-2 justify-end mt-1">
           <button
             className="px-2 border rounded-md text-sm"
             onClick={() => setComment("")}
@@ -65,14 +59,14 @@ const CommentInput: React.FC<CommentInputProps> = ({
             Cancel
           </button>
           <button
-            className="px-2 bg-slate-500 text-white rounded-md text-sm hover:bg-slate-400"
+            className="px-2 bg-parrot-blue text-white rounded-md text-sm hover:bg-black"
             onClick={() => handleSubmit()}
           >
             Comment
           </button>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

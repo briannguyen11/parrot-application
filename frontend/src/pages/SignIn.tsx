@@ -14,7 +14,7 @@ const SignIn = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
-  const { loggedIn, updatePfp } = useAuth();
+  const { loggedIn, setUserId, setUserPfp } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -45,19 +45,22 @@ const SignIn = () => {
       const res = await api.post("/api/users/auth/sign-in/", {
         id_token: idToken,
       });
+      console.log(res);
       if (res.status === 200) {
         // tokens verified, set storage and clear fields
         sessionStorage.setItem(ACCESS_TOKEN, idToken);
         sessionStorage.setItem(REFRESH_TOKEN, refreshToken);
 
         loggedIn();
+        setUserId(res.data.user_data.id);
+
         setEmail("");
         setPassword("");
 
         // if user has profile, set pfp and go to home othwerise onboard
         const profile = await api.get("/api/profiles/");
         if (profile.data.length !== 0) {
-          updatePfp(profile.data[0].profile_picture);
+          setUserPfp(profile.data[0].profile_picture);
           navigate("/");
         } else {
           navigate("/onboard");

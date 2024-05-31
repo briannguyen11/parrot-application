@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import { formatDistanceToNow } from "date-fns";
+import { useAuth } from "@/auth/AuthWrapper";
 
 import LeftIcon from "@/assets/icons/left-arrow-backup-2-svgrepo-com.svg";
 import RightIcon from "@/assets/icons/right-arrow-backup-2-svgrepo-com.svg";
@@ -13,6 +14,8 @@ import SaveIcon from "@/assets/icons/bookmark-svgrepo-com.svg";
 import api from "@/api";
 
 import {
+  LikeData,
+  SaveData,
   CommentData,
   MinProfileData,
   PhotoData,
@@ -23,15 +26,15 @@ import CommentList from "@/components/comments/CommentList";
 
 const ShowcaseProject = () => {
   const { projectId } = useParams<{ projectId: string }>();
-  const [liked, setLiked] = useState<boolean>(false);
-  const [saved, setSaved] = useState<boolean>(false);
+  const { loggedInId } = useAuth();
+  const [liked, setLiked] = useState<number | null>(null);
+  const [saved, setSaved] = useState<number | null>(null);
   const [comments, setComments] = useState<CommentData[]>([]);
   const [loading, setLoading] = useState(true);
   const [project, setProject] = useState<ShowcaseData>();
   const [profile, setProfile] = useState<MinProfileData>();
   const [photoIndex, setPhotoIndex] = useState(0);
   const [preloadedImages, setPreloadedImages] = useState<string[]>([]);
-
   // const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,23 +43,48 @@ const ShowcaseProject = () => {
         const res = await api.get(
           "/api/showcase-projects/projects/" + projectId + "/"
         );
-        console.log(res);
         setProject(res.data);
         setProfile(res.data.profile);
         setComments(res.data.comments);
 
+        // check if user liked current showcase
+        const likeObject = res.data.likes.find(
+          (like: LikeData) => like.user === loggedInId
+        );
+        if (likeObject) {
+          setLiked(likeObject.id);
+        }
+
+        // load images to render
         preloadImages(res.data.photos);
-
         document.title = `${res.data.project_name} | Parrot`;
-
-        setLoading(false);
       } catch (error) {
-        console.log(error);
+        console.error(error);
+      }
+    };
+
+    const checkUserSaved = async () => {
+      try {
+        if (loggedInId) {
+          const res = await api.get(
+            `/api/showcase-projects/saves/?user_id=${loggedInId}`
+          );
+          const saveObject = res.data.find(
+            (saved: SaveData) => saved.project.id === Number(projectId)
+          );
+          if (saveObject) {
+            setSaved(saveObject.id);
+          }
+        }
+      } catch (error) {
+        console.error(error);
       }
     };
 
     fetchProjects();
-  }, [projectId]);
+    checkUserSaved();
+    setLoading(false);
+  }, [projectId, loggedInId]);
 
   const preloadImages = (photos: PhotoData[]) => {
     const imagePromises = photos.map((photo) => {
@@ -72,6 +100,58 @@ const ShowcaseProject = () => {
       setPreloadedImages(images);
       setLoading(false);
     });
+  };
+
+  const timeAgo =
+    project && project.post_date
+      ? "Posted " +
+        formatDistanceToNow(new Date(project.post_date), {
+          addSuffix: false,
+        }) +
+        " ago"
+      : "Date not available";
+
+  const handleLike = async () => {
+    if (!liked) {
+      try {
+        const res = await api.post("/api/showcase-projects/likes/", {
+          project: projectId,
+        });
+        setLiked(res.data.id);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    if (liked) {
+      try {
+        await api.delete(`/api/showcase-projects/likes/${liked}/`);
+        setLiked(null);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
+  const handleSave = async () => {
+    if (!saved) {
+      try {
+        const res = await api.post("/api/showcase-projects/saves/", {
+          project: projectId,
+        });
+        console.log(res);
+        setSaved(res.data.id);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    if (saved) {
+      try {
+        await api.delete(`/api/showcase-projects/saves/${saved}/`);
+        setSaved(null);
+      } catch (error) {
+        console.error(error);
+      }
+    }
   };
 
   const nextPhotoButton = () => {
@@ -96,35 +176,12 @@ const ShowcaseProject = () => {
     );
   };
 
-  const timeAgo =
-    project && project.post_date
-      ? "Posted " +
-        formatDistanceToNow(new Date(project.post_date), {
-          addSuffix: false,
-        }) +
-        " ago"
-      : "Date not available";
-
-  const handleDelete = () => {
-    console.log("delete");
-  };
-
-  const handleLike = () => {
-    setLiked(!liked);
-    console.log("like");
-  };
-
-  const handleSave = () => {
-    setSaved(!saved);
-    console.log("saved");
-  };
-
   if (loading) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div className="flex flex-col space-y-4 w-full my-4 xs:w-[800px]">
+    <div className="flex flex-col space-y-4 w-full my-4 lg:w-[800px]">
       <div className="flex flex-col md:flex-row justify-between md:items-center">
         <div className="flex flex-row items-center gap-4">
           <div className="flex flex-row items-center gap-2">
@@ -167,42 +224,53 @@ const ShowcaseProject = () => {
       <p className="text-sm text-slate-400 text-center">
         {project?.photos[photoIndex].caption}
       </p>
-      <div className="flex flex-col space-y-2 sm:flex-row sm:justify-between">
+      <div className="flex flex-row justify-between gap-2">
         <div className="flex flex-row gap-4 items-center">
           <h3 className="text-3xl sm:text-4xl font-semibold">
             {project?.project_name}
           </h3>
-          <div className="flex flex-row gap-4">
+          <div className="flex flex-row gap-2 sm:gap-4">
             <a target="_blank" rel="noreferrer">
-              <img src={LinkIcon} alt="link" className="w-5 h-5" />
+              <img
+                src={LinkIcon}
+                alt="link"
+                className="w-6 h-6 min-w-5 min-h-5"
+              />
             </a>
             <a target="_blank" rel="noreferrer">
-              <img src={GithubIcon} alt="github" className="w-5 h-5" />
+              <img
+                src={GithubIcon}
+                alt="github"
+                className="w-6 h-6 min-w-5 min-h-5"
+              />
             </a>
           </div>
         </div>
-        <div className="flex flex-inline gap-2">
-          <button onClick={() => handleLike()}>
+        <div className="flex flex-inline gap-2 items-center">
+          <button
+            className="w-6 h-6 sm:w-8 sm:h-8"
+            onClick={() => handleLike()}
+          >
             <img
               src={HeartIcon}
               alt="Like"
-              className={`p-2 rounded-full w-12 h-12 ${
-                liked ? "bg-parrot-red" : "bg-transparent"
-              }`}
+              className={` ${liked ? "bg-parrot-red" : "bg-transparent"}`}
             />
           </button>
-          <button onClick={() => handleSave()}>
+          <button
+            className="w-6 h-6  sm:w-8 sm:h-8"
+            onClick={() => handleSave()}
+          >
             <img
               src={SaveIcon}
               alt="Like"
-              className={`p-2 rounded-full w-12 h-12 ${
-                saved ? "bg-parrot-yellow" : "bg-transparent"
-              }`}
+              className={` ${saved ? "bg-parrot-yellow" : "bg-transparent"}`}
             />
           </button>
         </div>
       </div>
       <div className="text-md font-normal">{project?.description}</div>
+      <h5 className="text-l sm:text-lg font-semibold">Comments</h5>
       <CommentInput projectId={Number(projectId)} setComments={setComments} />
       <CommentList comments={comments} setComments={setComments} />
     </div>

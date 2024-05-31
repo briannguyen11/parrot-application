@@ -37,11 +37,13 @@ export interface TagData {
 export interface LikeData {
   id: number;
   project: number;
+  user: string;
 }
 
 export interface SaveData {
   id: number;
-  project: number;
+  project: ShowcaseData;
+  user: string;
 }
 
 export interface CommentLikesData {
@@ -52,9 +54,11 @@ export interface CommentLikesData {
 
 export interface CommentData {
   id: number;
+  user: string;
   project: number;
-  comment: string;
+  content: string;
   created_date: string;
+  profile: MinProfileData;
   commentLikes: CommentLikesData[];
 }
 

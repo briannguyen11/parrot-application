@@ -202,7 +202,7 @@ const SignUp = () => {
               name="email"
               value={email}
               placeholder="Email Address"
-              className="text-sm border border-border border-black rounded-sm text-sm outline-none w-full p-2"
+              className="text-sm border border-border border-black rounded-sm outline-none w-full p-2"
               onChange={(e) => setEmail(e.target.value)}
               required
             />
@@ -211,7 +211,7 @@ const SignUp = () => {
               name="passowrd"
               value={password}
               placeholder="Password"
-              className="text-sm border border-border border-black rounded-sm text-sm outline-none w-full p-2"
+              className="text-sm border border-border border-black rounded-sm outline-none w-full p-2"
               onChange={(e) => setPassword(e.target.value)}
               required
             />
@@ -220,7 +220,7 @@ const SignUp = () => {
               name="confirmPassword"
               value={confirmPassword}
               placeholder="Confirm Password"
-              className="text-sm border border-border border-black rounded-sm text-sm outline-none w-full p-2"
+              className="text-sm border border-border border-black rounded-sm outline-none w-full p-2"
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />

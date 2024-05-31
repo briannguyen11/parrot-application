@@ -6,14 +6,16 @@ import {
   useEffect,
   ReactNode,
 } from "react";
-import { ACCESS_TOKEN, PFP } from "../constants";
+import { ACCESS_TOKEN, ID, PFP } from "../constants";
 
 interface AuthContextType {
   isLoggedIn: boolean;
-  pfp: string | null;
+  loggedInId: string | null;
+  loggedInPfp: string | null;
   loggedIn: () => void;
   loggedOut: () => void;
-  updatePfp: (pfpUrl: string | null) => void;
+  setUserId: (userId: string | null) => void;
+  setUserPfp: (pfpUrl: string | null) => void;
 }
 
 interface Props {
@@ -24,16 +26,21 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const AuthProvider = ({ children }: Props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [pfp, setPfp] = useState<string | null>(null);
+  const [loggedInId, setLoggedInId] = useState<string | null>(null);
+  const [loggedInPfp, setLoggedInPfp] = useState<string | null>(null);
 
   useEffect(() => {
     const storedToken = sessionStorage.getItem(ACCESS_TOKEN);
+    const storedId = sessionStorage.getItem(ID);
     const storedPfp = sessionStorage.getItem(PFP);
     if (storedToken) {
       setIsLoggedIn(true);
     }
+    if (storedId) {
+      setLoggedInId(storedId);
+    }
     if (storedPfp) {
-      setPfp(storedPfp);
+      setLoggedInPfp(storedPfp);
     }
   }, []);
 
@@ -45,12 +52,21 @@ const AuthProvider = ({ children }: Props) => {
     setIsLoggedIn(false);
   };
 
-  const updatePfp = (pfpUrl: string | null) => {
+  const setUserId = (userId: string | null) => {
+    if (userId) {
+      setLoggedInId(userId);
+      sessionStorage.setItem(ID, userId);
+    } else {
+      setLoggedInId(null);
+    }
+  };
+
+  const setUserPfp = (pfpUrl: string | null) => {
     if (pfpUrl) {
-      setPfp(pfpUrl);
+      setLoggedInPfp(pfpUrl);
       sessionStorage.setItem(PFP, pfpUrl);
     } else {
-      setPfp(null);
+      setLoggedInPfp(null);
     }
   };
 
@@ -58,10 +74,12 @@ const AuthProvider = ({ children }: Props) => {
     <AuthContext.Provider
       value={{
         isLoggedIn,
-        pfp,
+        loggedInId,
+        loggedInPfp,
         loggedIn,
         loggedOut,
-        updatePfp,
+        setUserId,
+        setUserPfp,
       }}
     >
       {children}

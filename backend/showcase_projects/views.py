@@ -43,10 +43,10 @@ class ShowcaseSearchViewSet(MixedPermissionsViewSet):
         )
         search = self.request.query_params.get("query", None)
         if search is not None:
-            queryset = queryset.filter(project_name__icontains=search) | queryset.filter(
-                description__icontains=search)
+            queryset = queryset.filter(
+                project_name__icontains=search
+            ) | queryset.filter(description__icontains=search)
         return queryset
-
 
 
 class ShowcaseProjectViewSet(MixedPermissionsViewSet):

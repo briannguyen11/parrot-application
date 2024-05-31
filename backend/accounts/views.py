@@ -42,7 +42,7 @@ class AuthSignUp(APIView):
                     data = serializer.data
                     response = {
                         "message": "User created successfully.",
-                        "data": data,
+                        "user_data": data,
                     }
                     return Response(response, status=status.HTTP_201_CREATED)
                 else:
@@ -75,9 +75,10 @@ class AuthSignIn(APIView):
                 user = User.objects.get(firebase_uid=uid)
                 serializer = UserSerializer(user)
                 data = serializer.data
+                data["id"] = user.id
                 response = {
                     "message": "User logged in successfully.",
-                    "data": data,
+                    "user_data": data,
                 }
                 return Response(response, status=status.HTTP_200_OK)
             except User.DoesNotExist:
@@ -111,9 +112,10 @@ class GoogleSignIn(APIView):
                 user = User.objects.get(firebase_uid=uid)
                 serializer = UserSerializer(user)
                 data = serializer.data
+                data["id"] = user.id
                 response = {
                     "message": "User logged in successfully.",
-                    "data": data,
+                    "user_data": data,
                 }
                 return Response(response, status=status.HTTP_200_OK)
             except User.DoesNotExist:

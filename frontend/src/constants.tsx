@@ -6,4 +6,5 @@ export const REFRESH_TOKEN = "refresh";
 
 // keys to user data
 export const EMAIL = "email";
+export const ID = "id";
 export const PFP = "pfp";

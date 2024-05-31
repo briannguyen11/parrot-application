@@ -15,7 +15,7 @@ import GoogleIcon from "@/assets/icons/google-color-svgrepo-com.svg";
 import api from "../api";
 
 const GoogleSignIn = () => {
-  const { loggedIn, updatePfp } = useAuth();
+  const { loggedIn, setUserId, setUserPfp } = useAuth();
   const navigate = useNavigate();
 
   const handleGoogleSignIn = async () => {
@@ -39,6 +39,7 @@ const GoogleSignIn = () => {
       sessionStorage.setItem(REFRESH_TOKEN, refreshToken);
 
       loggedIn();
+      setUserId(res.data.user_data.id);
 
       if (res.status === 201) {
         navigate("/onboard");
@@ -46,7 +47,7 @@ const GoogleSignIn = () => {
 
       if (res.status === 200) {
         const profile = await api.get("/api/profiles/");
-        updatePfp(profile.data[0].profile_picture);
+        setUserPfp(profile.data[0].profile_picture);
         navigate("/");
       }
     }
