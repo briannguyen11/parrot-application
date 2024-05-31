@@ -10,6 +10,8 @@ export interface ProfileData {
   resume: string;
   linkedin: string;
   github: string;
+  header: string;
+  banner: string;
 }
 
 

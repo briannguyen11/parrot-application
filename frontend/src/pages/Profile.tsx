@@ -9,6 +9,9 @@ import GithubIcon from "../assets/icons/github.svg";
 import ResumeIcon from "../assets/icons/resume.svg";
 import DefaultProfile from "../assets/icons/person-crop-circle-fill-svgrepo-com.svg";
 import LoadingIcon from "../assets/icons/loading.svg";
+import BannerInput from "@/components/profile/BannerInput";
+import PhotoInput from "@/components/profile/PhotoInput";
+import { EditProfileDialog } from "@/components/profile/EditProfileDialog";
 
 import {
   ProfileData,
@@ -16,9 +19,6 @@ import {
   // ApplyData,
   ShowcaseData,
 } from "@/components/interfaces";
-import { EditProfileDialog } from "@/components/profile/EditProfileDialog";
-import PhotoInput from "@/components/profile/PhotoInput";
-
 
 const Profile = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -64,6 +64,25 @@ const Profile = () => {
     }
   };
 
+  const setBanner = async (value: File) => {
+    const formData = new FormData();
+    formData.append("banner", value);
+
+
+
+    try {
+      setProfileUpdating(true);
+      const res = await api.patch(`/api/profiles/${profile?.id}/`, formData);
+
+      console.log(res.data);
+      window.scrollTo({ top: 0, behavior: "instant" });
+      setProfileUpdating(false);
+      setProfile(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     document.title = "View Profile";
 
@@ -86,6 +105,8 @@ const Profile = () => {
           resume,
           linkedin,
           github,
+          banner,
+          header,
         } = res.data[0];
         setProfile({
           user,
@@ -99,6 +120,8 @@ const Profile = () => {
           resume,
           linkedin,
           github,
+          banner,
+          header,
         });
 
         setShowcaseProjects(res.data[0].showcase_projects);
@@ -146,21 +169,15 @@ const Profile = () => {
       <div className="w-full pt-5 pb-10">
         <div className="h-60 w-full object-cover rounded-2xl relative">
           {!loading ? (
-            <img
-              src={DefaultBanner}
-              className="h-48 w-full object-cover rounded-2xl object-top"
-            />
+            <div className="h-48 w-full">
+              <BannerInput banner={profile?.banner || DefaultBanner} setBanner={setBanner}/>
+            </div>
           ) : (
             <Skeleton className="h-48 w-full object-cover rounded-2xl" />
           )}
 
           <div className="h-40 w-40 rounded-full bg-white  absolute bottom-0 left-12">
             {!loading && (
-              // <img
-              //   src={profile?.profile_picture || DefaultProfile}
-              //   alt="profile_picture"
-              //   className="h-full w-full rounded-full object-cover border-4 border-white"
-              // />
               <PhotoInput
                 pfp={profile?.profile_picture || DefaultProfile}
                 setPfp={setPfp}
@@ -181,7 +198,7 @@ const Profile = () => {
 
               {!loading ? (
                 <h4 className="mt-2 text-sm font-raleway text-primary-foreground font-medium">
-                  Profile Header Here
+                  {profile?.header !== "empty" ? profile?.header : ""}
                 </h4>
               ) : (
                 <Skeleton className="mt-2 w-64 h-4" />

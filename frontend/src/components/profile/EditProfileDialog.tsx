@@ -25,19 +25,34 @@ export function EditProfileDialog({
   const [bio, setBio] = useState(profile?.bio || "");
   const [github, setGithub] = useState(profile?.github || "");
   const [linkedin, setLinkedin] = useState(profile?.linkedin || "");
+  const [header, setHeader] = useState(profile?.header || "");
 
   const handlePatchProfile = () => {
     const patchData: Partial<ProfileData> = {};
-    if (first_name !== original_profile?.first_name) {
-      patchData.first_name = first_name;
+    if (first_name.trim() !== original_profile?.first_name?.trim()) {
+      patchData.first_name = first_name.trim();
     }
-    if (last_name !== original_profile?.last_name) {
-      patchData.last_name = last_name;
+    if (last_name.trim() !== original_profile?.last_name?.trim()) {
+      patchData.last_name = last_name.trim();
     }
 
-    if (bio !== original_profile?.bio) {
-      patchData.bio = bio;
+    if (bio.trim() !== original_profile?.bio?.trim()) {
+      patchData.bio = bio.trim();
     }
+
+    if (github.trim() !== original_profile?.github?.trim()) {
+      patchData.github = github.trim();
+    }
+
+    if (linkedin.trim() !== original_profile?.linkedin?.trim()) {
+      patchData.linkedin = linkedin.trim();
+    }
+
+    if (header.trim() !== original_profile?.header?.trim()) {
+      patchData.header = header.trim();
+    }
+    
+
 
     // console.log(patchData);
     patchProfile(patchData);
@@ -80,6 +95,16 @@ export function EditProfileDialog({
             </div>
 
             <div className="flex items-center gap-5">
+              <h3 className="font-medium w-40">Header</h3>
+              <input
+                type="text"
+                value={header !== "empty" ? header : ""}
+                onChange={(e) => setHeader(e.target.value)}
+                className="border rounded-md w-full p-1 pl-2 text-sm"
+              />
+            </div>
+
+            <div className="flex items-center gap-5">
               <h3 className="font-medium w-40">Bio</h3>
               <textarea
                 value={bio}
@@ -107,6 +132,8 @@ export function EditProfileDialog({
                 className="border rounded-md w-full p-1 pl-2 text-sm"
               />
             </div>
+
+            
           </div>
         </div>
         <DialogFooter>

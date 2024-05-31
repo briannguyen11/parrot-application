@@ -11,14 +11,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import DefaultProfile from "../../assets/icons/person-crop-circle-fill-svgrepo-com.svg";
+import DefaultBanner from "../../assets/banners/slo_default.jpg";
 
 interface SetPfpProps {
-  pfp: string | null;
-  setPfp: (value: File) => void;
+  banner: string | null;
+  setBanner: (value: File) => void;
 }
 
-const PhotoInput: React.FC<SetPfpProps> = ({ pfp, setPfp }) => {
+const BannerInput: React.FC<SetPfpProps> = ({ banner, setBanner }) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string>();
   const cropperRef = useRef<ReactCropperElement>(null);
@@ -47,7 +47,7 @@ const PhotoInput: React.FC<SetPfpProps> = ({ pfp, setPfp }) => {
           const croppedFile = new File([blob], fileName, {
             type: "image/png",
           });
-          setPfp(croppedFile);
+          setBanner(croppedFile);
         }
       });
     }
@@ -55,32 +55,31 @@ const PhotoInput: React.FC<SetPfpProps> = ({ pfp, setPfp }) => {
 
   const renderEditPfpButton = () => {
     return (
-      <button>
+      <button className="w-full">
         <div className="opacity-100 hover:opacity-0 rounded-full">
           {imagePreview && (
             <img
               src={imagePreview}
-              alt="Profile Preview"
-              className="h-full w-full rounded-full object-cover border-4 border-white"
+              alt="Banner Preview"
+              className="h-48 w-full object-cover rounded-2xl object-top"
             />
           )}
-          {!imagePreview && pfp && (
-            <img
-              src={pfp || DefaultProfile}
-              alt="profile_picture"
-              className="h-full w-full rounded-full object-cover border-4 border-white"
+          {!imagePreview && banner && (
+             <img
+              src={banner || DefaultBanner}
+              className="h-48 w-full object-cover rounded-2xl object-top"
             />
           )}
-          {!imagePreview && !pfp && (
+          {!imagePreview && !banner && (
             <img
-              src={DefaultProfile}
-              alt="Default Profile Picture"
-              className="h-full w-full rounded-full object-cover border-4 border-white"
+              src={DefaultBanner}
+              alt="Default Banner Picture"
+              className="h-48 w-full object-cover rounded-2xl object-top"
             />
           )}
         </div>
-        <div className="flex w-full h-full rounded-full bg-black text-white absolute top-0 left-0 justify-center items-center opacity-0 hover:opacity-70 border-4 transition duration-200 ease-in-out">
-          <p className="text-white opacity-100">Edit</p>
+        <div className="flex w-full h-48 rounded-2xl bg-black text-white absolute top-0 left-0 justify-center items-center opacity-0 hover:opacity-70 transition duration-200 ease-in-out">
+          <p className="text-white opacity-100">Edit Banner</p>
         </div>
       </button>
     );
@@ -95,8 +94,8 @@ const PhotoInput: React.FC<SetPfpProps> = ({ pfp, setPfp }) => {
               src={imagePreview}
               style={{ width: "100%", height: 400 }}
               // Cropper.js options
-              initialAspectRatio={1}
-              aspectRatio={1}
+              initialAspectRatio={1/2}
+              aspectRatio={16/3}
               guides={false}
               zoomable={false}
               background={false}
@@ -107,11 +106,11 @@ const PhotoInput: React.FC<SetPfpProps> = ({ pfp, setPfp }) => {
           </div>
         )}
 
-        {!imagePreview && pfp && (
+        {!imagePreview && banner && (
           <img
-            src={pfp}
-            alt="Profile Preview"
-            className="w-60 h-60 rounded-full"
+            src={banner}
+            alt="Banner Preview"
+            className="w-full aspect-banner object-cover rounded-2xl"
           />
         )}
         <input
@@ -150,7 +149,7 @@ const PhotoInput: React.FC<SetPfpProps> = ({ pfp, setPfp }) => {
         <DialogHeader>
           <DialogTitle>Select Photo</DialogTitle>
           <DialogDescription>
-            This photo is the face of your profile!
+            Choose a banner that gives your profile a unique look!
           </DialogDescription>
         </DialogHeader>
         {renderPhotoInput()}
@@ -171,4 +170,4 @@ const PhotoInput: React.FC<SetPfpProps> = ({ pfp, setPfp }) => {
   );
 };
 
-export default PhotoInput;
+export default BannerInput;

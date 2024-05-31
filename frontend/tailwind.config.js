@@ -54,6 +54,7 @@ export const theme = {
 
     aspectRatio: {
       spotlight: "16/9",
+      banner : "16/3",
     },
     colors: {
       border: "hsl(var(--border))",
