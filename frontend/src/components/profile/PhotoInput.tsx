@@ -61,7 +61,7 @@ const PhotoInput: React.FC<SetPfpProps> = ({ pfp, setPfp }) => {
             <img
               src={imagePreview}
               alt="Profile Preview"
-              className="h-full w-full rounded-full object-cover border-4 border-white"
+              className="h-full w-full aspect-square rounded-full object-cover border-4 border-white"
             />
           )}
           {!imagePreview && pfp && (
