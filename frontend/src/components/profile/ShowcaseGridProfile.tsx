@@ -117,8 +117,8 @@ const ShowcaseGridProfile: React.FC<ShowcaseProjectProp> = ({
       {!loading &&
         showcaseProjects &&
         showcaseProjects.length > 0 &&
-        showcaseProjects.map((project: ShowcaseData) => (
-          <ShowcaseCardProfile {...project} />
+        showcaseProjects.map((project: ShowcaseData, index) => (
+          <ShowcaseCardProfile {...project} key={index} />
         ))}
     </div>
   );

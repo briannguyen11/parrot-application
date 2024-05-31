@@ -7,6 +7,8 @@ import DefaultBanner from "../assets/banners/slo_default.jpg";
 import LinkedinIcon from "../assets/icons/linkedin.svg";
 import GithubIcon from "../assets/icons/github.svg";
 import ResumeIcon from "../assets/icons/resume.svg";
+import DefaultProfile from "../assets/icons/person-crop-circle-fill-svgrepo-com.svg";
+import LoadingIcon from "../assets/icons/loading.svg";
 
 import {
   ProfileData,
@@ -14,18 +16,53 @@ import {
   // ApplyData,
   ShowcaseData,
 } from "@/components/interfaces";
+import { EditProfileDialog } from "@/components/profile/EditProfileDialog";
+import PhotoInput from "@/components/profile/PhotoInput";
+
 
 const Profile = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [tab, setTab] = useState<string>("showcase");
-  // const [updateProfile, setUpdateProfile] = useState<boolean>(false);
   const [openProjects, setOpenProjects] = useState<OpenData[]>([]);
   const [showcaseProjects, setShowcaseProjects] = useState<ShowcaseData[]>([]);
-  // const [applyProjects, setApplyProjects] = useState<ApplyData[]>([]);
-  // const [liked, setLiked] = useState([]);
-  // const [savedOpen, setSavedOpen] = useState([]);
-  // const [savedShowcase, setSavedShowcase] = useState([]);
+  const [profileUpdating, setProfileUpdating] = useState<boolean>(false);
+
+  const patchProfile = async (newProfile: Partial<ProfileData>) => {
+    try {
+      console.log(newProfile);
+      if (Object.keys(newProfile).length === 0) {
+        return;
+      }
+
+      setProfileUpdating(true);
+      const res = await api.patch(`/api/profiles/${profile?.id}/`, newProfile);
+
+      console.log(res.data);
+      window.scrollTo({ top: 0, behavior: "instant" });
+      setProfileUpdating(false);
+      setProfile(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const setPfp = async (value: File) => {
+    const formData = new FormData();
+    formData.append("profile_picture", value);
+
+    try {
+      setProfileUpdating(true);
+      const res = await api.patch(`/api/profiles/${profile?.id}/`, formData);
+
+      // console.log(res.data);
+      window.scrollTo({ top: 0, behavior: "instant" });
+      setProfileUpdating(false);
+      setProfile(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     document.title = "View Profile";
@@ -34,7 +71,7 @@ const Profile = () => {
       // eslint-disable-next-line no-useless-catch
       try {
         const res = await api.get("/api/profiles/");
-        console.log(res);
+        // console.log(res);
 
         // set user
         const {
@@ -64,24 +101,8 @@ const Profile = () => {
           github,
         });
 
-        // set showcase projects
         setShowcaseProjects(res.data[0].showcase_projects);
-
-        // set open projects
         setOpenProjects(res.data[0].open_projects);
-
-        // set applied projects
-        // setApplyProjects(res.data[0].applied_open_projects);
-
-        // set liked
-        // setLiked(res.data[0].likes);
-
-        // // set saved open projects
-        // setSavedOpen(res.data[0].saved_open_projects);
-
-        // // set saved showcase projects
-        // setSavedShowcase(res.data[0].saved_showcase_projects);
-
         setLoading(false);
       } catch (error) {
         throw error;
@@ -101,6 +122,27 @@ const Profile = () => {
 
   return (
     <>
+      {profileUpdating && (
+        <div
+          className={`fixed top-0 left-0 w-full h-full bg-white ${
+            profileUpdating ? "opacity-100" : "opacity-0"
+          } z-50 flex items-center justify-center transition duration-300 ease-in-out`}
+        >
+          <div className="flex items-center gap-4">
+            <h4 className="font-montserrat text-lg font-medium">
+              Saving your new profile...
+            </h4>
+            <div className="animate-spin rounded-full w-8 h-8 overflow-hidden">
+              <img
+                src={LoadingIcon}
+                alt="logo"
+                className="w-full h-full object-cover select-none"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="w-full pt-5 pb-10">
         <div className="h-60 w-full object-cover rounded-2xl relative">
           {!loading ? (
@@ -114,10 +156,14 @@ const Profile = () => {
 
           <div className="h-40 w-40 rounded-full bg-white  absolute bottom-0 left-12">
             {!loading && (
-              <img
-                src={profile?.profile_picture}
-                alt="profile_picture"
-                className="h-full w-full rounded-full object-cover border-4 border-white"
+              // <img
+              //   src={profile?.profile_picture || DefaultProfile}
+              //   alt="profile_picture"
+              //   className="h-full w-full rounded-full object-cover border-4 border-white"
+              // />
+              <PhotoInput
+                pfp={profile?.profile_picture || DefaultProfile}
+                setPfp={setPfp}
               />
             )}
           </div>
@@ -153,9 +199,10 @@ const Profile = () => {
 
               {!loading ? (
                 <div className="mt-3 flex items-center">
-                  <button className="text-sm font-raleway font-semibold text-card-green border-2 border-card-green py-1 px-4 rounded-xl">
-                    Follow
-                  </button>
+                  <EditProfileDialog
+                    profile={profile}
+                    patchProfile={patchProfile}
+                  />
                 </div>
               ) : (
                 <Skeleton className="mt-3 w-40 h-8" />

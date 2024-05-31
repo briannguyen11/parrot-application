@@ -103,7 +103,19 @@ const Showcase = () => {
         </p>
 
         <div className="mt-4 flex items-center text-sm font-light pl-5 lg:w-full p-2 bg-inherit rounded-full focus:outline-none border">
-          <SearchIcon size={25} />
+          {!loading || initialLoad ? (
+            <SearchIcon size={25} className="mr-[6px] translate-x-1" />
+          ) : (
+            !initialLoad && (
+              <div className="animate-spin rounded-full w-8 h-8 overflow-hidden">
+                <img
+                  src={LoadingIcon}
+                  alt="logo"
+                  className="w-full h-full object-cover select-none"
+                />
+              </div>
+            )
+          )}
 
           <input
             type="text"
@@ -117,27 +129,6 @@ const Showcase = () => {
               }
             }}
           />
-          {/* {loading && (
-            <div className="animate-spin rounded-full mr-5 overflow-auto">
-              <img
-                src={LoadingIcon}
-                alt="logo"
-                className="w-6 h-6 object-cover select-none"
-              />
-            </div>
-          )} */}
-
-          {loading && !initialLoad ? (
-            <div className="animate-spin rounded-full w-8 h-8 overflow-hidden mr-5">
-              <img
-                src={LoadingIcon}
-                alt="logo"
-                className="w-full h-full object-cover select-none"
-              />
-            </div>
-          ) : (
-            <div className="rounded-full w-8 h-8 overflow-hidden mr-5"></div>
-          )}
 
           <button
             onClick={() => fetchProjects()}

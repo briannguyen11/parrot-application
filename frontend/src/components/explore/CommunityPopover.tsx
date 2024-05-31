@@ -25,8 +25,6 @@ export function CommunityPopover({ handleFilter }: CommunityPopoverProps) {
     setCommunities([]);
   };
 
-  
-
   return (
     <Dialog>
       <DialogTrigger asChild>

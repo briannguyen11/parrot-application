@@ -7,7 +7,7 @@ import LeftIcon from "../../assets/icons/left-arrow-backup-2-svgrepo-com.svg";
 import RightIcon from "../../assets/icons/right-arrow-backup-2-svgrepo-com.svg";
 
 
-const ShowcaseCardProfile = (project: ShowcaseData) => {
+const ShowcaseCardProfile = (project: ShowcaseData, key: number) => {
   const navigate = useNavigate();
   const [photoIndex, setPhotoIndex] = useState(0);
   const timeAgo =
@@ -39,7 +39,7 @@ const ShowcaseCardProfile = (project: ShowcaseData) => {
 
 
   return (
-    <div className="relative">
+    <div className="relative" key={key}>
       <div
         onClick={() => {navigate("/showcase-project/" + project.id)}}
         className="aspect-spotlight relative hover:cursor-pointer hover:scale-103 transition duration-300 ease-in-out select-none"

@@ -55,27 +55,31 @@ const PhotoInput: React.FC<SetPfpProps> = ({ pfp, setPfp }) => {
 
   const renderEditPfpButton = () => {
     return (
-      <button className="relative">
-        <div className="opacity-100 hover:opacity-0 w-28 h-28 rounded-full">
+      <button>
+        <div className="opacity-100 hover:opacity-0 rounded-full">
           {imagePreview && (
             <img
               src={imagePreview}
               alt="Profile Preview"
-              className="w-28 h-28 rounded-full"
+              className="h-full w-full rounded-full object-cover border-4 border-white"
             />
           )}
           {!imagePreview && pfp && (
-            <img src={pfp} alt="Original" className="w-28 h-28 rounded-full" />
+            <img
+              src={pfp || DefaultProfile}
+              alt="profile_picture"
+              className="h-full w-full rounded-full object-cover border-4 border-white"
+            />
           )}
           {!imagePreview && !pfp && (
             <img
               src={DefaultProfile}
               alt="Default Profile Picture"
-              className="w-28 h-28 rounded-full"
+              className="h-full w-full rounded-full object-cover border-4 border-white"
             />
           )}
         </div>
-        <div className="flex w-28 h-28 rounded-full bg-black text-white absolute top-0 left-0 justify-center items-center opacity-0 hover:opacity-100">
+        <div className="flex w-full h-full rounded-full bg-black text-white absolute top-0 left-0 justify-center items-center opacity-0 hover:opacity-70 border-4">
           Edit
         </div>
       </button>
