@@ -30,9 +30,9 @@ const AuthProvider = ({ children }: Props) => {
   const [loggedInPfp, setLoggedInPfp] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedToken = sessionStorage.getItem(ACCESS_TOKEN);
-    const storedId = sessionStorage.getItem(ID);
-    const storedPfp = sessionStorage.getItem(PFP);
+    const storedToken = localStorage.getItem(ACCESS_TOKEN);
+    const storedId = localStorage.getItem(ID);
+    const storedPfp = localStorage.getItem(PFP);
     if (storedToken) {
       setIsLoggedIn(true);
     }
@@ -55,7 +55,7 @@ const AuthProvider = ({ children }: Props) => {
   const setUserId = (userId: string | null) => {
     if (userId) {
       setLoggedInId(userId);
-      sessionStorage.setItem(ID, userId);
+      localStorage.setItem(ID, userId);
     } else {
       setLoggedInId(null);
     }
@@ -64,7 +64,7 @@ const AuthProvider = ({ children }: Props) => {
   const setUserPfp = (pfpUrl: string | null) => {
     if (pfpUrl) {
       setLoggedInPfp(pfpUrl);
-      sessionStorage.setItem(PFP, pfpUrl);
+      localStorage.setItem(PFP, pfpUrl);
     } else {
       setLoggedInPfp(null);
     }

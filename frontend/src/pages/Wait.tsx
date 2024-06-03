@@ -9,7 +9,7 @@ const Wait = () => {
 
   // TODO: Need to test this with no access token
   const handleSendEmailVerfication = async () => {
-    const data = { email: sessionStorage.getItem(EMAIL) };
+    const data = { email: localStorage.getItem(EMAIL) };
     try {
       const res = await api.post("/api/users/auth/resend/", data);
       console.log(res);

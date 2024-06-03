@@ -222,7 +222,7 @@ const ShowcaseProject = () => {
       </div>
 
       <p className="text-sm text-slate-400 text-center">
-        {project?.photos[photoIndex].caption}
+        {project?.photos[photoIndex]?.caption}
       </p>
       <div className="flex flex-row justify-between gap-2">
         <div className="flex flex-row gap-4 items-center">

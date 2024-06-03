@@ -41,15 +41,18 @@ const SignIn = () => {
       const idToken = await credentials.user.getIdToken();
       const refreshToken = credentials.user.refreshToken;
 
+      console.log(idToken);
+
       // verify tokens with backend
       const res = await api.post("/api/users/auth/sign-in/", {
         id_token: idToken,
       });
       console.log(res);
       if (res.status === 200) {
+        console.log("tokens verified");
         // tokens verified, set storage and clear fields
-        sessionStorage.setItem(ACCESS_TOKEN, idToken);
-        sessionStorage.setItem(REFRESH_TOKEN, refreshToken);
+        localStorage.setItem(ACCESS_TOKEN, idToken);
+        localStorage.setItem(REFRESH_TOKEN, refreshToken);
 
         loggedIn();
         setUserId(res.data.user_data.id);
@@ -67,6 +70,7 @@ const SignIn = () => {
         }
       }
     } catch (error: unknown) {
+      console.log(error);
       setError("Invalid email or password.");
       setEmail("");
       setPassword("");

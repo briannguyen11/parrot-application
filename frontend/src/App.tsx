@@ -28,7 +28,6 @@ import Admin from "./pages/Admin";
 // clear local storage before registering
 function RegisterAndLogout() {
   localStorage.clear();
-  sessionStorage.clear();
   return <SignUp />;
 }
 

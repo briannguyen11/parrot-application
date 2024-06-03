@@ -295,60 +295,6 @@ const Profile = () => {
           </div>
         )}
       </div>
-
-      {/* <div className="md:mx-7 mx-5 mt-16 relative">
-        <div className="flex flex-col lg:flex-row">
-          <div className="w-full lg:w-1/4">
-            {renderAccountSkeletons()}
-            {!loading && profile && !updateProfile && (
-              <>
-                <div className="mt-4 mx-4">
-                  <ProfileCard
-                    profile={profile}
-                    setUpdateProfile={setUpdateProfile}
-                  />
-                </div>
-              </>
-            )}
-            {!loading && profile && updateProfile && (
-              <>
-                <div className="mt-4 mx-4">
-                  <ProfileForm
-                    profile={profile}
-                    setProfile={setProfile}
-                    setUpdateProfile={setUpdateProfile}
-                  />
-                </div>
-              </>
-            )}
-          </div>
-          <div className="w-full lg:w-3/4 ">
-            {renderProjectSkeletons()}
-            {!loading && (
-              <>
-                <div className="mt-4 mx-4">
-                  <ShowcaseTable
-                    showcaseProjects={showcaseProjects}
-                    setShowcaseProjects={setShowcaseProjects}
-                    formatDate={formatDate}
-                  />
-                </div>
-                <div className="mt-4 mx-4">
-                  <OpenTable
-                    openProjects={openProjects}
-                    setOpenProjects={setOpenProjects}
-                    formatDate={formatDate}
-                  />
-                </div>
-                <div className="mt-4 mx-4">
-                  <ApplyTable applyProjects={applyProjects} />
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      </div>
- */}
     </>
   );
 };

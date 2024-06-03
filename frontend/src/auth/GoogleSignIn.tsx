@@ -35,8 +35,8 @@ const GoogleSignIn = () => {
       const res = await api.post("/api/users/auth/google-sign-in/", {
         id_token: idToken,
       });
-      sessionStorage.setItem(ACCESS_TOKEN, idToken);
-      sessionStorage.setItem(REFRESH_TOKEN, refreshToken);
+      localStorage.setItem(ACCESS_TOKEN, idToken);
+      localStorage.setItem(REFRESH_TOKEN, refreshToken);
 
       loggedIn();
       setUserId(res.data.user_data.id);
