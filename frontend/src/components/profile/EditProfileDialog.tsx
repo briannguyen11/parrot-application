@@ -26,6 +26,7 @@ export function EditProfileDialog({
   const [github, setGithub] = useState(profile?.github || "");
   const [linkedin, setLinkedin] = useState(profile?.linkedin || "");
   const [header, setHeader] = useState(profile?.header || "");
+  const [username, setUsername] = useState(profile?.username || "");
 
   const handlePatchProfile = () => {
     const patchData: Partial<ProfileData> = {};
@@ -52,6 +53,10 @@ export function EditProfileDialog({
       patchData.header = header.trim();
     }
 
+    if (username.trim() !== original_profile?.username?.trim()) {
+      patchData.username = username.trim();
+    }
+
     // console.log(patchData);
     patchProfile(patchData);
   };
@@ -72,6 +77,16 @@ export function EditProfileDialog({
         </DialogHeader>
         <div className="mt-5 mb-10 max-h-[400px] overflow-scroll">
           <div className="flex flex-col gap-3 items-center justify-center">
+            <div className="md:w-2/3 w-full flex flex-col gap-2">
+              <h3 className="font-medium w-40">Username</h3>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="border rounded-md w-full p-2 text-sm"
+              />
+            </div>
+
             <div className="md:w-2/3 w-full flex flex-col gap-2">
               <h3 className="font-medium w-40">First Name</h3>
               <input

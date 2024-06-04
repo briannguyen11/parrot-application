@@ -100,6 +100,7 @@ const Profile = () => {
         // set user
         const {
           user,
+          username,
           id,
           first_name,
           last_name,
@@ -127,6 +128,7 @@ const Profile = () => {
           github,
           banner,
           header,
+          username,
         });
 
         setShowcaseProjects(res.data[0].showcase_projects);
@@ -210,9 +212,16 @@ const Profile = () => {
           <div className="flex items-start justify-between md:flex-row flex-col">
             <div className="flex flex-col">
               {!loading ? (
-                <h1 className="text-4xl font-montserrat font-bold text-primary">
-                  {profile?.first_name} {profile?.last_name}
-                </h1>
+                <div className="flex items-end gap-2">
+                  <h1 className="text-4xl font-montserrat font-bold text-primary">
+                    {profile?.first_name} {profile?.last_name}
+                  </h1>
+                  <p className="font-montserrat text-sm text-secondary">
+                    {profile?.username !== "empty"
+                      ? `@${profile?.username}`
+                      : ""}
+                  </p>
+                </div>
               ) : (
                 <Skeleton className="w-96 h-10" />
               )}
