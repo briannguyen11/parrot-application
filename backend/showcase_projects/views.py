@@ -6,6 +6,7 @@ from .serializers import (
     ShowcaseProjectSaveSerializer,
     ShowcaseProjectTagSerializer,
     ShowcaseProjectPhotoSerializer,
+    ShowcaseExploreSerializer,
     LikeSerializer,
     CommentSerializer,
     CommentLikeSerializer,
@@ -46,6 +47,14 @@ class ShowcaseSearchViewSet(MixedPermissionsViewSet):
             queryset = queryset.filter(
                 project_name__icontains=search
             ) | queryset.filter(description__icontains=search)
+        return queryset
+
+class ShowcaseExploreViewSet(MixedPermissionsViewSet):
+    serializer_class = ShowcaseExploreSerializer
+    pagination_class = ShowcaseProjectPagination
+
+    def get_queryset(self):
+        queryset = ShowcaseProject.objects.all()
         return queryset
 
 

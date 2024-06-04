@@ -8,11 +8,13 @@ from showcase_projects.views import (
     CommentViewSet,
     CommentLikeViewSet,
     ShowcaseSearchViewSet,
+    ShowcaseExploreViewSet
 )
 
 
 router = DefaultRouter()
 router.register(r"projects", ShowcaseProjectViewSet, basename="showcase-projects")
+router.register(r"explore", ShowcaseExploreViewSet, basename="showcase-explore")
 router.register(r"search", ShowcaseSearchViewSet, basename="showcase-search")
 router.register(r"saves", ShowcaseProjectSaveViewSet, basename="showcase-project-saves")
 router.register(r"tags", ShowcaseProjectTagViewSet, basename="showcase-project-tags")

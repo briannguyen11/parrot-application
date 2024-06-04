@@ -68,6 +68,18 @@ class ShowcaseProjectSerializer(serializers.ModelSerializer):
         read_only_fields = ["user", "profile", "tags", "photos", "likes", "comments"]
 
 
+
+# Serializer with minimal data for explore page to reduce load time
+class ShowcaseExploreSerializer(serializers.ModelSerializer):
+    profile = ProfileInfoSerializer(source="user.profile", read_only=True)
+    tags = ShowcaseProjectTagSerializer(many=True, read_only=True)
+    photos = ShowcaseProjectPhotoSerializer(many=True, read_only=True)
+    class Meta:
+        model = ShowcaseProject
+        fields = ["id", "user", "profile", "project_name", "description", "tags", "photos", "post_date"]
+        read_only_fields = ["user", "profile", "tags", "photos"]
+
+
 class ShowcaseProjectSaveSerializer(ProjectDetailsMixin, serializers.ModelSerializer):
     class Meta:
         model = ShowcaseProjectSave

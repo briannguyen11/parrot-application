@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { formatDistanceToNow } from "date-fns";
 import LeftIcon from "../../assets/icons/left-arrow-backup-2-svgrepo-com.svg";
 import RightIcon from "../../assets/icons/right-arrow-backup-2-svgrepo-com.svg";
@@ -29,26 +29,10 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
   postDate,
 }) => {
   const [photoIndex, setPhotoIndex] = useState(0);
-  const [preloadedImages, setPreloadedImages] = useState<string[]>([]);
+  // const [preloadedImages, setPreloadedImages] = useState<string[]>([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const preloadImages = () => {
-      const imagePromises = photos.map((photo) => {
-        return new Promise<string>((resolve) => {
-          const img = new Image();
-          img.src = photo.photo;
-          img.onload = () => {
-            resolve(photo.photo);
-          };
-        });
-      });
-      Promise.all<string>(imagePromises).then((images) =>
-        setPreloadedImages(images)
-      );
-    };
-    preloadImages();
-  }, [photos]);
+
 
   const nextPhotoButton = () => {
     return (
@@ -83,9 +67,9 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
       className="relative"
     >
       <div  onClick={() => navigate("/showcase-project/" + projectId)} className="aspect-spotlight relative hover:cursor-pointer hover:scale-103 transition duration-300 ease-in-out select-none">
-        {preloadedImages.length > 0 ? (
+        {photos.length > 0 ? (
           <img
-            src={preloadedImages[photoIndex]}
+            src={photos[photoIndex].photo}
             alt="placeholder"
             className="object-cover w-full h-full rounded-md"
             draggable="false"
