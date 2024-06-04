@@ -55,8 +55,8 @@ const PhotoInput: React.FC<SetPfpProps> = ({ pfp, setPfp }) => {
 
   const renderEditPfpButton = () => {
     return (
-      <button>
-        <div className="opacity-100 hover:opacity-0 rounded-full">
+      <button className="w-full h-full">
+        <div className="w-full h-full opacity-100 hover:opacity-0 rounded-full">
           {imagePreview && (
             <img
               src={imagePreview}
