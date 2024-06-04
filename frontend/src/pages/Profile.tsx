@@ -31,7 +31,7 @@ const Profile = () => {
   const [openProjects, setOpenProjects] = useState<OpenData[]>([]);
   const [showcaseProjects, setShowcaseProjects] = useState<ShowcaseData[]>([]);
   const [profileUpdating, setProfileUpdating] = useState<boolean>(false);
-  const { loggedInId } = useAuth();
+  const { loggedInId, setUserPfp } = useAuth();
 
   const patchProfile = async (newProfile: Partial<ProfileData>) => {
     try {
@@ -63,6 +63,8 @@ const Profile = () => {
       // console.log(res.data);
       window.scrollTo({ top: 0, behavior: "instant" });
       setProfileUpdating(false);
+      console.log(res.data.profile_picture);
+      setUserPfp(res.data.profile_picture);
       setProfile(res.data);
     } catch (error) {
       console.log(error);
