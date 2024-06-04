@@ -81,20 +81,20 @@ const Navbar = () => {
           </div>
           <div className="lg:flex xl:gap-20 gap-14 items-center hidden select-none">
             <h2
-              onClick={() => handleNavigate("/")}
+              onClick={() => navigate("/")}
               className="font-semibold font-raleway text-sm hover:cursor-pointer hover:text-primary-foreground whitespace-nowrap"
             >
               Explore
             </h2>
             <h2
-              onClick={() => handleNavigate("/open-projects")}
+              onClick={() => navigate("/open-projects")}
               className="font-semibold font-raleway text-sm hover:cursor-pointer hover:text-primary-foreground whitespace-nowrap"
             >
               Find Teams
             </h2>
 
             <h2
-              onClick={() => handleNavigate("/create")}
+              onClick={() => navigate("/create")}
               className="font-semibold font-raleway text-sm hover:cursor-pointer hover:text-primary-foreground whitespace-nowrap"
             >
               Create Project

@@ -15,7 +15,11 @@ const ProtectedRoute = ({ children }: Props) => {
 
   useEffect(() => {
     // if any erros in auth(), set to false
-    auth().catch(() => setIsAuthorized(false));
+
+    auth().catch(() => {
+      console.log("No token found");
+      setIsAuthorized(false)});
+
   }, []);
 
   // request new token from backend
@@ -58,7 +62,7 @@ const ProtectedRoute = ({ children }: Props) => {
   };
 
   if (isAuthorized === null) {
-    return <div>Loading...</div>;
+    return <div></div>;
   }
 
   return isAuthorized ? children : <Navigate to="/login" />;

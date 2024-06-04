@@ -85,7 +85,7 @@ const OpenTable: React.FC<OpenProjectProp> = ({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {openProjects.map((project: any, index: number) => (
+            {openProjects?.map((project: any, index: number) => (
               <TableRow key={index}>
                 <TableCell>
                   <input

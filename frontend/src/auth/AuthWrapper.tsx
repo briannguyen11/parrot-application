@@ -7,6 +7,7 @@ import {
   ReactNode,
 } from "react";
 import { ACCESS_TOKEN, ID, PFP } from "../constants";
+import api from "@/api";
 
 interface AuthContextType {
   isLoggedIn: boolean;
@@ -30,6 +31,15 @@ const AuthProvider = ({ children }: Props) => {
   const [loggedInPfp, setLoggedInPfp] = useState<string | null>(null);
 
   useEffect(() => {
+
+    api.get("/api/profiles/picture/").then((response) => {
+      if (response.status === 200) {
+        setUserPfp(response.data[0]['profile_picture']);
+      }
+    }
+    );
+
+    console.log("Auth provider mounted");
     const storedToken = localStorage.getItem(ACCESS_TOKEN);
     const storedId = localStorage.getItem(ID);
     const storedPfp = localStorage.getItem(PFP);

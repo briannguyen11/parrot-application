@@ -3,7 +3,7 @@ from rest_framework import viewsets, permissions
 from rest_framework.exceptions import ValidationError
 from open_projects.models import OpenProject, OpenProjectApply, OpenProjectSave
 from showcase_projects.models import ShowcaseProject, ShowcaseProjectSave, Like
-from .serializers import ProfilesSerializer, ProfilesRestrictedSerializer, BaseProfilesSerializer
+from .serializers import ProfilesSerializer, ProfilesRestrictedSerializer, BaseProfilesSerializer, ProfilePictureSerializer
 from .models import Profiles
 from backend.views import MixedPermissionsViewSet, OwnerPermissionMixin
 
@@ -68,3 +68,26 @@ class PrivateProfilesViewSet(OwnerPermissionMixin, viewsets.ModelViewSet):
 
 
 
+# Fetches Only the profile of the authenticated user, no joins
+class BaseProfileViewset(OwnerPermissionMixin, viewsets.ModelViewSet):
+    serializer_class = BaseProfilesSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        return Profiles.objects.filter(user=user)
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        existing_profile = Profiles.objects.filter(user=user).exists()
+        if existing_profile:
+            raise ValidationError("Profile already exists for this user.")
+        serializer.save(user=user)
+
+class ProfilePictureViewset(OwnerPermissionMixin, viewsets.ModelViewSet):
+    serializer_class = ProfilePictureSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        return Profiles.objects.filter(user=user)

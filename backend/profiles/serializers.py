@@ -118,3 +118,10 @@ class ProfilesRestrictedSerializer(serializers.ModelSerializer):
             "open_projects",
             "showcase_projects",
         ]
+
+
+# Use for auth wrapper to get profile picture
+class ProfilePictureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profiles
+        fields = ['profile_picture']

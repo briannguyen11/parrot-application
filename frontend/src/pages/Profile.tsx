@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../api";
 import { Skeleton } from "@/components/ui/skeleton";
-import OpenTable from "@/components/profile/OpenTable";
 import ShowcaseGridProfile from "@/components/profile/ShowcaseGridProfile";
 import DefaultBanner from "../assets/banners/slo_default.jpg";
 import LinkedinIcon from "../assets/icons/linkedin.svg";
@@ -12,6 +11,8 @@ import LoadingIcon from "../assets/icons/loading.svg";
 import BannerInput from "@/components/profile/BannerInput";
 import PhotoInput from "@/components/profile/PhotoInput";
 import { EditProfileDialog } from "@/components/profile/EditProfileDialog";
+import { useAuth } from "../auth/AuthWrapper";
+import OpenListProfile from "@/components/profile/OpenListProfile";
 
 import {
   ProfileData,
@@ -22,11 +23,15 @@ import {
 
 const Profile = () => {
   const [loading, setLoading] = useState<boolean>(true);
+  const [openProjectLoading, setOpenProjectLoading] = useState<boolean>(true);
+  const [showcaseProjectLoading, setShowcaseProjectLoading] =
+    useState<boolean>(true);
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [tab, setTab] = useState<string>("showcase");
   const [openProjects, setOpenProjects] = useState<OpenData[]>([]);
   const [showcaseProjects, setShowcaseProjects] = useState<ShowcaseData[]>([]);
   const [profileUpdating, setProfileUpdating] = useState<boolean>(false);
+  const { loggedInId } = useAuth();
 
   const patchProfile = async (newProfile: Partial<ProfileData>) => {
     try {
@@ -68,8 +73,6 @@ const Profile = () => {
     const formData = new FormData();
     formData.append("banner", value);
 
-
-
     try {
       setProfileUpdating(true);
       const res = await api.patch(`/api/profiles/${profile?.id}/`, formData);
@@ -81,7 +84,7 @@ const Profile = () => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     document.title = "View Profile";
@@ -132,16 +135,29 @@ const Profile = () => {
       }
     };
 
+    const fetchShowcaseProjects = async () => {
+      const res = await api.get(
+        `/api/showcase-projects/projects/?user_id=${loggedInId}`
+      );
+      // console.log(res.data.results);
+      setShowcaseProjects(res.data.results);
+      setShowcaseProjectLoading(false);
+    };
+
+    const fetchOpenProjects = async () => {
+      const res = await api.get(
+        `/api/open-projects/projects/?user_id=${loggedInId}`
+      );
+      console.log(res.data.results);
+      setOpenProjects(res.data.results);
+      setOpenProjectLoading(false);
+    };
+
+    fetchShowcaseProjects();
+    fetchOpenProjects();
+
     fetchProfile();
   }, []);
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // Month starts from 0
-    const year = String(date.getFullYear()).slice(-2); // Get last 2 digits of the year
-    return `${month}/${day}/${year}`;
-  };
 
   return (
     <>
@@ -170,7 +186,10 @@ const Profile = () => {
         <div className="h-60 w-full object-cover rounded-2xl relative">
           {!loading ? (
             <div className="h-48 w-full">
-              <BannerInput banner={profile?.banner || DefaultBanner} setBanner={setBanner}/>
+              <BannerInput
+                banner={profile?.banner || DefaultBanner}
+                setBanner={setBanner}
+              />
             </div>
           ) : (
             <Skeleton className="h-48 w-full object-cover rounded-2xl" />
@@ -206,9 +225,13 @@ const Profile = () => {
               {!loading ? (
                 <div className="mt-1 flex items-center gap-5 text-sm font-raleway text-gray-400">
                   <p>500+ followers</p>
-                  <p>
-                    {openProjects.length + showcaseProjects.length} projects
-                  </p>
+                  {openProjects && showcaseProjects && (
+                    <p>
+                      {(openProjects ? openProjects.length : 0) +
+                        (showcaseProjects?.length || 0)}{" "}
+                      projects
+                    </p>
+                  )}
                 </div>
               ) : (
                 <Skeleton className="mt-1 w-52 h-4" />
@@ -260,19 +283,19 @@ const Profile = () => {
             )}
           </div>
         </div>
-        <div className="mt-3 flex items-center gap-7 text-sm">
+        <div className="mt-3 flex items-center gap-7 text-base font-raleway font-semibold">
           <button
             onClick={() => setTab("showcase")}
             className={`${tab === "showcase" && "underline"}`}
           >
-            Showcase Projects ({showcaseProjects.length})
+            Showcase Projects
           </button>
 
           <button
             onClick={() => setTab("open")}
             className={`${tab === "open" && "underline"}`}
           >
-            Open Projects ({openProjects.length})
+            Open Projects
           </button>
         </div>
 
@@ -280,18 +303,23 @@ const Profile = () => {
           <div className="mt-4">
             <ShowcaseGridProfile
               showcaseProjects={showcaseProjects}
-              loading={loading}
+              loading={showcaseProjectLoading}
             />
           </div>
         )}
 
         {tab === "open" && (
           <div className="mt-4">
-            <OpenTable
+            <OpenListProfile
+              openProjects={openProjects}
+              loading={openProjectLoading}
+            />
+
+            {/* <OpenTable
               openProjects={openProjects}
               setOpenProjects={setOpenProjects}
               formatDate={formatDate}
-            />
+            /> */}
           </div>
         )}
       </div>
