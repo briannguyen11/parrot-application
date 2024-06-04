@@ -1,5 +1,6 @@
 import { CommentData } from "../interfaces";
 import { formatDistanceToNow } from "date-fns";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/auth/AuthWrapper";
 import {
   DropdownMenu,
@@ -19,6 +20,7 @@ interface CommentListProps {
 
 const CommentList: React.FC<CommentListProps> = ({ comments, setComments }) => {
   const { loggedInId } = useAuth();
+  const navigate = useNavigate();
   const timeAgo = (date: string) => {
     return (
       "posted " +
@@ -84,9 +86,10 @@ const CommentList: React.FC<CommentListProps> = ({ comments, setComments }) => {
           <div key={index}>
             <div className="flex flex-row gap-2 items-center">
               <img
+                onClick={() => navigate(`/${comment.profile.id}`)}
                 src={comment.profile.profile_picture}
                 alt="Person Icon"
-                className="w-10 h-10 rounded-full"
+                className="w-10 h-10 rounded-full cursor-pointer"
               />
               <div className="flex flex-col">
                 <p className="text-xs text-slate-400">

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { useAuth } from "@/auth/AuthWrapper";
+import { useNavigate } from "react-router-dom";
 
 import LeftIcon from "@/assets/icons/left-arrow-backup-2-svgrepo-com.svg";
 import RightIcon from "@/assets/icons/right-arrow-backup-2-svgrepo-com.svg";
@@ -35,7 +36,7 @@ const ShowcaseProject = () => {
   const [profile, setProfile] = useState<MinProfileData>();
   const [photoIndex, setPhotoIndex] = useState(0);
   const [preloadedImages, setPreloadedImages] = useState<string[]>([]);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -184,7 +185,7 @@ const ShowcaseProject = () => {
     <div className="flex flex-col space-y-4 w-full my-4 lg:w-[800px]">
       <div className="flex flex-col md:flex-row justify-between md:items-center">
         <div className="flex flex-row items-center gap-4">
-          <div className="flex flex-row items-center gap-2">
+          <div onClick={()=>navigate(`/${profile?.id}`)} className="flex flex-row items-center gap-2 cursor-pointer">
             <img
               src={profile?.profile_picture}
               alt="Profile Picture"

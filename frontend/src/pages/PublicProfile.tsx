@@ -13,15 +13,10 @@ import PhotoInput from "@/components/profile/PhotoInput";
 import { EditProfileDialog } from "@/components/profile/EditProfileDialog";
 import { useAuth } from "../auth/AuthWrapper";
 import OpenListProfile from "@/components/profile/OpenListProfile";
+import { useLocation } from "react-router-dom";
+import { ProfileData, OpenData, ShowcaseData } from "@/components/interfaces";
 
-import {
-  ProfileData,
-  OpenData,
-  // ApplyData,
-  ShowcaseData,
-} from "@/components/interfaces";
-
-const Profile = () => {
+const PublicProfile = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [openProjectLoading, setOpenProjectLoading] = useState<boolean>(true);
   const [showcaseProjectLoading, setShowcaseProjectLoading] =
@@ -32,6 +27,9 @@ const Profile = () => {
   const [showcaseProjects, setShowcaseProjects] = useState<ShowcaseData[]>([]);
   const [profileUpdating, setProfileUpdating] = useState<boolean>(false);
   const { loggedInId, setUserPfp } = useAuth();
+  const location = useLocation();
+  const pid = location.pathname.split("/")[1];
+
 
   const patchProfile = async (newProfile: Partial<ProfileData>) => {
     try {
@@ -89,12 +87,37 @@ const Profile = () => {
   };
 
   useEffect(() => {
+    const fetchShowcaseProjects = async () => {
+      const res = await api.get(
+        `/api/showcase-projects/projects/?user_id=${profile?.user}`
+      );
+      // console.log(res.data.results);
+      setShowcaseProjects(res.data.results);
+      setShowcaseProjectLoading(false);
+    };
+
+    const fetchOpenProjects = async () => {
+      const res = await api.get(
+        `/api/open-projects/projects/?user_id=${profile?.user}`
+      );
+      console.log(res.data.results);
+      setOpenProjects(res.data.results);
+      setOpenProjectLoading(false);
+    };
+
+    if (profile) {
+      fetchShowcaseProjects();
+      fetchOpenProjects();
+    }
+  }, [profile]);
+
+  useEffect(() => {
     document.title = "View Profile";
 
     const fetchProfile = async () => {
       // eslint-disable-next-line no-useless-catch
       try {
-        const res = await api.get("/api/profiles/");
+        const res = await api.get(`/api/profiles/public/?id=${pid}`);
         // console.log(res);
 
         // set user
@@ -131,33 +154,12 @@ const Profile = () => {
           username,
         });
 
-        
         setLoading(false);
       } catch (error) {
+        // navigate("/");
         throw error;
       }
     };
-
-    const fetchShowcaseProjects = async () => {
-      const res = await api.get(
-        `/api/showcase-projects/projects/?user_id=${loggedInId}`
-      );
-      // console.log(res.data.results);
-      setShowcaseProjects(res.data.results);
-      setShowcaseProjectLoading(false);
-    };
-
-    const fetchOpenProjects = async () => {
-      const res = await api.get(
-        `/api/open-projects/projects/?user_id=${loggedInId}`
-      );
-      console.log(res.data.results);
-      setOpenProjects(res.data.results);
-      setOpenProjectLoading(false);
-    };
-
-    fetchShowcaseProjects();
-    fetchOpenProjects();
 
     fetchProfile();
   }, []);
@@ -189,22 +191,36 @@ const Profile = () => {
         <div className="h-60 w-full object-cover rounded-2xl relative">
           {!loading ? (
             <div className="h-48 w-full">
-              <BannerInput
-                banner={profile?.banner || DefaultBanner}
-                setBanner={setBanner}
-              />
+              {loggedInId === profile?.user ? (
+                <BannerInput
+                  banner={profile?.banner || DefaultBanner}
+                  setBanner={setBanner}
+                />
+              ) : (
+                <img
+                  src={profile?.banner || DefaultBanner}
+                  className="h-48 w-full object-cover rounded-2xl object-top"
+                />
+              )}
             </div>
           ) : (
             <Skeleton className="h-48 w-full object-cover rounded-2xl" />
           )}
 
           <div className="h-40 w-40 rounded-full bg-white  absolute bottom-0 left-12">
-            {!loading && (
-              <PhotoInput
-                pfp={profile?.profile_picture || DefaultProfile}
-                setPfp={setPfp}
-              />
-            )}
+            {!loading &&
+              (loggedInId === profile?.user ? (
+                <PhotoInput
+                  pfp={profile?.profile_picture || DefaultProfile}
+                  setPfp={setPfp}
+                />
+              ) : (
+                <img
+                  src={profile?.profile_picture || DefaultProfile}
+                  alt="profile_picture"
+                  className="h-full w-full rounded-full object-cover border-4 border-white"
+                />
+              ))}
           </div>
         </div>
         <div className="mt-3 pb-6 border-b">
@@ -235,11 +251,9 @@ const Profile = () => {
               {!loading ? (
                 <div className="mt-1 flex items-center gap-5 text-sm font-raleway text-gray-400">
                   <p>500+ followers</p>
-                  {openProjects && showcaseProjects && (
+                  {!openProjectLoading && !showcaseProjectLoading && (
                     <p>
-                      {(openProjects ? openProjects.length : 0) +
-                        (showcaseProjects?.length || 0)}{" "}
-                      projects
+                      {openProjects.length + showcaseProjects.length} projects
                     </p>
                   )}
                 </div>
@@ -249,10 +263,16 @@ const Profile = () => {
 
               {!loading ? (
                 <div className="mt-3 flex items-center">
-                  <EditProfileDialog
-                    profile={profile}
-                    patchProfile={patchProfile}
-                  />
+                  {loggedInId === profile?.user ? (
+                    <EditProfileDialog
+                      profile={profile}
+                      patchProfile={patchProfile}
+                    />
+                  ) : (
+                    <button className="text-sm font-raleway font-semibold text-parrot-green border-2 border-parrot-green py-1 px-4 rounded-xl">
+                      Follow
+                    </button>
+                  )}
                 </div>
               ) : (
                 <Skeleton className="mt-3 w-40 h-8" />
@@ -269,26 +289,38 @@ const Profile = () => {
             {!loading && (
               <div className="flex flex-col">
                 <div className="flex gap-3 items-center md:justify-end md:mt-0 mt-6">
-                  <a href={profile?.linkedin} target="_blank" rel="noreferrer">
-                    <img
-                      src={LinkedinIcon}
-                      alt="linkedin"
-                      className="w-6 h-6"
-                    />
-                  </a>
+                  {profile?.linkedin && (
+                    <a
+                      href={profile?.linkedin}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <img
+                        src={LinkedinIcon}
+                        alt="linkedin"
+                        className="w-6 h-6"
+                      />
+                    </a>
+                  )}
 
-                  <a href={profile?.github} target="_blank" rel="noreferrer">
-                    <img src={GithubIcon} alt="github" className="w-6 h-6" />
-                  </a>
+                  {profile?.github && (
+                    <a href={profile?.github} target="_blank" rel="noreferrer">
+                      <img src={GithubIcon} alt="github" className="w-6 h-6" />
+                    </a>
+                  )}
 
-                  <a href={profile?.resume} target="_blank" rel="noreferrer">
-                    <img src={ResumeIcon} alt="resume" className="w-6 h-6" />
-                  </a>
+                  {profile?.resume && (
+                    <a href={profile?.resume} target="_blank" rel="noreferrer">
+                      <img src={ResumeIcon} alt="resume" className="w-6 h-6" />
+                    </a>
+                  )}
                 </div>
 
-                <p className="mt-1 font-raleway text-secondary text-sm">
-                  Connect with me{" "}
-                </p>
+                {(profile?.linkedin || profile?.github || profile?.resume) && (
+                  <p className="mt-1 font-raleway text-secondary text-sm">
+                    Connect with me{" "}
+                  </p>
+                )}
               </div>
             )}
           </div>
@@ -337,4 +369,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default PublicProfile;

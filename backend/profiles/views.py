@@ -26,16 +26,13 @@ class ProfileSearchViewSet(MixedPermissionsViewSet):
 
         
 class PublicProfilesViewSet(MixedPermissionsViewSet):
-    serializer_class = ProfilesRestrictedSerializer
+    serializer_class = BaseProfilesSerializer
 
     def get_queryset(self):
-        queryset = Profiles.objects.prefetch_related(
-            Prefetch("user__open_projects", queryset=OpenProject.objects.filter(open=True)),
-            Prefetch("user__showcase_projects", queryset=ShowcaseProject.objects.all())
-        )
-        user_id = self.request.query_params.get("user_id")
-        if user_id:
-            queryset = queryset.filter(user_id=user_id)
+        queryset = Profiles.objects.all()
+        id = self.request.query_params.get("id")
+        if id:
+            queryset = queryset.filter(id=id)
         return queryset
 
 
@@ -71,7 +68,7 @@ class PrivateProfilesViewSet(OwnerPermissionMixin, viewsets.ModelViewSet):
 # Fetches Only the profile of the authenticated user, no joins
 class BaseProfileViewset(OwnerPermissionMixin, viewsets.ModelViewSet):
     serializer_class = BaseProfilesSerializer
-    permission_classes = [permissions.IsAuthenticated]
+
 
     def get_queryset(self):
         user = self.request.user

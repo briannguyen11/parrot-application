@@ -17,6 +17,7 @@ export interface ProfileData {
 
 // For use in open project cards
 export interface MinProfileData {
+  id : string;
   first_name: string;
   last_name: string;
   profile_picture: string;

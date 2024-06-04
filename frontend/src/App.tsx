@@ -24,6 +24,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Admin from "./pages/Admin";
+import PublicProfile from "./pages/PublicProfile";
 
 // clear local storage before registering
 function RegisterAndLogout() {
@@ -50,6 +51,7 @@ const router = createBrowserRouter(
 
         <Route path="campus" element={<div>campus</div>} />
         <Route path="saved" element={<div>saved</div>} />
+        <Route path=":username" element={<PublicProfile/>} />
 
         <Route
           path="/create"

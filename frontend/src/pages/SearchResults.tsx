@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import api from "@/api";
 import BlankAvatar from "../assets/icons/person.svg";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useNavigate } from "react-router-dom";
 
 
 interface Profile {
@@ -63,6 +64,7 @@ const SearchResults = () => {
   const [searchQuery, setSearchQuery] = useState<string | null>(null);
   const [profiles, setProfiles] = useState([] as Profile[]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -100,8 +102,9 @@ const SearchResults = () => {
           <div className="mt-5 flex flex-col ">
             {profiles.map((result, index) => (
               <div
+              onClick={() => navigate(`/${result.id}`)}
                 key={result.id}
-                className={`flex items-start gap-4 border-b py-5 ${
+                className={`flex items-start gap-4 border-b py-5 cursor-pointer ${
                   index === profiles.length - 1 ? "border-b-0" : ""
                 }`}
               >
