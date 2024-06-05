@@ -45,6 +45,7 @@ const ShowcaseProject = () => {
           "/api/showcase-projects/projects/" + projectId + "/"
         );
         setProject(res.data);
+        console.log(res.data);
         setProfile(res.data.profile);
         setComments(res.data.comments);
 
@@ -57,7 +58,8 @@ const ShowcaseProject = () => {
         }
 
         // load images to render
-        preloadImages(res.data.photos);
+        preloadImages(res.data.photos.sort((a : PhotoData, b:PhotoData) => a.order - b.order));
+ 
         document.title = `${res.data.project_name} | Parrot`;
       } catch (error) {
         console.error(error);
@@ -185,7 +187,10 @@ const ShowcaseProject = () => {
     <div className="flex flex-col space-y-4 w-full my-4 lg:w-[800px]">
       <div className="flex flex-col md:flex-row justify-between md:items-center">
         <div className="flex flex-row items-center gap-4">
-          <div onClick={()=>navigate(`/${profile?.id}`)} className="flex flex-row items-center gap-2 cursor-pointer">
+          <div
+            onClick={() => navigate(`/${profile?.id}`)}
+            className="flex flex-row items-center gap-2 cursor-pointer"
+          >
             <img
               src={profile?.profile_picture}
               alt="Profile Picture"

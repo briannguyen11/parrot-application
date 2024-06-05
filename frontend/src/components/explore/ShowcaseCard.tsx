@@ -6,13 +6,8 @@ import PersonIcon from "../../assets/icons/person-crop-circle-fill-svgrepo-com.s
 import { useNavigate } from "react-router-dom";
 import NoPic from "../../assets/icons/nopic.svg";
 import { MinProfileData } from "../interfaces";
-
-interface Photo {
-  photo: string;
-  caption: string;
-  id: number;
-  project: number;
-}
+import { useEffect } from "react";
+import { PhotoData } from "../interfaces";
 
 interface ShowcaseCardProps {
   projectId: number;
@@ -32,6 +27,7 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
   profile,
 }) => {
   const [photoIndex, setPhotoIndex] = useState(0);
+  const orderedPhotos = photos.sort((a, b) => a.order - b.order);
   // const [preloadedImages, setPreloadedImages] = useState<string[]>([]);
   const navigate = useNavigate();
 
@@ -69,7 +65,7 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
       >
         {photos.length > 0 ? (
           <img
-            src={photos[photoIndex].photo}
+            src={orderedPhotos[photoIndex].photo}
             alt="placeholder"
             className="object-cover w-full h-full rounded-md"
             draggable="false"
@@ -89,7 +85,7 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
       <div className="flex flex-inline py-2 mt-1">
         <img
           onClick={() => navigate(`/${profile.id}`)}
-          src={profile.profile_picture}
+          src={profile.profile_picture || PersonIcon}
           alt="pfp"
           className="w-9 h-9 rounded-full cursor-pointer"
         />

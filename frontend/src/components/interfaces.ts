@@ -28,6 +28,7 @@ export interface PhotoData {
   caption: string;
   id: number;
   project: number;
+  order: number;
 }
 
 export interface TagData {
