@@ -62,7 +62,7 @@ const Showcase = () => {
       setNextPage(res.data.next);
       setLoading(false);
       setInitialLoad(false);
-      // console.log(res.data);
+      console.log(res.data);
     } catch (error: unknown) {
       console.log(error);
     }

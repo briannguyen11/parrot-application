@@ -83,7 +83,7 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
       </div>
       <div className="flex flex-inline py-2 mt-1">
         <img
-          onClick={() => navigate(`/${profile.id}`)}
+          onClick={() => navigate(`/${profile.username}`)}
           src={profile.profile_picture || PersonIcon}
           alt="pfp"
           className="w-9 h-9 rounded-full cursor-pointer"

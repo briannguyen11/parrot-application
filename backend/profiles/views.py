@@ -31,8 +31,12 @@ class PublicProfilesViewSet(MixedPermissionsViewSet):
     def get_queryset(self):
         queryset = Profiles.objects.all()
         id = self.request.query_params.get("id")
+        username = self.request.query_params.get("username")
         if id:
             queryset = queryset.filter(id=id)
+
+        if username:
+            queryset = queryset.filter(username=username)
         return queryset
 
 

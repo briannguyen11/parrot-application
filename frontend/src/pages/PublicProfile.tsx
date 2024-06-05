@@ -117,7 +117,7 @@ const PublicProfile = () => {
     const fetchProfile = async () => {
       // eslint-disable-next-line no-useless-catch
       try {
-        const res = await api.get(`/api/profiles/public/?id=${pid}`);
+        const res = await api.get(`/api/profiles/public/?username=${pid}`);
         // console.log(res);
 
         // set user

@@ -86,7 +86,7 @@ const CommentList: React.FC<CommentListProps> = ({ comments, setComments }) => {
           <div key={index}>
             <div className="flex flex-row gap-2 items-center">
               <img
-                onClick={() => navigate(`/${comment.profile.id}`)}
+                onClick={() => navigate(`/${comment.profile.username}`)}
                 src={comment.profile.profile_picture}
                 alt="Person Icon"
                 className="w-10 h-10 rounded-full cursor-pointer"

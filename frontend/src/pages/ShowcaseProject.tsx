@@ -188,7 +188,7 @@ const ShowcaseProject = () => {
       <div className="flex flex-col md:flex-row justify-between md:items-center">
         <div className="flex flex-row items-center gap-4">
           <div
-            onClick={() => navigate(`/${profile?.id}`)}
+            onClick={() => navigate(`/${profile?.username}`)}
             className="flex flex-row items-center gap-2 cursor-pointer"
           >
             <img

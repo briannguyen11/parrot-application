@@ -7,7 +7,7 @@ class Profiles(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    username = models.CharField(max_length=100)
+    username = models.CharField(max_length=100, unique=True)
     header = models.CharField(max_length=100)
     school = models.CharField(max_length=100, blank=True, default="")
     major = models.CharField(max_length=100, blank=True, default="")
