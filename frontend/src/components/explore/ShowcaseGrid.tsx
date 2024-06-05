@@ -1,36 +1,32 @@
 import ShowcaseCard from "./ShowcaseCard";
-import { useEffect, useRef} from "react";
+import { useEffect, useRef } from "react";
 import { Skeleton } from "../ui/skeleton";
 import { MinProfileData } from "../interfaces";
-
-interface Photo {
-  photo: string;
-  caption: string;
-  id: number;
-  project: number;
-}
+import { PhotoData } from "../interfaces";
 
 interface ShowcaseProject {
   id: number;
   project_name: string;
   description: string;
-  photos: Photo[];
+  photos: PhotoData[];
   user_id: string;
   post_date: string;
   profile: MinProfileData;
 }
 
-const ShowcaseGrid = ({ projects, fetchMoreProjects, loading, nextPage }: {
+const ShowcaseGrid = ({
+  projects,
+  fetchMoreProjects,
+  loading,
+  nextPage,
+}: {
   projects: ShowcaseProject[];
   fetchMoreProjects: () => void;
   loading: boolean;
   nextPage: string | null;
 }) => {
-
   const observerRef = useRef<IntersectionObserver | null>(null);
   const triggerRef = useRef<HTMLDivElement | null>(null);
-
-
 
   useEffect(() => {
     if (loading) return;
@@ -61,101 +57,22 @@ const ShowcaseGrid = ({ projects, fetchMoreProjects, loading, nextPage }: {
 
   const renderSkeletons = () => (
     <>
-      <div className="mb-3">
-        <div className="aspect-spotlight bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
-          <Skeleton className="w-[600px] h-[600px]" />
-        </div>
-        <div className="flex items-center gap-4">
-          <Skeleton className="mt-3 h-10 w-10 rounded-full" />
-          <div>
-            <div className="mt-3 flex flex-col gap-2">
-              <Skeleton className="h-4 w-52" />
-
-              <Skeleton className="h-4 w-24" />
+      {[...Array(6)].map((_, index) => (
+        <div key={index} className="mb-3">
+          <div className="aspect-spotlight relative rounded-md hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
+            <Skeleton className="w-[600px] h-[600px]  dark:bg-gray-500" />
+          </div>
+          <div className="flex items-center gap-4">
+            <Skeleton className="mt-3 h-9 w-9 rounded-full dark:bg-gray-500" />
+            <div>
+              <div className="mt-3 flex flex-col gap-2">
+                <Skeleton className="h-4 w-52 dark:bg-gray-500" />
+                <Skeleton className="h-4 w-24 dark:bg-gray-500" />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="mb-3">
-        <div className="aspect-spotlight bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
-          <Skeleton className="w-[600px] h-[600px]" />
-        </div>
-        <div className="flex items-center gap-4">
-          <Skeleton className="mt-3 h-10 w-10 rounded-full" />
-          <div>
-            <div className="mt-3 flex flex-col gap-2">
-              <Skeleton className="h-4 w-52" />
-
-              <Skeleton className="h-4 w-24" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="mb-3">
-        <div className="aspect-spotlight bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
-          <Skeleton className="w-[600px] h-[600px]" />
-        </div>
-        <div className="flex items-center gap-4">
-          <Skeleton className="mt-3 h-10 w-10 rounded-full" />
-          <div>
-            <div className="mt-3 flex flex-col gap-2">
-              <Skeleton className="h-4 w-52" />
-
-              <Skeleton className="h-4 w-24" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="mb-3">
-        <div className="aspect-spotlight bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
-          <Skeleton className="w-[600px] h-[600px]" />
-        </div>
-        <div className="flex items-center gap-4">
-          <Skeleton className="mt-3 h-10 w-10 rounded-full" />
-          <div>
-            <div className="mt-3 flex flex-col gap-2">
-              <Skeleton className="h-4 w-52" />
-
-              <Skeleton className="h-4 w-24" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="mb-3">
-        <div className="aspect-spotlight bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
-          <Skeleton className="w-[600px] h-[600px]" />
-        </div>
-        <div className="flex items-center gap-4">
-          <Skeleton className="mt-3 h-10 w-10 rounded-full" />
-          <div>
-            <div className="mt-3 flex flex-col gap-2">
-              <Skeleton className="h-4 w-52" />
-
-              <Skeleton className="h-4 w-24" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="mb-3">
-        <div className="aspect-spotlight bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
-          <Skeleton className="w-[600px] h-[600px]" />
-        </div>
-        <div className="flex items-center gap-4">
-          <Skeleton className="mt-3 h-10 w-10 rounded-full" />
-          <div>
-            <div className="mt-3 flex flex-col gap-2">
-              <Skeleton className="h-4 w-52" />
-
-              <Skeleton className="h-4 w-24" />
-            </div>
-          </div>
-        </div>
-      </div>
+      ))}
     </>
   );
 
@@ -165,7 +82,7 @@ const ShowcaseGrid = ({ projects, fetchMoreProjects, loading, nextPage }: {
       {!loading &&
         projects &&
         projects.length > 0 &&
-        projects.map((project : ShowcaseProject) => (
+        projects.map((project: ShowcaseProject) => (
           <ShowcaseCard
             key={project.id}
             projectId={project.id}
@@ -174,7 +91,6 @@ const ShowcaseGrid = ({ projects, fetchMoreProjects, loading, nextPage }: {
             photos={project.photos}
             postDate={project.post_date}
             profile={project.profile}
-            
           />
         ))}
       {!loading && nextPage && (

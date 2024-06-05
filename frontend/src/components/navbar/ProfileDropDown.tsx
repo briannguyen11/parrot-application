@@ -52,7 +52,7 @@ export function ProfileDropDown() {
     <DropdownMenu>
       <Toaster />
       <DropdownMenuTrigger asChild>
-        <img src={renderPfp()} alt="profile" className="h-8 w-8 rounded-full" onError={()=>console.log("bruh")} />
+        <img src={renderPfp()} alt="profile" className="h-9 w-9 rounded-full" />
       </DropdownMenuTrigger>
 
       {auth ? (

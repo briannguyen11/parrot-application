@@ -2,6 +2,7 @@ import { ShowcaseData } from "../interfaces";
 import ShowcaseCardProfile from "./ShowcaseCardProfile";
 import { Skeleton } from "../ui/skeleton";
 
+
 interface ShowcaseProjectProp {
   showcaseProjects: ShowcaseData[];
   loading: boolean;

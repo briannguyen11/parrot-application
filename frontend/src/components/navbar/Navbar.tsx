@@ -109,7 +109,7 @@ const Navbar = () => {
             className="md:hidden w-7 h-7 stroke-primary hover:bg-gray-200 p-1 rounded-full transition duration-300 ease-in-out hover:cursor-pointer"
           />
 
-          <div className="hover:cursor-pointer h-8 w-8 ml-1">
+          <div className="hover:cursor-pointer h-9 w-9 ml-1">
             <ProfileDropDown />
           </div>
         </div>

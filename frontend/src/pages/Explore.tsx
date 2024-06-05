@@ -7,19 +7,15 @@ import { X } from "lucide-react";
 import api from "@/api";
 import LoadingIcon from "../assets/icons/loading.svg";
 import { MinProfileData } from "@/components/interfaces";
+import { PhotoData } from "@/components/interfaces";
 
-interface Photo {
-  photo: string;
-  caption: string;
-  id: number;
-  project: number;
-}
+
 
 interface ShowcaseProject {
   id: number;
   project_name: string;
   description: string;
-  photos: Photo[];
+  photos: PhotoData[];
   user_id: string;
   post_date: string;
   profile: MinProfileData;
@@ -99,7 +95,7 @@ const Showcase = () => {
           </span>{" "}
           minds
         </h1>
-        <p className="text-secondary font-normal mt-2 font-montserrat text-sm max-w-[590px]">
+        <p className="text-secondary font-medium mt-2 font-montserrat text-sm max-w-[590px]">
           See what others are posting right now. Discover a world of creativity
           and inspiration as you browse through diverse portfolios from talented
           individuals.
@@ -135,7 +131,7 @@ const Showcase = () => {
 
           <button
             onClick={() => fetchProjects()}
-            className="p-2 px-5 bg-black text-white rounded-full"
+            className="p-2 px-5 bg-primary text-white dark:text-black rounded-full"
           >
             Search
           </button>

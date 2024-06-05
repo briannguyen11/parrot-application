@@ -10,6 +10,7 @@ import RightIcon from "../../assets/icons/right-arrow-backup-2-svgrepo-com.svg";
 const ShowcaseCardProfile = (project: ShowcaseData, key: number) => {
   const navigate = useNavigate();
   const [photoIndex, setPhotoIndex] = useState(0);
+  const orderedPhotos = project.photos.sort((a, b) => a.order - b.order);
   const timeAgo =
   formatDistanceToNow(new Date(project.post_date), {
     addSuffix: true,
@@ -46,7 +47,7 @@ const ShowcaseCardProfile = (project: ShowcaseData, key: number) => {
       >
         {project.photos.length > 0 ? (
           <img
-            src={project.photos[photoIndex].photo}
+            src={orderedPhotos[photoIndex].photo}
             alt="placeholder"
             className="object-cover w-full h-full rounded-md"
             draggable="false"

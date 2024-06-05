@@ -6,14 +6,13 @@ import PersonIcon from "../../assets/icons/person-crop-circle-fill-svgrepo-com.s
 import { useNavigate } from "react-router-dom";
 import NoPic from "../../assets/icons/nopic.svg";
 import { MinProfileData } from "../interfaces";
-import { useEffect } from "react";
 import { PhotoData } from "../interfaces";
 
 interface ShowcaseCardProps {
   projectId: number;
   projectName: string;
   description: string;
-  photos: Photo[];
+  photos: PhotoData[];
   postDate: string;
   profile: MinProfileData;
 }

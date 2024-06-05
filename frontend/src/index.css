@@ -9,11 +9,11 @@
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
-    --parrot-red: #C73B36;
+    --parrot-red: #c73b36;
     --parrot-purple: #443647;
-    --parrot-yellow: #E69215;
-    --parrot-blue: #1D425C;
-    --parrot-green: #4D6631;
+    --parrot-yellow: #e69215;
+    --parrot-blue: #1d425c;
+    --parrot-green: #4d6631;
 
     --card-hover: rgba(0, 0, 0, 0.297);
 
@@ -23,7 +23,7 @@
     --primary: #2a2a2a;
     --primary-foreground: #555555;
 
-    --secondary: 0 0% 40%;
+    --secondary: #666666;
     --secondary-foreground: 0 0% 80%;
 
     --muted: 210 40% 96.1%;
@@ -43,9 +43,6 @@
 
     --sidebar: #f5f5f5;
     --sidebar-hover: #f7f7f7;
-
-
-    
   }
 
   .dark {
@@ -61,7 +58,7 @@
     --primary: #ffffff;
     --primary-foreground: 0 0 71.2%;
 
-    --secondary: 217.2 32.6% 17.5%;
+    --secondary: #d9d9d9;
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
@@ -76,7 +73,6 @@
     --border: 0 0 47.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
-
 
     --sidebar: #3f4a4f;
     --sidebar-hover: #4f5a5f;
@@ -106,5 +102,4 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
-
 }
