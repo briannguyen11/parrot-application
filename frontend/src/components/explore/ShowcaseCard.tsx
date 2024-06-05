@@ -90,11 +90,11 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
         />
         <div className="flex-col ml-4 w-full">
           <div className="flex items-center justify-between gap-2 ">
-            <h4 className="font-semibold text-md">{projectName}</h4>
+            <h4 className="font-semibold text-md text-primary">{projectName}</h4>
             <p className="text-gray-400 text-sm">{timeAgo}</p>
           </div>
 
-          <p className="text-slate-500 text-sm whitespace-nowrap text-ellipsis w-64 overflow-hidden">
+          <p className="text-slate-500 dark:text-gray-400 text-sm whitespace-nowrap text-ellipsis w-64 overflow-hidden">
             {description}
           </p>
         </div>

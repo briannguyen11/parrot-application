@@ -13,6 +13,7 @@ interface Profile {
   last_name: string;
   bio: string;
   profile_picture: string;
+  username: string;
 }
 
 const renderSkeleton = () => {
@@ -102,7 +103,7 @@ const SearchResults = () => {
           <div className="mt-5 flex flex-col ">
             {profiles.map((result, index) => (
               <div
-              onClick={() => navigate(`/${result.id}`)}
+              onClick={() => navigate(`/${result.username}`)}
                 key={result.id}
                 className={`flex items-start gap-4 border-b py-5 cursor-pointer ${
                   index === profiles.length - 1 ? "border-b-0" : ""
