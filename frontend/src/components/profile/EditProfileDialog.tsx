@@ -64,7 +64,7 @@ export function EditProfileDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="text-sm font-raleway font-semibold text-parrot-blue border-2 border-parrot-blue py-1 px-4 rounded-xl">
+        <button className="text-sm font-raleway font-semibold text-parrot-blue border-2 border-parrot-blue py-1 px-4 rounded-xl hover:bg-parrot-blue hover:text-white">
           Edit
         </button>
       </DialogTrigger>

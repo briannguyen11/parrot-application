@@ -30,7 +30,6 @@ const PublicProfile = () => {
   const location = useLocation();
   const pid = location.pathname.split("/")[1];
 
-
   const patchProfile = async (newProfile: Partial<ProfileData>) => {
     try {
       console.log(newProfile);
@@ -113,6 +112,7 @@ const PublicProfile = () => {
 
   useEffect(() => {
     document.title = "View Profile";
+    window.scrollTo({ top: 0, behavior: "instant" });
 
     const fetchProfile = async () => {
       // eslint-disable-next-line no-useless-catch
@@ -227,7 +227,7 @@ const PublicProfile = () => {
           <div className="flex items-start justify-between md:flex-row flex-col">
             <div className="flex flex-col">
               {!loading ? (
-                <div className="flex items-end gap-2">
+                <div className="flex md:flex-row md:items-end md:justify-start flex-col justify-end md:gap-2">
                   <h1 className="text-4xl font-montserrat font-bold text-primary">
                     {profile?.first_name} {profile?.last_name}
                   </h1>
@@ -269,7 +269,7 @@ const PublicProfile = () => {
                       patchProfile={patchProfile}
                     />
                   ) : (
-                    <button className="text-sm font-raleway font-semibold text-parrot-green border-2 border-parrot-green py-1 px-4 rounded-xl">
+                    <button className="text-sm font-raleway font-semibold text-parrot-green border-2 border-parrot-green py-1 px-6 rounded-xl hover:bg-parrot-green hover:text-white">
                       Follow
                     </button>
                   )}

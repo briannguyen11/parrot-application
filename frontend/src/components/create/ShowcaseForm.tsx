@@ -117,17 +117,20 @@ const ShowcaseForm = () => {
         photoData.append("caption", photos[i].caption);
         photoData.append("order", (i + 1).toString());
 
+        // const photoObj = {
+        //   project: res.data.id,
+        //   photo: photos[i].photo,
+        //   caption: photos[i].caption,
+        //   order: i + 1,
+        // };
 
-        const photoObj = {
-          project: res.data.id,
-          photo: photos[i].photo,
-          caption: photos[i].caption,
-          order: i + 1,
-        };
-
-        console.log(photoObj);
+        // console.log(photoObj);
         photoRequests.push(
-          api.post("/api/showcase-projects/photos/", photoObj)
+          api.post("/api/showcase-projects/photos/", photoData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
         );
       }
       await Promise.all(photoRequests);
@@ -137,8 +140,8 @@ const ShowcaseForm = () => {
         project: res.data.id,
         tags: techStack,
       });
-      navigate("/showcase");
-    } catch (error: any) {
+      navigate("/showcase-project/" + res.data.id);
+    } catch (error: unknown) {
       console.error(error);
     }
   };

@@ -21,7 +21,6 @@ interface ShowcaseCardProps {
   photos: Photo[];
   postDate: string;
   profile: MinProfileData;
-
 }
 
 const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
@@ -35,8 +34,6 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
   const [photoIndex, setPhotoIndex] = useState(0);
   // const [preloadedImages, setPreloadedImages] = useState<string[]>([]);
   const navigate = useNavigate();
-
-
 
   const nextPhotoButton = () => {
     return (
@@ -60,17 +57,16 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
     );
   };
 
-  const timeAgo =
-  
-    formatDistanceToNow(new Date(postDate), {
-      addSuffix: true,
-    });
+  const timeAgo = formatDistanceToNow(new Date(postDate), {
+    addSuffix: true,
+  });
 
   return (
-    <div
-      className="relative"
-    >
-      <div  onClick={() => navigate("/showcase-project/" + projectId)} className="aspect-spotlight relative hover:cursor-pointer hover:scale-103 transition duration-300 ease-in-out select-none">
+    <div className="relative">
+      <div
+        onClick={() => navigate("/showcase-project/" + projectId)}
+        className="aspect-spotlight relative hover:cursor-pointer hover:scale-103 transition duration-300 ease-in-out select-none"
+      >
         {photos.length > 0 ? (
           <img
             src={photos[photoIndex].photo}
@@ -91,17 +87,21 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
         </div>
       </div>
       <div className="flex flex-inline py-2 mt-1">
-        <img src={profile.profile_picture} alt="pfp" className="w-9 h-9 rounded-full" />
+        <img
+          onClick={() => navigate(`/${profile.id}`)}
+          src={profile.profile_picture}
+          alt="pfp"
+          className="w-9 h-9 rounded-full cursor-pointer"
+        />
         <div className="flex-col ml-4 w-full">
-          <div className="flex items-center justify-between gap-2">
-          <h4 className="font-semibold text-md">
-            {projectName}
-          </h4>
-          <p className="text-gray-400 text-sm">{timeAgo}</p>
+          <div className="flex items-center justify-between gap-2 ">
+            <h4 className="font-semibold text-md">{projectName}</h4>
+            <p className="text-gray-400 text-sm">{timeAgo}</p>
           </div>
-          
-          <p className="text-slate-500 text-sm">{description}</p>
-         
+
+          <p className="text-slate-500 text-sm whitespace-nowrap text-ellipsis w-64 overflow-hidden">
+            {description}
+          </p>
         </div>
       </div>
     </div>
