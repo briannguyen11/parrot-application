@@ -99,16 +99,14 @@ const AuthProvider = ({ children }: Props) => {
     console.log("Auth provider mounted");
     const storedToken = localStorage.getItem(ACCESS_TOKEN);
     const storedId = localStorage.getItem(ID);
-    const storedPfp = localStorage.getItem(PFP);
+
     if (storedToken) {
       setIsLoggedIn(true);
     }
     if (storedId) {
       setLoggedInId(storedId);
     }
-    if (storedPfp) {
-      setLoggedInPfp(storedPfp);
-    }
+ 
   }, []);
 
   const loggedIn = () => {

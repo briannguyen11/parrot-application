@@ -1,6 +1,7 @@
 import ShowcaseCard from "./ShowcaseCard";
 import { useEffect, useRef} from "react";
 import { Skeleton } from "../ui/skeleton";
+import { MinProfileData } from "../interfaces";
 
 interface Photo {
   photo: string;
@@ -16,6 +17,7 @@ interface ShowcaseProject {
   photos: Photo[];
   user_id: string;
   post_date: string;
+  profile: MinProfileData;
 }
 
 const ShowcaseGrid = ({ projects, fetchMoreProjects, loading, nextPage }: {
@@ -171,6 +173,8 @@ const ShowcaseGrid = ({ projects, fetchMoreProjects, loading, nextPage }: {
             description={project.description}
             photos={project.photos}
             postDate={project.post_date}
+            profile={project.profile}
+            
           />
         ))}
       {!loading && nextPage && (

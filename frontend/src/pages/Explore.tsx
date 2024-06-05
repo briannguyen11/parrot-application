@@ -6,6 +6,7 @@ import { CommunityPopover } from "@/components/explore/CommunityPopover";
 import { X } from "lucide-react";
 import api from "@/api";
 import LoadingIcon from "../assets/icons/loading.svg";
+import { MinProfileData } from "@/components/interfaces";
 
 interface Photo {
   photo: string;
@@ -21,6 +22,7 @@ interface ShowcaseProject {
   photos: Photo[];
   user_id: string;
   post_date: string;
+  profile: MinProfileData;
 }
 const colorMap: { [key: string]: string } = {
   all: "bg-parrot-red",
@@ -64,6 +66,7 @@ const Showcase = () => {
       setNextPage(res.data.next);
       setLoading(false);
       setInitialLoad(false);
+      console.log(res.data);
     } catch (error: unknown) {
       console.log(error);
     }

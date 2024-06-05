@@ -38,7 +38,7 @@ const Onboard = () => {
     }
 
     try {
-      const res = await api.post("/api/profiles/", profileData, {
+      const res = await api.post("/api/profiles/private/", profileData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

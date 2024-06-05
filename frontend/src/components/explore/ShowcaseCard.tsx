@@ -5,6 +5,7 @@ import RightIcon from "../../assets/icons/right-arrow-backup-2-svgrepo-com.svg";
 import PersonIcon from "../../assets/icons/person-crop-circle-fill-svgrepo-com.svg";
 import { useNavigate } from "react-router-dom";
 import NoPic from "../../assets/icons/nopic.svg";
+import { MinProfileData } from "../interfaces";
 
 interface Photo {
   photo: string;
@@ -19,6 +20,8 @@ interface ShowcaseCardProps {
   description: string;
   photos: Photo[];
   postDate: string;
+  profile: MinProfileData;
+
 }
 
 const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
@@ -27,6 +30,7 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
   description,
   photos,
   postDate,
+  profile,
 }) => {
   const [photoIndex, setPhotoIndex] = useState(0);
   // const [preloadedImages, setPreloadedImages] = useState<string[]>([]);
@@ -87,10 +91,10 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
         </div>
       </div>
       <div className="flex flex-inline py-2 mt-1">
-        <img src={PersonIcon} alt="pfp" className="w-10 h-10" />
+        <img src={profile.profile_picture} alt="pfp" className="w-9 h-9 rounded-full" />
         <div className="flex-col ml-4 w-full">
           <div className="flex items-center justify-between gap-2">
-          <h4 className="font-bold text-md">
+          <h4 className="font-semibold text-md">
             {projectName}
           </h4>
           <p className="text-gray-400 text-sm">{timeAgo}</p>
