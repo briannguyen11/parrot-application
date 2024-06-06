@@ -19,7 +19,7 @@ const Onboard = () => {
 
   const navigate = useNavigate();
 
-  const { updatePfp } = useAuth();
+  const { setUserPfp } = useAuth();
 
   const handleSubmit = async () => {
     const profileData = new FormData();
@@ -44,7 +44,7 @@ const Onboard = () => {
         },
       });
       console.log(res);
-      updatePfp(res.data.profile_picture);
+      setUserPfp(res.data.profile_picture);
       navigate("/");
     } catch (error: unknown) {
       console.log(error);

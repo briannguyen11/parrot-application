@@ -7,6 +7,7 @@ import Tag from "@/components/Tag";
 import FeedCard from "@/components/open-projects/FeedCard";
 import TechStackInput from "@/components/TechStackInput";
 import api from "@/api";
+import { MinProfileData } from "../interfaces";
 
 const OpenForm = () => {
   const [techStack, setTechStack] = useState<string[]>([]);
@@ -279,6 +280,8 @@ const OpenForm = () => {
           group_size={groupSize}
           level={difficultyLevel}
           previewTags={techStack}
+          profile={{} as MinProfileData}
+        
         />
 
         <button

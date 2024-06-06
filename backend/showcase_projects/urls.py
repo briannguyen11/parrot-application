@@ -8,8 +8,10 @@ from showcase_projects.views import (
     CommentViewSet,
     CommentLikeViewSet,
     ShowcaseSearchViewSet,
-    ShowcaseExploreViewSet
+    ShowcaseExploreViewSet,
+    get_showcase_projects
 )
+from django.urls import path
 
 
 router = DefaultRouter()
@@ -25,4 +27,8 @@ router.register(r"likes", LikeViewSet, basename="likes")
 router.register(r"comments", CommentViewSet, basename="comments")
 router.register(r"comment-likes", CommentLikeViewSet, basename="comment-likes")
 
-urlpatterns = router.urls
+
+# Define urlpatterns to include both the router and the standalone view
+urlpatterns = [
+    path('showcase_projects/<str:username>/', get_showcase_projects, name='showcase_projects'),
+] + router.urls

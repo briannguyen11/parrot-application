@@ -27,7 +27,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
   const [newLinkedin, setNewLinkedin] = useState<string>(profile.linkedin);
   const [newGithub, setNewGithub] = useState<string>(profile.github);
 
-  const { updatePfp } = useAuth();
+  const { setUserPfp } = useAuth();
 
   const handleUpdate = async () => {
     const formData = new FormData();
@@ -53,7 +53,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
       });
 
       setProfile(res.data);
-      updatePfp(res.data.profile_picture);
+      setUserPfp(res.data.profile_picture);
       setUpdateProfile(false);
     } catch (error: unknown) {
       console.error(error);

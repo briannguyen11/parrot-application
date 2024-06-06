@@ -26,6 +26,11 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.decorators import action
 
 
+from django.shortcuts import get_object_or_404
+from collections import defaultdict
+from django.db import connection
+from django.http import JsonResponse
+
 class ShowcaseProjectPagination(PageNumberPagination):
     page_size = 10
     max_page_size = 20
@@ -200,3 +205,51 @@ class CommentLikeViewSet(MixedPermissionsViewSet):
         if comment_id:
             queryset = queryset.filter(comment_id=comment_id)
         return queryset
+
+
+
+def get_showcase_projects(request, username):
+
+    # Define the raw SQL query
+
+
+
+    raw_query = """
+    SELECT *
+    FROM showcase_project s
+    JOIN user_profile u ON s.user_id = u.user_id
+    JOIN showcase_project_photo sp ON sp.project_id = s.id
+    WHERE u.username = %s
+    """
+
+    # Execute the raw SQL query
+    with connection.cursor() as cursor:
+        cursor.execute(raw_query, [username])
+        rows = cursor.fetchall()
+
+    # Get column names
+    columns = [col[0] for col in cursor.description]
+
+    # Process the data
+    projects = defaultdict(lambda: {"photos": []})
+    for row in rows:
+        row_data = dict(zip(columns, row))
+        project_id = row_data['project_id']
+        projects[project_id]["project_id"] = project_id
+        projects[project_id]["title"] = row_data["project_name"]
+        projects[project_id]["description"] = row_data["description"]
+        projects[project_id]["post_date"] = row_data["post_date"]
+        projects[project_id]["user_id"] = row_data["user_id"]
+        projects[project_id]["username"] = row_data["username"]
+        projects[project_id]["photos"].append(row_data["photo"])
+
+    # Convert the defaultdict to a list for easier JSON serialization
+    project_list = list(projects.values())
+
+    # Create the response structure
+    response = {
+        "username": username,
+        "showcase_projects": project_list
+    }
+
+    return JsonResponse(response)
