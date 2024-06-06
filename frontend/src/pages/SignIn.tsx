@@ -118,7 +118,7 @@ const SignIn = () => {
             </Button>
           </form>
           <p className="text-sm font-semibold">Or</p>
-          <GoogleSignIn mode={"sign-in"} />
+          <GoogleSignIn />
         </div>
       </div>
     </div>

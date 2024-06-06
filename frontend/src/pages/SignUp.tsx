@@ -229,7 +229,7 @@ const SignUp = () => {
             </Button>
           </form>
           <p className="text-sm font-semibold">Or</p>
-          <GoogleSignIn mode={"sign-up"} />
+          <GoogleSignIn />
         </div>
       </div>
     </div>
