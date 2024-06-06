@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api";
 import { Skeleton } from "@/components/ui/skeleton";
+import OpenListProfile from "@/components/profile/OpenListProfile";
 import ShowcaseGridProfile from "@/components/profile/ShowcaseGridProfile";
 import DefaultBanner from "../assets/banners/slo_default.jpg";
 import LinkedinIcon from "../assets/icons/linkedin.svg";
@@ -11,8 +12,8 @@ import LoadingIcon from "../assets/icons/loading.svg";
 import BannerInput from "@/components/profile/BannerInput";
 import PhotoInput from "@/components/profile/PhotoInput";
 import { EditProfileDialog } from "@/components/profile/EditProfileDialog";
-import { useAuth } from "../auth/AuthWrapper";
-import OpenListProfile from "@/components/profile/OpenListProfile";
+import { UserAuth } from "../auth/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 import {
   ProfileData,
@@ -31,7 +32,8 @@ const Profile = () => {
   const [openProjects, setOpenProjects] = useState<OpenData[]>([]);
   const [showcaseProjects, setShowcaseProjects] = useState<ShowcaseData[]>([]);
   const [profileUpdating, setProfileUpdating] = useState<boolean>(false);
-  const { loggedInId, setUserPfp } = useAuth();
+  const { user, setUserPfp } = UserAuth();
+  const navigate = useNavigate();
 
   const patchProfile = async (newProfile: Partial<ProfileData>) => {
     try {
@@ -90,12 +92,14 @@ const Profile = () => {
 
   useEffect(() => {
     document.title = "View Profile";
+    if (user === undefined) {
+      navigate("/onboard");
+    }
 
     const fetchProfile = async () => {
       // eslint-disable-next-line no-useless-catch
       try {
         const res = await api.get("/api/profiles/");
-        // console.log(res);
 
         // set user
         const {
@@ -131,7 +135,6 @@ const Profile = () => {
           username,
         });
 
-        
         setLoading(false);
       } catch (error) {
         throw error;
@@ -140,7 +143,7 @@ const Profile = () => {
 
     const fetchShowcaseProjects = async () => {
       const res = await api.get(
-        `/api/showcase-projects/projects/?user_id=${loggedInId}`
+        `/api/showcase-projects/projects/?user_id=${user?.user}`
       );
       // console.log(res.data.results);
       setShowcaseProjects(res.data.results);
@@ -149,7 +152,7 @@ const Profile = () => {
 
     const fetchOpenProjects = async () => {
       const res = await api.get(
-        `/api/open-projects/projects/?user_id=${loggedInId}`
+        `/api/open-projects/projects/?user_id=${user?.user}`
       );
       console.log(res.data.results);
       setOpenProjects(res.data.results);

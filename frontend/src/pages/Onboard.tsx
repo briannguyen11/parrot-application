@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/auth/AuthWrapper";
+import { UserAuth } from "@/auth/AuthContext";
 import api from "../api";
 import PhotoInput from "@/components/profile/PhotoInput";
 
@@ -19,7 +19,7 @@ const Onboard = () => {
 
   const navigate = useNavigate();
 
-  const { setUserPfp } = useAuth();
+  const { setUserPfp } = UserAuth();
 
   const handleSubmit = async () => {
     const profileData = new FormData();

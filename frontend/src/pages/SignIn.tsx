@@ -1,29 +1,31 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from "react";
+import { UserAuth } from "@/auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants";
-import { useAuth } from "@/auth/AuthWrapper";
 import { Button } from "@/components/ui/button";
 
 import GoogleSignIn from "@/auth/GoogleSignIn";
-
-import api from "../api";
 
 const SignIn = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
-  const { loggedIn, setUserId, setUserPfp } = useAuth();
+  const { user } = UserAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     document.title = "Sign In | parrot";
-  }, []);
+    if (user !== null) {
+      if (user === undefined) {
+        navigate("/onboard");
+      } else {
+        navigate("/");
+      }
+    }
+  }, [user]);
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-
     try {
       const auth = getAuth();
       const credentials = await signInWithEmailAndPassword(
@@ -37,43 +39,13 @@ const SignIn = () => {
         return;
       }
 
-      // sign in passed, extract tokens
-      const idToken = await credentials.user.getIdToken();
-      const refreshToken = credentials.user.refreshToken;
-
-      console.log(idToken);
-
-      // verify tokens with backend
-      const res = await api.post("/api/users/auth/sign-in/", {
-        id_token: idToken,
-      });
-      console.log(res);
-      if (res.status === 200) {
-        console.log("tokens verified");
-        // tokens verified, set storage and clear fields
-        localStorage.setItem(ACCESS_TOKEN, idToken);
-        localStorage.setItem(REFRESH_TOKEN, refreshToken);
-
-        loggedIn();
-        setUserId(res.data.user_data.id);
-
-        setEmail("");
-        setPassword("");
-
-        // if user has profile, set pfp and go to home othwerise onboard
-        const profile = await api.get("/api/profiles/");
-        if (profile.data.length !== 0) {
-          setUserPfp(profile.data[0].profile_picture);
-          navigate("/");
-        } else {
-          navigate("/onboard");
-        }
-      }
-    } catch (error: unknown) {
-      console.log(error);
-      setError("Invalid email or password.");
       setEmail("");
       setPassword("");
+    } catch (error: unknown) {
+      console.error(error);
+      setEmail("");
+      setPassword("");
+      setError("Invalid email or password.");
     }
   };
 
@@ -146,7 +118,7 @@ const SignIn = () => {
             </Button>
           </form>
           <p className="text-sm font-semibold">Or</p>
-          <GoogleSignIn />
+          <GoogleSignIn mode={"sign-in"} />
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAuth } from "@/auth/AuthWrapper";
+import { UserAuth } from "@/auth/AuthContext";
 import { CommentData } from "../interfaces";
 import api from "@/api";
 import PersonIcon from "../../assets/icons/person-crop-circle-fill-svgrepo-com.svg";
@@ -13,7 +13,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   projectId,
   setComments,
 }) => {
-  const { loggedInPfp } = useAuth();
+  const { user } = UserAuth();
   const [comment, setComment] = useState<string>("");
 
   const handleSubmit = async () => {
@@ -33,9 +33,9 @@ const CommentInput: React.FC<CommentInputProps> = ({
   return (
     <div className="flex-col">
       <div className="flex flex-inline gap-2 items-center">
-        {loggedInPfp ? (
+        {user && user.profile_picture ? (
           <img
-            src={loggedInPfp}
+            src={user.profile_picture}
             alt="Profile Picture"
             className="w-10 h-10 rounded-full"
           />

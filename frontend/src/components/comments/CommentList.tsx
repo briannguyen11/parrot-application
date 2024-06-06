@@ -1,7 +1,7 @@
 import { CommentData } from "../interfaces";
 import { formatDistanceToNow } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/auth/AuthWrapper";
+import { UserAuth } from "@/auth/AuthContext";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,7 +19,7 @@ interface CommentListProps {
 }
 
 const CommentList: React.FC<CommentListProps> = ({ comments, setComments }) => {
-  const { loggedInId } = useAuth();
+  const { user } = UserAuth();
   const navigate = useNavigate();
   const timeAgo = (date: string) => {
     return (
@@ -105,7 +105,7 @@ const CommentList: React.FC<CommentListProps> = ({ comments, setComments }) => {
                   {comment.content}
                 </p>
               </div>
-              {loggedInId === comment.user && (
+              {user?.user === comment.user && (
                 <div className="ml-auto">{renderOptions(comment.id)}</div>
               )}
             </div>

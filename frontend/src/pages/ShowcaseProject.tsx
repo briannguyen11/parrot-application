@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import { formatDistanceToNow } from "date-fns";
-import { useAuth } from "@/auth/AuthWrapper";
+import { UserAuth } from "@/auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 import LeftIcon from "@/assets/icons/left-arrow-backup-2-svgrepo-com.svg";
@@ -27,7 +27,7 @@ import CommentList from "@/components/comments/CommentList";
 
 const ShowcaseProject = () => {
   const { projectId } = useParams<{ projectId: string }>();
-  const { loggedInId } = useAuth();
+  const { user } = UserAuth();
   const [liked, setLiked] = useState<number | null>(null);
   const [saved, setSaved] = useState<number | null>(null);
   const [comments, setComments] = useState<CommentData[]>([]);
@@ -45,21 +45,24 @@ const ShowcaseProject = () => {
           "/api/showcase-projects/projects/" + projectId + "/"
         );
         setProject(res.data);
-        console.log(res.data);
         setProfile(res.data.profile);
         setComments(res.data.comments);
 
         // check if user liked current showcase
         const likeObject = res.data.likes.find(
-          (like: LikeData) => like.user === loggedInId
+          (like: LikeData) => like.user === user?.user
         );
         if (likeObject) {
           setLiked(likeObject.id);
         }
 
         // load images to render
-        preloadImages(res.data.photos.sort((a : PhotoData, b:PhotoData) => a.order - b.order));
- 
+        preloadImages(
+          res.data.photos.sort(
+            (a: PhotoData, b: PhotoData) => a.order - b.order
+          )
+        );
+
         document.title = `${res.data.project_name} | Parrot`;
       } catch (error) {
         console.error(error);
@@ -68,9 +71,9 @@ const ShowcaseProject = () => {
 
     const checkUserSaved = async () => {
       try {
-        if (loggedInId) {
+        if (user?.user) {
           const res = await api.get(
-            `/api/showcase-projects/saves/?user_id=${loggedInId}`
+            `/api/showcase-projects/saves/?user_id=${user?.user}`
           );
           const saveObject = res.data.find(
             (saved: SaveData) => saved.project.id === Number(projectId)
@@ -87,7 +90,7 @@ const ShowcaseProject = () => {
     fetchProjects();
     checkUserSaved();
     setLoading(false);
-  }, [projectId, loggedInId]);
+  }, [projectId, user]);
 
   const preloadImages = (photos: PhotoData[]) => {
     const imagePromises = photos.map((photo) => {

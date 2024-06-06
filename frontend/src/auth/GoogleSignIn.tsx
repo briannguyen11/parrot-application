@@ -1,72 +1,39 @@
 import { useEffect } from "react";
-import {
-  GoogleAuthProvider,
-  signInWithRedirect,
-  getAuth,
-  getRedirectResult,
-  UserCredential,
-} from "firebase/auth";
-import { useAuth } from "@/auth/AuthWrapper";
+import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
+import { UserAuth } from "@/auth/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants";
 import { Button } from "@/components/ui/button";
-
+import api from "@/api";
 import GoogleIcon from "@/assets/icons/google-color-svgrepo-com.svg";
-import api from "../api";
 
 const GoogleSignIn = () => {
-  const { loggedIn, setUserId, setUserPfp } = useAuth();
+  const { user } = UserAuth();
   const navigate = useNavigate();
 
   const handleGoogleSignIn = async () => {
     try {
       const auth = getAuth();
-      await signInWithRedirect(auth, new GoogleAuthProvider());
+      const cred = await signInWithPopup(auth, new GoogleAuthProvider());
+      const idToken = await cred.user.getIdToken();
+
+      // will create user if user does not exit, othwerwise return nothing
+      await api.post("/api/users/create/", {
+        id_token: idToken,
+      });
     } catch (error) {
       console.error("Google sign-in error:", error);
     }
   };
 
-  const processCredentials = async (credential: UserCredential) => {
-    if (credential && credential.user) {
-      const idToken = await credential.user.getIdToken();
-      const refreshToken = credential.user.refreshToken;
-
-      const res = await api.post("/api/users/auth/google-sign-in/", {
-        id_token: idToken,
-      });
-      localStorage.setItem(ACCESS_TOKEN, idToken);
-      localStorage.setItem(REFRESH_TOKEN, refreshToken);
-
-      loggedIn();
-      setUserId(res.data.user_data.id);
-
-      if (res.status === 201) {
+  useEffect(() => {
+    if (user !== null) {
+      if (user === undefined) {
         navigate("/onboard");
-      }
-
-      if (res.status === 200) {
-        const profile = await api.get("/api/profiles/");
-        setUserPfp(profile.data[0].profile_picture);
+      } else {
         navigate("/");
       }
     }
-  };
-
-  useEffect(() => {
-    const processRedirectResult = async () => {
-      try {
-        const credentials = await getRedirectResult(getAuth());
-        if (credentials) {
-          processCredentials(credentials);
-        }
-      } catch (error) {
-        console.error("Error processing redirect result:", error);
-      }
-    };
-    processRedirectResult();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  });
+  }, [user]);
 
   return (
     <Button

@@ -3,7 +3,6 @@ import Home from "./pages/Home";
 import Explore from "./pages/Explore";
 import Profile from "./pages/Profile";
 import Onboard from "./pages/Onboard";
-import Wait from "./pages/Wait";
 import NotFound from "./pages/NotFound";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
@@ -15,7 +14,7 @@ import ProtectedRoute from "./auth/ProtectedRoute";
 import Settings from "./pages/Settings";
 import Messages from "./pages/Messages";
 import SearchResults from "./pages/SearchResults";
-import { AuthProvider } from "./auth/AuthWrapper";
+import { AuthProvider } from "./auth/AuthContext";
 
 import {
   Route,
@@ -51,7 +50,7 @@ const router = createBrowserRouter(
 
         <Route path="campus" element={<div>campus</div>} />
         <Route path="saved" element={<div>saved</div>} />
-        <Route path=":username" element={<PublicProfile/>} />
+        <Route path=":username" element={<PublicProfile />} />
 
         <Route
           path="/create"
@@ -70,8 +69,6 @@ const router = createBrowserRouter(
           }
         />
       </Route>
-
-      <Route path="/wait" element={<Wait />} />
 
       <Route
         path="/onboard"

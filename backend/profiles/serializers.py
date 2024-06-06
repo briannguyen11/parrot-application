@@ -1,7 +1,23 @@
 from rest_framework import serializers
-from open_projects.serializers import OpenProjectSerializer, OpenProjectApplySerializer, OpenProjectSaveSerializer, OpenProjectRestrictedSerializer
-from showcase_projects.serializers import ShowcaseProjectSerializer, ShowcaseProjectSaveSerializer, LikeSerializer
+from open_projects.serializers import (
+    OpenProjectSerializer,
+    OpenProjectApplySerializer,
+    OpenProjectSaveSerializer,
+    OpenProjectRestrictedSerializer,
+)
+from showcase_projects.serializers import (
+    ShowcaseProjectSerializer,
+    ShowcaseProjectSaveSerializer,
+    LikeSerializer,
+)
 from .models import Profiles
+
+
+class MiniProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profiles
+        fields = ["user", "username", "profile_picture"]
+        read_only_fields = ["user"]
 
 
 # Used for searching just for regular profiles, no joins neccessary
@@ -22,17 +38,27 @@ class BaseProfilesSerializer(serializers.ModelSerializer):
             "banner",
             "resume",
             "linkedin",
-            "github"
+            "github",
         ]
         read_only_fields = ["user"]
 
 
-class ProfilesSerializer(serializers.ModelSerializer): 
-    open_projects = OpenProjectSerializer(many=True, read_only=True, source="user.open_projects")
-    applied_open_projects = OpenProjectApplySerializer(many=True, read_only=True, source="user.applied_open_projects")
-    saved_open_projects = OpenProjectSaveSerializer(many=True, read_only=True, source="user.saved_open_projects")
-    showcase_projects = ShowcaseProjectSerializer(many=True, read_only=True, source="user.showcase_projects")
-    saved_showcase_projects = ShowcaseProjectSaveSerializer(many=True, read_only=True, source="user.saved_showcase_projects")
+class ProfilesSerializer(serializers.ModelSerializer):
+    open_projects = OpenProjectSerializer(
+        many=True, read_only=True, source="user.open_projects"
+    )
+    applied_open_projects = OpenProjectApplySerializer(
+        many=True, read_only=True, source="user.applied_open_projects"
+    )
+    saved_open_projects = OpenProjectSaveSerializer(
+        many=True, read_only=True, source="user.saved_open_projects"
+    )
+    showcase_projects = ShowcaseProjectSerializer(
+        many=True, read_only=True, source="user.showcase_projects"
+    )
+    saved_showcase_projects = ShowcaseProjectSaveSerializer(
+        many=True, read_only=True, source="user.saved_showcase_projects"
+    )
     likes = LikeSerializer(many=True, read_only=True, source="user.likes")
 
     class Meta:
@@ -57,16 +83,16 @@ class ProfilesSerializer(serializers.ModelSerializer):
             "saved_open_projects",
             "showcase_projects",
             "saved_showcase_projects",
-            "likes"
+            "likes",
         ]
         read_only_fields = [
-            "user", 
-            "open_projects", 
+            "user",
+            "open_projects",
             "applied_open_projects",
             "saved_open_projects",
             "showcase_projects",
             "saved_showcase_projects",
-            "likes"
+            "likes",
         ]
 
     def validate(self, data):
@@ -89,9 +115,13 @@ class ProfilesSerializer(serializers.ModelSerializer):
         return data
 
 
-class ProfilesRestrictedSerializer(serializers.ModelSerializer): 
-    open_projects = OpenProjectRestrictedSerializer(many=True, read_only=True, source="user.open_projects")
-    showcase_projects = ShowcaseProjectSerializer(many=True, read_only=True, source="user.showcase_projects")
+class ProfilesRestrictedSerializer(serializers.ModelSerializer):
+    open_projects = OpenProjectRestrictedSerializer(
+        many=True, read_only=True, source="user.open_projects"
+    )
+    showcase_projects = ShowcaseProjectSerializer(
+        many=True, read_only=True, source="user.showcase_projects"
+    )
 
     class Meta:
         model = Profiles
@@ -114,14 +144,7 @@ class ProfilesRestrictedSerializer(serializers.ModelSerializer):
             "showcase_projects",
         ]
         read_only_fields = [
-            "user", 
+            "user",
             "open_projects",
             "showcase_projects",
         ]
-
-
-# Use for auth wrapper to get profile picture
-class ProfilePictureSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Profiles
-        fields = ['profile_picture']

@@ -11,7 +11,7 @@ import LoadingIcon from "../assets/icons/loading.svg";
 import BannerInput from "@/components/profile/BannerInput";
 import PhotoInput from "@/components/profile/PhotoInput";
 import { EditProfileDialog } from "@/components/profile/EditProfileDialog";
-import { useAuth } from "../auth/AuthWrapper";
+import { UserAuth } from "../auth/AuthContext";
 import OpenListProfile from "@/components/profile/OpenListProfile";
 import { useLocation } from "react-router-dom";
 import { ProfileData, OpenData, ShowcaseData } from "@/components/interfaces";
@@ -26,7 +26,7 @@ const PublicProfile = () => {
   const [openProjects, setOpenProjects] = useState<OpenData[]>([]);
   const [showcaseProjects, setShowcaseProjects] = useState<ShowcaseData[]>([]);
   const [profileUpdating, setProfileUpdating] = useState<boolean>(false);
-  const { loggedInId, setUserPfp } = useAuth();
+  const { user, setUserPfp } = UserAuth();
   const location = useLocation();
   const pid = location.pathname.split("/")[1];
 
@@ -191,7 +191,7 @@ const PublicProfile = () => {
         <div className="h-60 w-full object-cover rounded-2xl relative">
           {!loading ? (
             <div className="h-48 w-full">
-              {loggedInId === profile?.user ? (
+              {user?.user === profile?.user ? (
                 <BannerInput
                   banner={profile?.banner || DefaultBanner}
                   setBanner={setBanner}
@@ -209,7 +209,7 @@ const PublicProfile = () => {
 
           <div className="h-40 w-40 rounded-full bg-white  absolute bottom-0 left-12">
             {!loading &&
-              (loggedInId === profile?.user ? (
+              (user?.user === profile?.user ? (
                 <PhotoInput
                   pfp={profile?.profile_picture || DefaultProfile}
                   setPfp={setPfp}
@@ -263,7 +263,7 @@ const PublicProfile = () => {
 
               {!loading ? (
                 <div className="mt-3 flex items-center">
-                  {loggedInId === profile?.user ? (
+                  {user?.user === profile?.user ? (
                     <EditProfileDialog
                       profile={profile}
                       patchProfile={patchProfile}

@@ -7,9 +7,8 @@ import {
   UserCredential,
 } from "firebase/auth";
 import { Button } from "@/components/ui/button";
-
+import api from "@/api";
 import GoogleSignIn from "@/auth/GoogleSignIn";
-import api from "../api";
 
 const SignUp = () => {
   const [email, setEmail] = useState<string>("");
@@ -60,23 +59,21 @@ const SignUp = () => {
         try {
           const auth = getAuth();
 
-          // create user with email and password
-          const credentials = await createUserWithEmailAndPassword(
+          const cred = await createUserWithEmailAndPassword(
             auth,
             email,
             password
           );
-          const idToken = await credentials.user.getIdToken();
 
-          // send email verification
-          setCredential(credentials);
-          await sendEmailVerification(credentials.user);
+          const idToken = await cred.user.getIdToken();
 
-          const res = await api.post("/api/users/auth/sign-up/", {
+          await sendEmailVerification(cred.user);
+
+          await api.post("/api/users/create/", {
             id_token: idToken,
           });
-          console.log(res);
 
+          setCredential(cred);
           setPopup(true);
           setEmail("");
           setPassword("");
@@ -232,7 +229,7 @@ const SignUp = () => {
             </Button>
           </form>
           <p className="text-sm font-semibold">Or</p>
-          <GoogleSignIn />
+          <GoogleSignIn mode={"sign-up"} />
         </div>
       </div>
     </div>

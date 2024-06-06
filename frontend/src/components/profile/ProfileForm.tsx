@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "../ui/button";
-import { useAuth } from "../../auth/AuthWrapper";
+import { UserAuth } from "../../auth/AuthContext";
 import { ProfileData } from "../interfaces";
 import api from "../../api";
 import PhotoInput from "@/components/profile/PhotoInput";
@@ -27,7 +27,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
   const [newLinkedin, setNewLinkedin] = useState<string>(profile.linkedin);
   const [newGithub, setNewGithub] = useState<string>(profile.github);
 
-  const { setUserPfp } = useAuth();
+  const { setUserPfp } = UserAuth();
 
   const handleUpdate = async () => {
     const formData = new FormData();

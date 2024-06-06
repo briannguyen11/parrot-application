@@ -22,27 +22,26 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
 
 import { Toaster } from "@/components/ui/sonner";
-import { useAuth } from "../../auth/AuthWrapper";
+import { UserAuth } from "../../auth/AuthContext";
+import { getAuth, signOut } from "firebase/auth";
 
 export function ProfileDropDown() {
   const navigate = useNavigate();
-  const { isLoggedIn, loggedInPfp, loggedOut, setUserPfp } = useAuth();
-
-  const auth = isLoggedIn;
+  const auth = getAuth();
+  const { user, setUser } = UserAuth();
 
   const handleLogout = () => {
     localStorage.clear();
-    setUserPfp(null);
-    loggedOut();
+    setUser(null);
+    signOut(auth);
     navigate("/");
   };
 
   const renderPfp = () => {
-    if (loggedInPfp) {
-      return loggedInPfp;
+    if (user && user.profile_picture) {
+      return user.profile_picture;
     } else {
       return ProfilePicture;
     }
@@ -55,7 +54,7 @@ export function ProfileDropDown() {
         <img src={renderPfp()} alt="profile" className="h-9 w-9 rounded-full" />
       </DropdownMenuTrigger>
 
-      {auth ? (
+      {user !== null ? (
         <DropdownMenuContent className="md:mr-12 mr-5 mt-[14px] w-56">
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
 
@@ -101,14 +100,6 @@ export function ProfileDropDown() {
           <DropdownMenuItem
             className="hover:cursor-pointer"
             onClick={() => {
-              toast("You have been logged out.", {
-                description: "See you again!",
-                action: {
-                  label: "Close",
-                  onClick: () => console.log(""),
-                },
-                className: "bg-white",
-              });
               handleLogout();
             }}
           >
