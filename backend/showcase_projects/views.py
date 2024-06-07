@@ -208,6 +208,10 @@ class ShowcaseFeedViewSet(MixedPermissionsViewSet):
     def get_queryset(self):
         queryset = ShowcaseProject.objects.select_related('user__profile').prefetch_related('photos').prefetch_related('tags')
         username = self.request.query_params.get('username')
+        search = self.request.query_params.get('search')
         if username:
             queryset = queryset.filter(user__profile__username=username)
+
+        if search:
+            queryset = queryset.filter(project_name__icontains=search) | queryset.filter(description__icontains=search)
         return queryset

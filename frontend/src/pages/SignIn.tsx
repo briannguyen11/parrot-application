@@ -14,6 +14,7 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(user);
     document.title = "Sign In | parrot";
     if (user !== null) {
       if (user === undefined) {
@@ -32,7 +33,10 @@ const SignIn = () => {
         auth,
         email,
         password
-      );
+      ).then((cred) => {
+        console.log(cred);
+        return cred;
+      });
 
       if (!credentials.user.emailVerified) {
         setError("Please verify email before signing in.");

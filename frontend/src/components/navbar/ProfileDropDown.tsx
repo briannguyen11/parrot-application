@@ -27,6 +27,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { UserAuth } from "../../auth/AuthContext";
 import { getAuth, signOut } from "firebase/auth";
 
+
 export function ProfileDropDown() {
   const navigate = useNavigate();
   const auth = getAuth();
@@ -63,7 +64,7 @@ export function ProfileDropDown() {
           <DropdownMenuGroup>
             <DropdownMenuItem
               className="hover:cursor-pointer"
-              onClick={() => navigate("/profile")}
+              onClick={() => navigate(`/${user.username}`)}
             >
               <User className="mr-2 h-4 w-4" />
               <span>Profile</span>

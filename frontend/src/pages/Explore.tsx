@@ -55,7 +55,7 @@ const Showcase = () => {
     try {
       let link = "/api/showcase-projects/feed/";
       if (search.length > 0) {
-        link = `/api/showcase-projects/search/?query=${search}`;
+        link = `/api/showcase-projects/feed/?search=${search}`;
       }
       const res = await api.get(link);
       setProjects(res.data.results);
