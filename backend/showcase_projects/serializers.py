@@ -69,15 +69,7 @@ class ShowcaseProjectSerializer(serializers.ModelSerializer):
 
 
 
-# Serializer with minimal data for explore page to reduce load time
-class ShowcaseExploreSerializer(serializers.ModelSerializer):
-    profile = ProfileInfoSerializer(source="user.profile", read_only=True)
-    tags = ShowcaseProjectTagSerializer(many=True, read_only=True)
-    photos = ShowcaseProjectPhotoSerializer(many=True, read_only=True)
-    class Meta:
-        model = ShowcaseProject
-        fields = ["id", "user", "profile", "project_name", "description", "tags", "photos", "post_date"]
-        read_only_fields = ["user", "profile", "tags", "photos"]
+
 
 
 class ShowcaseProjectSaveSerializer(ProjectDetailsMixin, serializers.ModelSerializer):
@@ -85,3 +77,15 @@ class ShowcaseProjectSaveSerializer(ProjectDetailsMixin, serializers.ModelSerial
         model = ShowcaseProjectSave
         fields = ["id", "user", "project"]
         read_only_fields = ["user"]
+
+
+
+
+class ShowcaseFeedSerializer(serializers.ModelSerializer):
+    tags = ShowcaseProjectTagSerializer(many=True, read_only=True)
+    photos = ShowcaseProjectPhotoSerializer(many=True, read_only=True)
+    profile = ProfileInfoSerializer(source="user.profile", read_only=True)
+    class Meta:
+        model = ShowcaseProject
+        fields = ["id", "user", "project_name", "description", "post_date", "photos", "profile", "tags"]
+       

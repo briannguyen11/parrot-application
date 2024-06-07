@@ -53,7 +53,7 @@ const Showcase = () => {
   const fetchProjects = async () => {
     setLoading(true);
     try {
-      let link = "/api/showcase-projects/explore/";
+      let link = "/api/showcase-projects/feed/";
       if (search.length > 0) {
         link = `/api/showcase-projects/search/?query=${search}`;
       }

@@ -6,10 +6,10 @@ from .serializers import (
     ShowcaseProjectSaveSerializer,
     ShowcaseProjectTagSerializer,
     ShowcaseProjectPhotoSerializer,
-    ShowcaseExploreSerializer,
     LikeSerializer,
     CommentSerializer,
     CommentLikeSerializer,
+    ShowcaseFeedSerializer,
 )
 from .models import (
     ShowcaseProject,
@@ -52,14 +52,6 @@ class ShowcaseSearchViewSet(MixedPermissionsViewSet):
             queryset = queryset.filter(
                 project_name__icontains=search
             ) | queryset.filter(description__icontains=search)
-        return queryset
-
-class ShowcaseExploreViewSet(MixedPermissionsViewSet):
-    serializer_class = ShowcaseExploreSerializer
-    pagination_class = ShowcaseProjectPagination
-
-    def get_queryset(self):
-        queryset = ShowcaseProject.objects.all()
         return queryset
 
 
@@ -208,48 +200,14 @@ class CommentLikeViewSet(MixedPermissionsViewSet):
 
 
 
-def get_showcase_projects(request, username):
 
-    # Define the raw SQL query
+class ShowcaseFeedViewSet(MixedPermissionsViewSet):
+    serializer_class = ShowcaseFeedSerializer
+    pagination_class = ShowcaseProjectPagination
 
-
-
-    raw_query = """
-    SELECT *
-    FROM showcase_project s
-    JOIN user_profile u ON s.user_id = u.user_id
-    JOIN showcase_project_photo sp ON sp.project_id = s.id
-    WHERE u.username = %s
-    """
-
-    # Execute the raw SQL query
-    with connection.cursor() as cursor:
-        cursor.execute(raw_query, [username])
-        rows = cursor.fetchall()
-
-    # Get column names
-    columns = [col[0] for col in cursor.description]
-
-    # Process the data
-    projects = defaultdict(lambda: {"photos": []})
-    for row in rows:
-        row_data = dict(zip(columns, row))
-        project_id = row_data['project_id']
-        projects[project_id]["project_id"] = project_id
-        projects[project_id]["title"] = row_data["project_name"]
-        projects[project_id]["description"] = row_data["description"]
-        projects[project_id]["post_date"] = row_data["post_date"]
-        projects[project_id]["user_id"] = row_data["user_id"]
-        projects[project_id]["username"] = row_data["username"]
-        projects[project_id]["photos"].append(row_data["photo"])
-
-    # Convert the defaultdict to a list for easier JSON serialization
-    project_list = list(projects.values())
-
-    # Create the response structure
-    response = {
-        "username": username,
-        "showcase_projects": project_list
-    }
-
-    return JsonResponse(response)
+    def get_queryset(self):
+        queryset = ShowcaseProject.objects.select_related('user__profile').prefetch_related('photos').prefetch_related('tags')
+        username = self.request.query_params.get('username')
+        if username:
+            queryset = queryset.filter(user__profile__username=username)
+        return queryset

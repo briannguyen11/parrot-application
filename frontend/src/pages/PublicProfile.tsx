@@ -28,12 +28,12 @@ const PublicProfile = () => {
   const [profileUpdating, setProfileUpdating] = useState<boolean>(false);
   const { user, setUserPfp } = UserAuth();
   const location = useLocation();
-  const pid = location.pathname.split("/")[1];
+  const user_name = location.pathname.split("/")[1];
 
   const patchProfile = async (newProfile: Partial<ProfileData>) => {
     try {
       console.log(newProfile);
-      if (Object.keys(newProfile).length === 0) {
+      if (Object.keys(newProfile)?.length === 0) {
         return;
       }
 
@@ -86,15 +86,6 @@ const PublicProfile = () => {
   };
 
   useEffect(() => {
-    const fetchShowcaseProjects = async () => {
-      const res = await api.get(
-        `/api/showcase-projects/projects/?user_id=${profile?.user}`
-      );
-      // console.log(res.data.results);
-      setShowcaseProjects(res.data.results);
-      setShowcaseProjectLoading(false);
-    };
-
     const fetchOpenProjects = async () => {
       const res = await api.get(
         `/api/open-projects/projects/?user_id=${profile?.user}`
@@ -105,7 +96,6 @@ const PublicProfile = () => {
     };
 
     if (profile) {
-      fetchShowcaseProjects();
       fetchOpenProjects();
     }
   }, [profile]);
@@ -117,7 +107,7 @@ const PublicProfile = () => {
     const fetchProfile = async () => {
       // eslint-disable-next-line no-useless-catch
       try {
-        const res = await api.get(`/api/profiles/public/?username=${pid}`);
+        const res = await api.get(`/api/profiles/public/?username=${user_name}`);
         // console.log(res);
 
         // set user
@@ -160,6 +150,17 @@ const PublicProfile = () => {
         throw error;
       }
     };
+
+    const fetchShowcaseProjects = async () => {
+      const res = await api.get(
+        `/api/showcase-projects/feed/?username=${user_name}`
+      );
+      console.log(res.data.results);
+      setShowcaseProjects(res.data.results);
+      setShowcaseProjectLoading(false);
+    };
+
+    fetchShowcaseProjects();
 
     fetchProfile();
   }, []);
@@ -253,7 +254,7 @@ const PublicProfile = () => {
                   <p>500+ followers</p>
                   {!openProjectLoading && !showcaseProjectLoading && (
                     <p>
-                      {openProjects.length + showcaseProjects.length} projects
+                      {openProjects?.length + showcaseProjects?.length} projects
                     </p>
                   )}
                 </div>
