@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { formatDistanceToNow } from "date-fns";
-import LeftIcon from "../../assets/icons/left-arrow-backup-2-svgrepo-com.svg";
-import RightIcon from "../../assets/icons/right-arrow-backup-2-svgrepo-com.svg";
 import PersonIcon from "../../assets/icons/person-crop-circle-fill-svgrepo-com.svg";
 import { useNavigate } from "react-router-dom";
 import NoPic from "../../assets/icons/nopic.svg";
 import { MinProfileData } from "../interfaces";
+import { ChevronRight, ChevronLeft } from "lucide-react";
 import { PhotoData } from "../interfaces";
 
 interface ShowcaseCardProps {
@@ -27,59 +26,76 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
 }) => {
   const [photoIndex, setPhotoIndex] = useState(0);
   const orderedPhotos = photos.sort((a, b) => a.order - b.order);
-  // const [preloadedImages, setPreloadedImages] = useState<string[]>([]);
+  const [preloadedImages, setPreloadedImages] = useState<string[]>([]);
+  const [isPreloaded, setIsPreloaded] = useState(false);
   const navigate = useNavigate();
 
-  const nextPhotoButton = () => {
-    return (
-      <button
-        onClick={() => setPhotoIndex(photoIndex + 1)}
-        className="z-50 bg-white rounded-full absolute right-0 mr-2 p-2 flex justify-center items-center opacity-80 hover:opacity-100"
-      >
-        <img src={RightIcon} alt="next" className="h-4 w-4" />
-      </button>
-    );
-  };
-
-  const prevPhotoButton = () => {
-    return (
-      <button
-        onClick={() => setPhotoIndex(photoIndex - 1)}
-        className="bg-white rounded-full absolute left-0 ml-2 p-2 flex justify-center items-center opacity-80 hover:opacity-100"
-      >
-        <img src={LeftIcon} alt="prev" className="h-4 w-4" />
-      </button>
-    );
-  };
-
+ 
   const timeAgo = formatDistanceToNow(new Date(postDate), {
     addSuffix: true,
   });
 
+  useEffect(() => {
+    preloadImages(orderedPhotos);
+  }, []);
+
+  const preloadImages = (photos: PhotoData[]) => {
+    const imagePromises = photos.map((photo) => {
+      return new Promise<string>((resolve) => {
+        const img = new Image();
+        img.src = photo.photo;
+        img.onload = () => {
+          resolve(photo.photo);
+        };
+      });
+    });
+    Promise.all<string>(imagePromises).then((images) => {
+      setIsPreloaded(true);
+      setPreloadedImages(images);
+    });
+  };
+
+
   return (
     <div className="relative">
-      <div
-        onClick={() => navigate("/showcase-project/" + projectId)}
-        className="aspect-spotlight relative hover:cursor-pointer hover:scale-103 transition duration-300 ease-in-out select-none"
-      >
+      <div className="group aspect-spotlight relative hover:cursor-pointer hover:scale-102 transition duration-300 ease-in-out select-none">
         {photos.length > 0 ? (
-          <img
-            src={orderedPhotos[photoIndex].photo}
-            alt="placeholder"
-            className="object-cover w-full h-full rounded-md"
-            draggable="false"
-          />
+          isPreloaded ? (
+            <img
+              src={preloadedImages[photoIndex]}
+              alt="showcase-project"
+              className="object-cover w-full h-full rounded-md"
+              draggable="false"
+              onClick={() => {
+                navigate("/showcase-project/" + projectId);
+              }}
+            />
+          ) : (
+            <div className="w-full h-full rounded-md bg-gray-50"></div>
+          )
         ) : (
           <div className="w-full h-full bg-gray-200 rounded-md flex items-center justify-center">
             <img src={NoPic} alt="placeholder" className="w-12 h-12" />
           </div>
         )}
-        <div className="absolute bottom-0 left-0 w-full h-full opacity-0 hover:opacity-100">
-          <div className="flex items-center h-full w-full">
-            {photoIndex > 0 && prevPhotoButton()}
-            {photoIndex < photos.length - 1 && nextPhotoButton()}
+
+        {photoIndex < photos.length - 1 && (
+          <div
+            onClick={() => setPhotoIndex(photoIndex + 1)}
+            className="  rounded-full absolute top-1/2 right-2 p-1.5 bg-white transform -translate-y-1/2 bg-opacity-50 opacity-0 group-hover:opacity-100 hover:bg-opacity-90 transition-opacity duration-300 "
+          >
+            <ChevronRight size={18} />
           </div>
-        </div>
+        )}
+
+        {photoIndex > 0 && (
+          <div
+            onClick={() => setPhotoIndex(photoIndex - 1)}
+            className="  rounded-full absolute top-1/2 left-2 p-1.5 bg-white transform -translate-y-1/2 bg-opacity-50 opacity-0 group-hover:opacity-100 hover:bg-opacity-90 transition-opacity duration-300 "
+          >
+            <ChevronLeft size={18} />
+          </div>
+        )}
       </div>
       <div className="flex flex-inline py-2 mt-1">
         <img
@@ -90,7 +106,9 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
         />
         <div className="flex-col ml-4 w-full">
           <div className="flex items-center justify-between gap-2 ">
-            <h4 className="font-semibold text-md text-primary">{projectName}</h4>
+            <h4 className="font-semibold text-md text-primary">
+              {projectName}
+            </h4>
             <p className="text-gray-400 text-sm">{timeAgo}</p>
           </div>
 
