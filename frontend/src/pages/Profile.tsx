@@ -10,7 +10,7 @@ import ResumeIcon from "../assets/icons/resume.svg";
 import DefaultProfile from "../assets/icons/person-crop-circle-fill-svgrepo-com.svg";
 import LoadingIcon from "../assets/icons/loading.svg";
 import BannerInput from "@/components/profile/BannerInput";
-import PhotoInput from "@/components/profile/PhotoInput";
+import ProfilePcitureInput from "@/components/profile/ProfilePictureInput";
 import { EditProfileDialog } from "@/components/profile/EditProfileDialog";
 import { UserAuth } from "../auth/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -203,7 +203,7 @@ const Profile = () => {
 
           <div className="h-40 w-40 rounded-full bg-white  absolute bottom-0 left-12">
             {!loading && (
-              <PhotoInput
+              <ProfilePcitureInput
                 pfp={profile?.profile_picture || DefaultProfile}
                 setPfp={setPfp}
               />

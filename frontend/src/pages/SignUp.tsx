@@ -75,6 +75,7 @@ const SignUp = () => {
 
           setCredential(cred);
           setPopup(true);
+
           setEmail("");
           setPassword("");
           setConfirmPassword("");
@@ -167,29 +168,24 @@ const SignUp = () => {
 
   return (
     <div className="w-full h-full flex items-center justify-center">
-      <div className="sm:w-[400px] w-full m-8 flex flex-col items-center">
-        {popup && renderEmailPopup()}
-        {error && renderError()}
-        <img
-          src="../../icon.svg"
-          alt="logo"
-          className="w-12 h-12 object-cover select-none"
-        />
-        <h1 className="text-2xl font-semibold mt-2 text-center">
-          Welcome to Parrot!
-        </h1>
-        <div className="border border-1 border-black rounded-sm mt-4 flex flex-col space-y-4 p-4 w-full items-center">
-          <div className="flex flex-inline gap-4">
-            <p
-              className="text-sm font-medium hover:underline underline-offset-4 hover:cursor-pointer"
-              onClick={() => navigate("/sign-in")}
-            >
-              Sign In
-            </p>
-            <p className="text-sm font-medium  underline underline-offset-4 hover:cursor-pointer">
-              Sign Up
+      <div className="xs:w-[300px] w-full mt-16">
+        <div className="flex flex-col space-y-4 px-6 sm:px-0 w-full items-center">
+          {popup && renderEmailPopup()}
+          {error && renderError()}
+          <img
+            src="../../icon.svg"
+            alt="logo"
+            className="w-10 h-10 object-cover select-none"
+          />
+          <div className="flex flex-col space-y-2">
+            <h1 className="text-2xl sm:text-3xl font-semibold font-montserrat text-center">
+              Create an account
+            </h1>
+            <p className="text-xs font-medium text-center text-slate-400 font-montserrat">
+              Please note that email verification is required upon sign up.
             </p>
           </div>
+
           <form
             onSubmit={handleSignUp}
             className="w-full flex flex-col space-y-4 items-center"
@@ -199,16 +195,16 @@ const SignUp = () => {
               name="email"
               value={email}
               placeholder="Email Address"
-              className="text-sm border border-border border-black rounded-sm outline-none w-full p-2"
+              className="text-sm border border-border rounded-sm text-s outline-none w-full p-2 font-montserrat"
               onChange={(e) => setEmail(e.target.value)}
               required
             />
             <input
               type="password"
-              name="passowrd"
+              name="password"
               value={password}
               placeholder="Password"
-              className="text-sm border border-border border-black rounded-sm outline-none w-full p-2"
+              className="text-sm border border-border rounded-sm text- outline-none w-full p-2 font-montserrat"
               onChange={(e) => setPassword(e.target.value)}
               required
             />
@@ -217,18 +213,36 @@ const SignUp = () => {
               name="confirmPassword"
               value={confirmPassword}
               placeholder="Confirm Password"
-              className="text-sm border border-border border-black rounded-sm outline-none w-full p-2"
+              className="text-sm border border-border rounded-sm outline-none w-full p-2 font-montserrat"
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
             <Button
-              type="submit"
               className="text-white bg-parrot-red w-full hover:bg-black"
+              type="submit"
             >
-              Create Account
+              Sign In
             </Button>
+            <div className="flex flex-col items-center sm:flex-row sm:gap-2">
+              <p className="text-xs font-medium font-montserrat text-slate-400">
+                Already have an account?
+              </p>
+              <p
+                className="text-xs font-medium font-montserrat text-parrot-red hover:cursor-pointer"
+                onClick={() => navigate("/sign-in")}
+              >
+                Sign in
+              </p>
+            </div>
           </form>
-          <p className="text-sm font-semibold">Or</p>
+          <div className="w-full flex flex-row gap-2 items-center">
+            <hr className="border-t-1 border-slate-500 w-full" />
+            <p className="text-sm font-semibold text-slate-500 font-montserrat">
+              OR
+            </p>
+            <hr className="border-t-1 border-slate-600 w-full" />
+          </div>
+
           <GoogleSignIn />
         </div>
       </div>

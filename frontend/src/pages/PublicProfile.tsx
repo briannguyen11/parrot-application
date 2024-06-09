@@ -9,7 +9,7 @@ import ResumeIcon from "../assets/icons/resume.svg";
 import DefaultProfile from "../assets/icons/person-crop-circle-fill-svgrepo-com.svg";
 import LoadingIcon from "../assets/icons/loading.svg";
 import BannerInput from "@/components/profile/BannerInput";
-import PhotoInput from "@/components/profile/PhotoInput";
+import ProfilePictureInput from "@/components/profile/ProfilePictureInput";
 import { EditProfileDialog } from "@/components/profile/EditProfileDialog";
 import { UserAuth } from "../auth/AuthContext";
 import OpenListProfile from "@/components/profile/OpenListProfile";
@@ -107,7 +107,9 @@ const PublicProfile = () => {
     const fetchProfile = async () => {
       // eslint-disable-next-line no-useless-catch
       try {
-        const res = await api.get(`/api/profiles/public/?username=${user_name}`);
+        const res = await api.get(
+          `/api/profiles/public/?username=${user_name}`
+        );
         // console.log(res);
 
         // set user
@@ -211,7 +213,7 @@ const PublicProfile = () => {
           <div className="h-40 w-40 rounded-full bg-white  absolute bottom-0 left-12">
             {!loading &&
               (user?.user === profile?.user ? (
-                <PhotoInput
+                <ProfilePictureInput
                   pfp={profile?.profile_picture || DefaultProfile}
                   setPfp={setPfp}
                 />

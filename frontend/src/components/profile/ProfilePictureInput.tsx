@@ -13,12 +13,15 @@ import {
 } from "@/components/ui/dialog";
 import DefaultProfile from "../../assets/icons/person-crop-circle-fill-svgrepo-com.svg";
 
-interface SetPfpProps {
+interface ProfilePictureProps {
   pfp: string | null;
   setPfp: (value: File) => void;
 }
 
-const PhotoInput: React.FC<SetPfpProps> = ({ pfp, setPfp }) => {
+const ProfilePictureInput: React.FC<ProfilePictureProps> = ({
+  pfp,
+  setPfp,
+}) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string>();
   const cropperRef = useRef<ReactCropperElement>(null);
@@ -171,4 +174,4 @@ const PhotoInput: React.FC<SetPfpProps> = ({ pfp, setPfp }) => {
   );
 };
 
-export default PhotoInput;
+export default ProfilePictureInput;
