@@ -168,7 +168,7 @@ const SignUp = () => {
 
   return (
     <div className="w-full h-full flex items-center justify-center">
-      <div className="xs:w-[300px] w-full mt-16">
+      <div className="sm:w-[300px] w-full mt-16">
         <div className="flex flex-col space-y-4 px-6 sm:px-0 w-full items-center">
           {popup && renderEmailPopup()}
           {error && renderError()}
@@ -178,7 +178,7 @@ const SignUp = () => {
             className="w-10 h-10 object-cover select-none"
           />
           <div className="flex flex-col space-y-2">
-            <h1 className="text-2xl sm:text-3xl font-semibold font-montserrat text-center">
+            <h1 className="text-2xl xs:text-3xl font-semibold font-montserrat text-center">
               Create an account
             </h1>
             <p className="text-xs font-medium text-center text-slate-400 font-montserrat">
@@ -223,7 +223,7 @@ const SignUp = () => {
             >
               Sign In
             </Button>
-            <div className="flex flex-col items-center sm:flex-row sm:gap-2">
+            <div className="flex flex-col items-center xs:flex-row xs:gap-2">
               <p className="text-xs font-medium font-montserrat text-slate-400">
                 Already have an account?
               </p>

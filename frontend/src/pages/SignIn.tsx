@@ -70,7 +70,7 @@ const SignIn = () => {
 
   return (
     <div className="w-full h-full flex items-center justify-center">
-      <div className="xs:w-[300px] w-full mt-16">
+      <div className="sm:w-[300px] w-full mt-16">
         <div className="flex flex-col space-y-4 px-6 sm:px-0 w-full items-center">
           {error && renderError()}
           <img
@@ -78,7 +78,7 @@ const SignIn = () => {
             alt="logo"
             className="w-10 h-10 object-cover select-none"
           />
-          <h1 className="text-2xl sm:text-3xl font-semibold font-montserrat mt-8 text-center">
+          <h1 className="text-2xl xs:text-3xl font-semibold font-montserrat mt-8 text-center">
             Welcome to Parrot
           </h1>
           <form
@@ -109,7 +109,7 @@ const SignIn = () => {
             >
               Sign In
             </Button>
-            <div className="flex flex-col items-center sm:flex-row sm:gap-2">
+            <div className="flex flex-col items-center xs:flex-row xs:gap-2">
               <p className="text-xs font-medium font-montserrat text-slate-400">
                 Don't have an account?
               </p>
