@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 import { UserAuth } from "../../auth/AuthContext";
 import { ProfileData } from "../interfaces";
 import api from "../../api";
-import PhotoInput from "@/components/profile/PhotoInput";
+import ProfilePictureInput from "@/components/profile/ProfilePictureInput";
 import CloseIcon from "../../assets/icons/close-svgrepo-com.svg";
 
 interface ProfileFormProps {
@@ -72,7 +72,10 @@ const ProfileForm: React.FC<ProfileFormProps> = ({
           />
         </div>
         <div className="flex items-center justify-center">
-          <PhotoInput pfp={profile.profile_picture} setPfp={setNewPfp} />
+          <ProfilePictureInput
+            pfp={profile.profile_picture}
+            setPfp={setNewPfp}
+          />
         </div>
         <div className="flex-col mt-2">
           <h3 className="text-md font-semibold">Your Name</h3>
