@@ -30,13 +30,13 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
   const [isPreloaded, setIsPreloaded] = useState(false);
   const navigate = useNavigate();
 
-  const isRecentPost = (postDate : string) => {
+  const isRecentPost = (postDate: string) => {
     const postDateObj = new Date(postDate);
     const currentDate = new Date();
     const dayDifference = (+currentDate - +postDateObj) / (1000 * 3600 * 24);
     return dayDifference <= 3;
   };
- 
+
   const timeAgo = formatDistanceToNow(new Date(postDate), {
     addSuffix: true,
   });
@@ -61,7 +61,6 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
     });
   };
 
-
   return (
     <div className="relative">
       <div className="group aspect-spotlight relative hover:cursor-pointer hover:scale-102 transition duration-300 ease-in-out select-none">
@@ -80,13 +79,22 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
             <div className="w-full h-full rounded-md bg-gray-50"></div>
           )
         ) : (
-          <div className="w-full h-full bg-gray-200 rounded-md flex items-center justify-center">
+          <div
+            onClick={() => {
+              navigate("/showcase-project/" + projectId);
+            }}
+            className="w-full h-full bg-gray-200 rounded-md flex items-center justify-center"
+          >
             <img src={NoPic} alt="placeholder" className="w-12 h-12" />
           </div>
         )}
-        {isRecentPost(postDate) &&  <div className="absolute top-3 right-3 px-3 py-1 rounded-sm bg-white shadow-light">
-          <p className="text-sm font-raleway font-medium bg-showcase-gradient text-transparent bg-clip-text animate-pulseGradient">New</p>
-        </div>}
+        {isRecentPost(postDate) && (
+          <div className="absolute top-3 right-3 px-3 py-1 rounded-sm bg-white shadow-light">
+            <p className="text-sm font-raleway font-medium bg-showcase-gradient text-transparent bg-clip-text animate-pulseGradient">
+              New
+            </p>
+          </div>
+        )}
 
         {photoIndex < photos.length - 1 && (
           <div
