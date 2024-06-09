@@ -38,7 +38,7 @@ const ShowcaseCardProfile = (project: ShowcaseData, key: number) => {
 
   return (
     <div className="relative" key={key}>
-      <div className="group aspect-spotlight relative hover:cursor-pointer hover:scale-102 transition duration-300 ease-in-out select-none">
+      <div className="group aspect-video relative hover:cursor-pointer hover:scale-102 transition duration-300 ease-in-out select-none">
         {project.photos.length > 0 ? (
           isPreloaded ? <img
             src={preloadedImages[photoIndex]}

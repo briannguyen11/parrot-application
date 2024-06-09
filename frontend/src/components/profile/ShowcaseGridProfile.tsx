@@ -11,7 +11,7 @@ interface ShowcaseProjectProp {
 const renderSkeletons = () => (
   <>
     <div className="mb-3">
-      <div className="aspect-spotlight bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
+      <div className="aspect-video bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
         <Skeleton className="w-[600px] h-[600px]" />
       </div>
       <div className="flex items-center gap-4">
@@ -27,7 +27,7 @@ const renderSkeletons = () => (
     </div>
 
     <div className="mb-3">
-      <div className="aspect-spotlight bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
+      <div className="aspect-video bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
         <Skeleton className="w-[600px] h-[600px]" />
       </div>
       <div className="flex items-center gap-4">
@@ -43,7 +43,7 @@ const renderSkeletons = () => (
     </div>
 
     <div className="mb-3">
-      <div className="aspect-spotlight bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
+      <div className="aspect-video bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
         <Skeleton className="w-[600px] h-[600px]" />
       </div>
       <div className="flex items-center gap-4">
@@ -59,7 +59,7 @@ const renderSkeletons = () => (
     </div>
 
     <div className="mb-3">
-      <div className="aspect-spotlight bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
+      <div className="aspect-video bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
         <Skeleton className="w-[600px] h-[600px]" />
       </div>
       <div className="flex items-center gap-4">
@@ -75,7 +75,7 @@ const renderSkeletons = () => (
     </div>
 
     <div className="mb-3">
-      <div className="aspect-spotlight bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
+      <div className="aspect-video bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
         <Skeleton className="w-[600px] h-[600px]" />
       </div>
       <div className="flex items-center gap-4">
@@ -91,7 +91,7 @@ const renderSkeletons = () => (
     </div>
 
     <div className="mb-3">
-      <div className="aspect-spotlight bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
+      <div className="aspect-video bg-gray-50 relative rounded-sm  hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
         <Skeleton className="w-[600px] h-[600px]" />
       </div>
       <div className="flex items-center gap-4">

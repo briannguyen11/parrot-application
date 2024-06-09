@@ -59,7 +59,7 @@ const ShowcaseGrid = ({
     <>
       {[...Array(6)].map((_, index) => (
         <div key={index} className="mb-3">
-          <div className="aspect-spotlight relative rounded-md hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
+          <div className="aspect-video relative rounded-md hover:cursor-pointer overflow-clip hover:scale-103 transition duration-300 ease-in-out select-none">
             <Skeleton className="w-[600px] h-[600px]  dark:bg-gray-500" />
           </div>
           <div className="flex items-center gap-4">

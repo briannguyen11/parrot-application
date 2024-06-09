@@ -74,7 +74,7 @@ const CommentList: React.FC<CommentListProps> = ({ comments, setComments }) => {
   };
 
   return (
-    <>
+    <div className="mt-4">
       {comments
         .slice()
         .sort(
@@ -84,7 +84,7 @@ const CommentList: React.FC<CommentListProps> = ({ comments, setComments }) => {
         )
         .map((comment: CommentData, index: number) => (
           <div key={index}>
-            <div className="flex flex-row gap-2 items-center">
+            <div className="mt-7 flex flex-row gap-4 items-center">
               <img
                 onClick={() => navigate(`/${comment.profile.username}`)}
                 src={comment.profile.profile_picture}
@@ -92,13 +92,14 @@ const CommentList: React.FC<CommentListProps> = ({ comments, setComments }) => {
                 className="w-10 h-10 rounded-full cursor-pointer"
               />
               <div className="flex flex-col">
-                <p className="text-xs text-slate-400">
+                <p className="text-sm text-primary font-medium">
                   {comment.profile.first_name} {comment.profile.last_name}
-                  {" • "}
-                  {timeAgo(comment.created_date)}
+                  <span className="ml-1.5 text-gray-400 font-light text-xs">
+                    {timeAgo(comment.created_date)}
+                  </span>
                 </p>
                 <p
-                  className={`text-sm ${
+                  className={`text-sm text-primary-foreground font-light ${
                     comment.content.includes(" ") ? "break-words" : "break-all"
                   }`}
                 >
@@ -111,7 +112,7 @@ const CommentList: React.FC<CommentListProps> = ({ comments, setComments }) => {
             </div>
           </div>
         ))}
-    </>
+    </div>
   );
 };
 

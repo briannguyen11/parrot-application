@@ -28,7 +28,7 @@ export const theme = {
     "navbar-gradient":
       "linear-gradient(to right, #1D425C, #C73B36, #E69215, #F9D423)",
 
-      "showcase-gradient": "linear-gradient(to right ,#C73B36, #E69215)",
+    "showcase-gradient": "linear-gradient(to right ,#C73B36, #E69215)",
   },
 
   extend: {
@@ -55,8 +55,7 @@ export const theme = {
     },
 
     aspectRatio: {
-      spotlight: "16/9",
-      banner : "16/3",
+      banner: "16/3",
     },
     colors: {
       border: "hsl(var(--border))",
@@ -64,7 +63,6 @@ export const theme = {
       ring: "hsl(var(--ring))",
       background: "var(--background)",
       foreground: "hsl(var(--foreground))",
-      
 
       parrot: {
         red: "var(--parrot-red)",
@@ -72,9 +70,7 @@ export const theme = {
         yellow: "var(--parrot-yellow)",
         blue: "var(--parrot-blue)",
         green: "var(--parrot-green)",
-
       },
-
 
       primary: {
         DEFAULT: "var(--primary)",
@@ -104,7 +100,6 @@ export const theme = {
         DEFAULT: "hsl(var(--card))",
         foreground: "hsl(var(--card-foreground))",
         hover: "var(--card-hover)",
-    
       },
 
       sidebar: {

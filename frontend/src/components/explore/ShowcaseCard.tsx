@@ -63,7 +63,7 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
 
   return (
     <div className="relative">
-      <div className="group aspect-spotlight relative hover:cursor-pointer hover:scale-102 transition duration-300 ease-in-out select-none">
+      <div className="group aspect-video relative hover:cursor-pointer hover:scale-102 transition duration-300 ease-in-out select-none">
         {photos.length > 0 ? (
           isPreloaded ? (
             <img
@@ -76,7 +76,12 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
               }}
             />
           ) : (
-            <div className="w-full h-full rounded-md bg-gray-50"></div>
+            <div
+              onClick={() => {
+                navigate("/showcase-project/" + projectId);
+              }}
+              className="w-full h-full rounded-md bg-gray-50"
+            ></div>
           )
         ) : (
           <div

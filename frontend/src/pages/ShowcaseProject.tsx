@@ -187,23 +187,23 @@ const ShowcaseProject = () => {
   }
 
   return (
-    <div className="flex flex-col space-y-4 w-full my-4 lg:w-[800px]">
+    <div className="mt-8 flex flex-col w-full my-4 lg:w-[800px] pb-20">
       <div className="flex flex-col md:flex-row justify-between md:items-center">
         <div className="flex flex-row items-center gap-4">
           <div
             onClick={() => navigate(`/${profile?.username}`)}
-            className="flex flex-row items-center gap-2 cursor-pointer"
+            className="flex flex-row items-center gap-3 cursor-pointer"
           >
             <img
               src={profile?.profile_picture}
               alt="Profile Picture"
               className="w-8 h-8 rounded-full"
             />
-            <p className="text-medium font-medium">
+            <p className="font-raleway text-medium font-semibold text-primary">
               {profile?.first_name} {profile?.last_name}
             </p>
           </div>
-          <button className="font-semibold text-xs md:text-sm text-parrotGreen border-2 border-parrot-green rounded-lg px-2 py-1 md:px-3 md:py-1.5">
+          <button className="text-sm font-raleway font-semibold text-parrot-green border-2 border-parrot-green py-1 px-4 rounded-xl hover:bg-parrot-green hover:text-white">
             Follow
           </button>
         </div>
@@ -214,7 +214,7 @@ const ShowcaseProject = () => {
           <img
             src={preloadedImages[photoIndex]}
             alt="placeholder"
-            className="object-cover rounded-md w-full "
+            className="object-cover rounded-md w-full aspect-video mt-3"
             draggable="false"
           />
         ) : (
@@ -230,34 +230,34 @@ const ShowcaseProject = () => {
         </div>
       </div>
 
-      <p className="text-sm text-slate-400 text-center">
+      <p className="mt-2 text-sm text-slate-400 text-center">
         {project?.photos[photoIndex]?.caption}
       </p>
       <div className="flex flex-row justify-between gap-2">
-        <div className="flex flex-row gap-4 items-center">
-          <h3 className="text-3xl sm:text-4xl font-semibold">
+        <div className="mt-5 flex flex-row gap-4 items-center">
+          <h3 className="text-2xl sm:text-4xl font-bold font-raleway">
             {project?.project_name}
           </h3>
-          <div className="flex flex-row gap-2 sm:gap-4">
-            <a target="_blank" rel="noreferrer">
+          <div className="flex flex-row items-center gap-2 sm:gap-4">
+            <a target="_blank" rel="noreferrer" className="cursor-pointer">
               <img
                 src={LinkIcon}
                 alt="link"
-                className="w-6 h-6 min-w-5 min-h-5"
+                className="w-5 h-5"
               />
             </a>
-            <a target="_blank" rel="noreferrer">
+            <a target="_blank" rel="noreferrer" className="cursor-pointer">
               <img
                 src={GithubIcon}
                 alt="github"
-                className="w-6 h-6 min-w-5 min-h-5"
+                className="w-6 h-6"
               />
             </a>
           </div>
         </div>
         <div className="flex flex-inline gap-2 items-center">
           <button
-            className="w-6 h-6 sm:w-8 sm:h-8"
+            className="w-6 h-6"
             onClick={() => handleLike()}
           >
             <img
@@ -267,7 +267,7 @@ const ShowcaseProject = () => {
             />
           </button>
           <button
-            className="w-6 h-6  sm:w-8 sm:h-8"
+            className="w-6 h-6"
             onClick={() => handleSave()}
           >
             <img
@@ -278,8 +278,8 @@ const ShowcaseProject = () => {
           </button>
         </div>
       </div>
-      <div className="text-md font-normal">{project?.description}</div>
-      <h5 className="text-l sm:text-lg font-semibold">Comments</h5>
+      <div className="mt-3 text-md font-montserrat text-gray-800">{project?.description}</div>
+      <h5 className="mt-10 mb-5 text-lg font-semibold font-raleway">Comments</h5>
       <CommentInput projectId={Number(projectId)} setComments={setComments} />
       <CommentList comments={comments} setComments={setComments} />
     </div>
