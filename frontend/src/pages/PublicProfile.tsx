@@ -264,7 +264,7 @@ const PublicProfile = () => {
                 <Skeleton className="mt-1 w-52 h-4" />
               )}
 
-              {!loading ? (
+              {!loading && user && profile ? (
                 <div className="mt-3 flex items-center">
                   {user?.user === profile?.user ? (
                     <EditProfileDialog
@@ -278,7 +278,7 @@ const PublicProfile = () => {
                   )}
                 </div>
               ) : (
-                <Skeleton className="mt-3 w-40 h-8" />
+                <div className="mt-3 w-24 h-8" />
               )}
 
               {!loading ? (
