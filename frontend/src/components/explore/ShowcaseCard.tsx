@@ -64,35 +64,37 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
   return (
     <div className="relative">
       <div className="group aspect-video relative hover:cursor-pointer hover:scale-102 transition duration-300 ease-in-out select-none">
-        {photos.length > 0 ? (
-          isPreloaded ? (
-            <img
-              src={preloadedImages[photoIndex]}
-              alt="showcase-project"
-              className="object-cover w-full h-full rounded-md"
-              draggable="false"
-              onClick={() => {
-                navigate("/showcase-project/" + projectId);
-              }}
-            />
+        <a href={`/showcase-project/${projectId}`}>
+          {photos.length > 0 ? (
+            isPreloaded ? (
+              <img
+                src={preloadedImages[photoIndex]}
+                alt="showcase-project"
+                className="object-cover w-full h-full rounded-md"
+                draggable="false"
+                onClick={() => {
+                  navigate("/showcase-project/" + projectId);
+                }}
+              />
+            ) : (
+              <div
+                onClick={() => {
+                  navigate("/showcase-project/" + projectId);
+                }}
+                className="w-full h-full rounded-md bg-gray-50"
+              ></div>
+            )
           ) : (
             <div
               onClick={() => {
                 navigate("/showcase-project/" + projectId);
               }}
-              className="w-full h-full rounded-md bg-gray-50"
-            ></div>
-          )
-        ) : (
-          <div
-            onClick={() => {
-              navigate("/showcase-project/" + projectId);
-            }}
-            className="w-full h-full bg-gray-200 rounded-md flex items-center justify-center"
-          >
-            <img src={NoPic} alt="placeholder" className="w-12 h-12" />
-          </div>
-        )}
+              className="w-full h-full bg-gray-200 rounded-md flex items-center justify-center"
+            >
+              <img src={NoPic} alt="placeholder" className="w-12 h-12" />
+            </div>
+          )}
+        </a>
         {isRecentPost(postDate) && (
           <div className="absolute top-3 right-3 px-3 py-1 rounded-sm bg-white shadow-light">
             <p className="text-sm font-raleway font-medium bg-showcase-gradient text-transparent bg-clip-text animate-pulseGradient">

@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
-import { formatDistanceToNow } from "date-fns";
+// import { formatDistanceToNow } from "date-fns";
 import { UserAuth } from "@/auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -40,7 +40,6 @@ const ShowcaseProject = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-
     window.scrollTo(0, 0);
 
     const fetchProjects = async () => {
@@ -112,14 +111,14 @@ const ShowcaseProject = () => {
     });
   };
 
-  const timeAgo =
-    project && project.post_date
-      ? "Posted " +
-        formatDistanceToNow(new Date(project.post_date), {
-          addSuffix: false,
-        }) +
-        " ago"
-      : "Date not available";
+  // const timeAgo =
+  //   project && project.post_date
+  //     ? "Posted " +
+  //       formatDistanceToNow(new Date(project.post_date), {
+  //         addSuffix: false,
+  //       }) +
+  //       " ago"
+  //     : "Date not available";
 
   const handleLike = async () => {
     if (!liked) {
@@ -188,7 +187,7 @@ const ShowcaseProject = () => {
 
   return (
     <div className="mt-8 flex flex-col w-full my-4 lg:w-[800px] pb-20">
-      <div className="flex flex-col md:flex-row justify-between md:items-center">
+      <div className="flex flex-row justify-between md:items-center">
         {!loading ? (
           <div className="flex flex-row items-center gap-4">
             <div
@@ -198,7 +197,7 @@ const ShowcaseProject = () => {
               <img
                 src={profile?.profile_picture}
                 alt="Profile Picture"
-                className="w-8 h-8 rounded-full"
+                className="w-10 h-10 rounded-full"
               />
               <p className="font-raleway text-medium font-semibold text-primary">
                 {profile?.first_name} {profile?.last_name}
@@ -212,12 +211,27 @@ const ShowcaseProject = () => {
           <Skeleton className="w-64 h-8" />
         )}
         {!loading ? (
-          <p className="text-slate-500 text-sm mt-2 md:mt-0">{timeAgo}</p>
+          <div className="flex flex-inline gap-2 items-center">
+            <button className="w-6 h-6" onClick={() => handleLike()}>
+              <img
+                src={HeartIcon}
+                alt="Like"
+                className={` ${liked ? "bg-parrot-red" : "bg-transparent"}`}
+              />
+            </button>
+            <button className="w-6 h-6" onClick={() => handleSave()}>
+              <img
+                src={SaveIcon}
+                alt="Like"
+                className={` ${saved ? "bg-parrot-yellow" : "bg-transparent"}`}
+              />
+            </button>
+          </div>
         ) : (
           <Skeleton className="w-32 h-6" />
         )}
       </div>
-      <div className="relative mt-3">
+      <div className="relative mt-5">
         {!loading && preloadedImages.length > 0 && (
           <img
             src={preloadedImages[photoIndex]}
@@ -227,9 +241,11 @@ const ShowcaseProject = () => {
           />
         )}
 
-        {!loading && preloadedImages.length === 0 && (
-          <div className="w-full rounded-md bg-gray-50 aspect-video"></div>
-        )}
+        {!loading &&
+          preloadedImages.length === 0 &&
+          project?.photos.length !== 0 && (
+            <div className="w-full rounded-md bg-gray-50 aspect-video"></div>
+          )}
 
         {loading && <Skeleton className="w-full aspect-video rounded-md" />}
 
@@ -247,44 +263,36 @@ const ShowcaseProject = () => {
         {project?.photos[photoIndex]?.caption}
       </p>
 
-
-      {!loading ? <div className="flex flex-row justify-between gap-2">
-        <div className="mt-5 flex flex-row gap-4 items-center">
-          <h3 className="text-2xl sm:text-4xl font-bold font-raleway">
-            {project?.project_name}
-          </h3>
-          <div className="flex flex-row items-center gap-2 sm:gap-4">
-            <a target="_blank" rel="noreferrer" className="cursor-pointer">
-              <img src={LinkIcon} alt="link" className="w-5 h-5" />
-            </a>
-            <a target="_blank" rel="noreferrer" className="cursor-pointer">
-              <img src={GithubIcon} alt="github" className="w-6 h-6" />
-            </a>
+      {!loading ? (
+        <div className="flex flex-row justify-between gap-2">
+          <div className="mt-5 flex flex-row gap-4 items-center">
+            <h3 className="text-2xl sm:text-4xl font-bold font-raleway">
+              {project?.project_name}
+            </h3>
+            <div className="flex flex-row items-center gap-2 sm:gap-4">
+              <a target="_blank" rel="noreferrer" className="cursor-pointer">
+                <img src={LinkIcon} alt="link" className="w-5 h-5" />
+              </a>
+              <a target="_blank" rel="noreferrer" className="cursor-pointer">
+                <img src={GithubIcon} alt="github" className="w-6 h-6" />
+              </a>
+            </div>
           </div>
         </div>
-        <div className="flex flex-inline gap-2 items-center">
-          <button className="w-6 h-6" onClick={() => handleLike()}>
-            <img
-              src={HeartIcon}
-              alt="Like"
-              className={` ${liked ? "bg-parrot-red" : "bg-transparent"}`}
-            />
-          </button>
-          <button className="w-6 h-6" onClick={() => handleSave()}>
-            <img
-              src={SaveIcon}
-              alt="Like"
-              className={` ${saved ? "bg-parrot-yellow" : "bg-transparent"}`}
-            />
-          </button>
-        </div>
-      </div> : <Skeleton className="mt-10 w-96 h-8" />}
+      ) : (
+        <Skeleton className="mt-10 w-96 h-8" />
+      )}
       <div className="mt-3 text-md font-montserrat text-gray-800">
         {project?.description}
       </div>
-      {!loading ?<h5 className="mt-10 mb-5 text-lg font-semibold font-raleway">
-        Comments
-      </h5> : <Skeleton className="w-64 h-6 mb-10" />}
+
+      {!loading ? (
+        <h5 className="mt-10 mb-5 text-lg font-semibold font-raleway">
+          Comments
+        </h5>
+      ) : (
+        <Skeleton className="w-64 h-6 mb-10" />
+      )}
       <CommentInput projectId={Number(projectId)} setComments={setComments} />
       <CommentList comments={comments} setComments={setComments} />
     </div>

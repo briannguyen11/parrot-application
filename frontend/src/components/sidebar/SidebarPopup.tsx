@@ -11,7 +11,6 @@ import ReportIcon from "../../assets/icons/report.svg";
 import HelpIcon from "../../assets/icons/help.svg";
 import SettingsIcon from "../../assets/icons/settings.svg";
 import MessagesIcon from "../../assets/icons/messages.svg";
-import CampusIcon from "../../assets/icons/campus.svg";
 import SavedIcon from "../../assets/icons/saved.svg";
 
 import SidebarElement from "./SidebarElement";
@@ -29,8 +28,8 @@ export function SidebarPopup() {
     if (location.pathname === "/") {
       setTab("explore");
     }
-    if (location.pathname === "/showcase") {
-      setTab("showcase");
+    if (location.pathname === "/open-projects") {
+      setTab("open-projects");
     }
     if (location.pathname === "/settings") {
       setTab("settings");
@@ -61,9 +60,9 @@ export function SidebarPopup() {
           <path d="M19 10.625H1v-1.25h18v1.25Zm0-7.875H1V4h18V2.75ZM19 16H1v1.25h18V16Z"></path>
         </svg>
       </SheetTrigger>
-      <SheetContent className="w-72 bg-white mt-12" side={"left"}>
+      <SheetContent className="z-50 w-72 bg-white mt-[68px] border-0 border-t border-border" side={"left"}>
         <SheetClose asChild>
-          <div className="fixed w-60 h-sidebar lg:border-r border-gray-200 pt-5 overflow-auto flex flex-col justify-between ">
+          <div className="fixed w-60 h-sidebar lg:border-r border-gray-200 pt-0 overflow-auto flex flex-col justify-between ">
             <div className="flex flex-col gap-y-2">
               <SidebarElement
                 title="Explore"
@@ -76,12 +75,12 @@ export function SidebarPopup() {
               />
 
               <SidebarElement
-                title="Showcase"
+                title="Find Teams"
                 icon={SpotlightIcon}
-                selected={tab === "showcase"}
+                selected={tab === "open-projects"}
                 onClick={() => {
-                  setTab("showcase");
-                  navigate("/showcase");
+                  setTab("open-projects");
+                  navigate("/open-projects");
                 }}
               />
               <SidebarElement
@@ -104,18 +103,10 @@ export function SidebarPopup() {
                 }}
               />
 
-              <SidebarElement
-                title="Campus"
-                icon={CampusIcon}
-                selected={tab === "campus"}
-                onClick={() => {
-                  setTab("campus");
-                  navigate("/campus");
-                }}
-              />
+              
             </div>
 
-            <div className="border-t mr-4 py-4 flex flex-col gap-y-2">
+            <div className="border-t mr-4 py-4 flex flex-col gap-y-2 mb-10">
               <SidebarElement
                 title="Settings"
                 icon={SettingsIcon}
