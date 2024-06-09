@@ -90,12 +90,12 @@ const Showcase = () => {
       <div className="grid grid-cols-1 ">
         <h1 className="mt-4 text-3xl font-bold font-raleway text-primary">
           Discover projects from <br className="inline-block sm:hidden" />
-          <span className=" bg-parrot-gradient inline-block text-transparent bg-clip-text">
+          <span className="bg-parrot-gradient inline-block text-transparent bg-clip-text">
             creative
           </span>{" "}
           minds
         </h1>
-        <p className="text-secondary font-medium mt-2 font-montserrat text-sm max-w-[590px]">
+        <p className="text-secondary font-normal mt-2 font-montserrat text-sm max-w-[590px]">
           See what others are posting right now. Discover a world of creativity
           and inspiration as you browse through diverse portfolios from talented
           individuals.

@@ -30,6 +30,12 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
   const [isPreloaded, setIsPreloaded] = useState(false);
   const navigate = useNavigate();
 
+  const isRecentPost = (postDate : string) => {
+    const postDateObj = new Date(postDate);
+    const currentDate = new Date();
+    const dayDifference = (+currentDate - +postDateObj) / (1000 * 3600 * 24);
+    return dayDifference <= 3;
+  };
  
   const timeAgo = formatDistanceToNow(new Date(postDate), {
     addSuffix: true,
@@ -78,6 +84,9 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
             <img src={NoPic} alt="placeholder" className="w-12 h-12" />
           </div>
         )}
+        {isRecentPost(postDate) &&  <div className="absolute top-3 right-3 px-3 py-1 rounded-sm bg-white shadow-light">
+          <p className="text-sm font-raleway font-medium bg-showcase-gradient text-transparent bg-clip-text animate-pulseGradient">New</p>
+        </div>}
 
         {photoIndex < photos.length - 1 && (
           <div
@@ -91,7 +100,7 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
         {photoIndex > 0 && (
           <div
             onClick={() => setPhotoIndex(photoIndex - 1)}
-            className="  rounded-full absolute top-1/2 left-2 p-1.5 bg-white transform -translate-y-1/2 bg-opacity-50 opacity-0 group-hover:opacity-100 hover:bg-opacity-90 transition-opacity duration-300 "
+            className="rounded-full absolute top-1/2 left-2 p-1.5 bg-white transform -translate-y-1/2 bg-opacity-50 opacity-0 group-hover:opacity-100 hover:bg-opacity-90 transition-opacity duration-300 "
           >
             <ChevronLeft size={18} />
           </div>

@@ -124,7 +124,7 @@ const Feed = () => {
               </span>{" "}
               your Ideas
             </h1>
-            <p className="text-secondary font-medium font-montserrat mt-2 text-sm max-w-[550px]">
+            <p className="text-secondary font-normal font-montserrat mt-2 text-sm max-w-[550px]">
               Find collaborators for your next project. Connect with passionate
               individuals and work together to bring your vision to life.
             </p>
