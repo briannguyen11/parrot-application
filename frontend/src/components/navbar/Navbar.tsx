@@ -1,11 +1,11 @@
 import { ProfileDropDown } from "./ProfileDropDown";
 import { SidebarPopup } from "../sidebar/SidebarPopup";
-
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { SearchIcon } from "lucide-react";
 import { ArrowLeft } from "lucide-react";
 import SearchIcon2 from "../../assets/icons/search-alt.svg";
+import CreateDropdown from "./CreateDropdown";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -93,13 +93,7 @@ const Navbar = () => {
               Find Teams
             </h2>
 
-            <h2
-              onClick={() => navigate("/create")}
-              className="font-semibold font-raleway text-sm hover:cursor-pointer hover:text-primary-foreground whitespace-nowrap"
-            >
-              Create Project
-            </h2>
-         
+            <CreateDropdown />
           </div>
         </div>
 
