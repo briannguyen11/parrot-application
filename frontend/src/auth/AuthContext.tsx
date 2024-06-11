@@ -20,6 +20,7 @@ interface AuthContextType {
   user: User | null;
   setUser: (user: User | null) => void;
   setUserPfp: (pfp: string | null) => void;
+  loading: boolean;
 }
 
 interface Props {
@@ -31,6 +32,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const AuthProvider = ({ children }: Props) => {
   const auth = getAuth();
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (cred) => {
@@ -43,7 +45,11 @@ const AuthProvider = ({ children }: Props) => {
           setUser(res.data[0]);
         } catch (error: unknown) {
           console.error(error);
+        } finally {
+          setLoading(false);
         }
+      } else {
+        setLoading(false);
       }
     });
     return () => {
@@ -72,6 +78,7 @@ const AuthProvider = ({ children }: Props) => {
         user,
         setUser,
         setUserPfp,
+        loading,
       }}
     >
       {children}

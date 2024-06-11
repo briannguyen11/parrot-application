@@ -26,12 +26,12 @@ import { useNavigate } from "react-router-dom";
 import { Toaster } from "@/components/ui/sonner";
 import { UserAuth } from "../../auth/AuthContext";
 import { getAuth, signOut } from "firebase/auth";
-
+import { Skeleton } from "../ui/skeleton";
 
 export function ProfileDropDown() {
   const navigate = useNavigate();
   const auth = getAuth();
-  const { user, setUser } = UserAuth();
+  const { user, setUser, loading } = UserAuth();
 
   const handleLogout = () => {
     localStorage.clear();
@@ -47,6 +47,10 @@ export function ProfileDropDown() {
       return ProfilePicture;
     }
   };
+
+  if (loading) {
+    return <Skeleton className="h-9 w-9 rounded-full" />;
+  }
 
   return (
     <DropdownMenu>

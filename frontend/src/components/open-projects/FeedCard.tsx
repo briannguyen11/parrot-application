@@ -110,8 +110,8 @@ const FeedCard: React.FC<FeedCardProps> = ({
 
           <p className="text-md font-light text-secondary-foreground">|</p>
 
-          <p className="text-sm font-light text-secondary-foreground">
-            {"Profile Header (in development)"}
+          <p className="text-sm font-light text-secondary">
+            {profile.header}
           </p>
         </div>
       </div>

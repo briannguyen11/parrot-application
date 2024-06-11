@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { formatDistanceToNow } from "date-fns";
-import PersonIcon from "../../assets/icons/person-crop-circle-fill-svgrepo-com.svg";
 import { useNavigate } from "react-router-dom";
 import NoPic from "../../assets/icons/nopic.svg";
 import { MinProfileData } from "../interfaces";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import { PhotoData } from "../interfaces";
+import ProfileHover from "./ProfileHover";
 
 interface ShowcaseCardProps {
   projectId: number;
@@ -122,12 +122,8 @@ const ShowcaseCard: React.FC<ShowcaseCardProps> = ({
         )}
       </div>
       <div className="flex flex-inline py-2 mt-1">
-        <img
-          onClick={() => navigate(`/${profile.username}`)}
-          src={profile.profile_picture || PersonIcon}
-          alt="pfp"
-          className="w-9 h-9 rounded-full cursor-pointer"
-        />
+     
+        <ProfileHover profile={profile} />
         <div className="flex-col ml-4 w-full">
           <div className="flex items-center justify-between gap-2 ">
             <h4 className="font-semibold text-md text-primary">
