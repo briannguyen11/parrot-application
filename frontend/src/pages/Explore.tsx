@@ -85,6 +85,7 @@ const Showcase = () => {
     }
   }, [nextPage, projects]);
 
+
   return (
     <div className="w-full pt-5">
       <div className="grid grid-cols-1 ">
@@ -106,7 +107,7 @@ const Showcase = () => {
             <SearchIcon size={25} className="mr-[6px] translate-x-1" />
           ) : (
             !initialLoad && (
-              <div className="animate-spin rounded-full w-8 h-8 overflow-hidden">
+              <div className="animate-spin rounded-full w-8 h-8 overflow-hidden bg-red-500">
                 <img
                   src={LoadingIcon}
                   alt="logo"

@@ -75,7 +75,7 @@ class ShowcaseProjectViewSet(MixedPermissionsViewSet):
             queryset = queryset.filter(user_id=user_id)
         return queryset
 
-    @action(detail=False, methods=["delete"], url_path="delete-many")
+    @action(detail=False, methods=["post"], url_path="delete-many")
     def delete_many(self, request):
         try:
             ids_to_delete = request.data.get("ids", [])

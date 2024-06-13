@@ -77,6 +77,7 @@ export interface ShowcaseData {
   likes: LikeData[];
   comments: CommentData[];
   tags: TagData[];
+
 }
 
 export interface OpenData {

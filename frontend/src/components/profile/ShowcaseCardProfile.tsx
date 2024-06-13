@@ -5,8 +5,26 @@ import NoPic from "../../assets/icons/nopic.svg";
 import { formatDistanceToNow } from "date-fns";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import { PhotoData } from "../interfaces";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import ThreeDots from "@/assets/icons/three-dots-vertical-svgrepo-com.svg";
+import TrashIcon from "@/assets/icons/trash-svgrepo-com.svg";
 
-const ShowcaseCardProfile = (project: ShowcaseData, key: number) => {
+interface ShowcaseCardProfileProp {
+  project: ShowcaseData;
+  key: number;
+  deleteProject: (projectId: number) => void;
+}
+
+const ShowcaseCardProfile: React.FC<ShowcaseCardProfileProp> = ({
+  project,
+  key,
+  deleteProject,
+}) => {
   const navigate = useNavigate();
   const [photoIndex, setPhotoIndex] = useState(0);
   const orderedPhotos = project.photos.sort((a, b) => a.order - b.order);
@@ -36,21 +54,55 @@ const ShowcaseCardProfile = (project: ShowcaseData, key: number) => {
     });
   };
 
+  const renderOptions = (projectId: number) => {
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <img
+            src={ThreeDots}
+            alt="Option"
+            className="h-7 w-7 hover:cursor-pointer p-1 rounded-full transition duration-300 ease-in-out"
+          />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="mr-4">
+          <DropdownMenuItem>
+            <div
+              className="flex gap-2 items-center hover:bg-gray-100 p-1 rounded-md"
+              onClick={() => deleteProject(projectId)}
+            >
+              <img src={TrashIcon} alt="Delete" className="h-4 w-4" />
+              <p className="text-xs">Delete</p>
+            </div>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    );
+  };
+
   return (
     <div className="relative" key={key}>
-      <div className="group aspect-video relative hover:cursor-pointer hover:scale-102 transition duration-300 ease-in-out select-none">
+      <div className="group aspect-video relative hover:cursor-pointer transition duration-300 ease-in-out select-none">
         {project.photos.length > 0 ? (
-          isPreloaded ? <img
-            src={preloadedImages[photoIndex]}
-            alt="showcase-project"
-            className="object-cover w-full h-full rounded-md"
-            draggable="false"
+          isPreloaded ? (
+            <img
+              src={preloadedImages[photoIndex]}
+              alt="showcase-project"
+              className="object-cover w-full h-full rounded-md"
+              draggable="false"
+              onClick={() => {
+                navigate("/showcase-project/" + project.id);
+              }}
+            />
+          ) : (
+            <div className="w-full h-full rounded-md bg-gray-50"></div>
+          )
+        ) : (
+          <div
             onClick={() => {
               navigate("/showcase-project/" + project.id);
             }}
-          /> : <div className="w-full h-full rounded-md bg-gray-50"></div>
-        ) : (
-          <div className="w-full h-full bg-gray-200 rounded-md flex items-center justify-center">
+            className="w-full h-full bg-gray-200 rounded-md flex items-center justify-center"
+          >
             <img src={NoPic} alt="placeholder" className="w-12 h-12" />
           </div>
         )}
@@ -72,6 +124,12 @@ const ShowcaseCardProfile = (project: ShowcaseData, key: number) => {
             <ChevronLeft size={18} />
           </div>
         )}
+
+        {
+          <div className="absolute top-4 right-4">
+            {renderOptions(project.id)}
+          </div>
+        }
       </div>
       <div className="flex flex-inline py-2 mt-1">
         <div className="flex-col w-full">

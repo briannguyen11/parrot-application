@@ -165,7 +165,21 @@ const PublicProfile = () => {
     fetchShowcaseProjects();
 
     fetchProfile();
-  }, []);
+  }, [location.pathname]);
+
+  const deleteProject = async (projectId: number) => {
+    try {
+      console.log(`Deleting project with id: ${projectId}`);
+      await api.post(`/api/showcase-projects/projects/delete-many/`, {
+        ids: [projectId],
+      });
+      setShowcaseProjects(
+        showcaseProjects.filter((project) => project.id !== projectId)
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -349,6 +363,7 @@ const PublicProfile = () => {
             <ShowcaseGridProfile
               showcaseProjects={showcaseProjects}
               loading={showcaseProjectLoading}
+              deleteProject={deleteProject}
             />
           </div>
         )}
@@ -359,12 +374,6 @@ const PublicProfile = () => {
               openProjects={openProjects}
               loading={openProjectLoading}
             />
-
-            {/* <OpenTable
-              openProjects={openProjects}
-              setOpenProjects={setOpenProjects}
-              formatDate={formatDate}
-            /> */}
           </div>
         )}
       </div>

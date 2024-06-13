@@ -217,8 +217,8 @@ const ShowcaseProject = () => {
             </button>
             <button className="w-7 h-7" onClick={() => handleSave()}>
               <svg
-                className={`w-7 h-7 stroke-2 stroke-primary ${
-                  saved && "fill-parrot-yellow stroke-parrot-yellow"
+                className={`w-7 h-7 stroke-2 stroke-parrot-blue ${
+                  saved && "fill-parrot-blue stroke-parrot-blue"
                 }`}
                 width="800px"
                 height="800px"

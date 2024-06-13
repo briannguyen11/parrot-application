@@ -2,10 +2,10 @@ import { ShowcaseData } from "../interfaces";
 import ShowcaseCardProfile from "./ShowcaseCardProfile";
 import { Skeleton } from "../ui/skeleton";
 
-
 interface ShowcaseProjectProp {
   showcaseProjects: ShowcaseData[];
   loading: boolean;
+  deleteProject: (projectId: number) => void;
 }
 
 const renderSkeletons = () => (
@@ -111,6 +111,7 @@ const renderSkeletons = () => (
 const ShowcaseGridProfile: React.FC<ShowcaseProjectProp> = ({
   showcaseProjects,
   loading,
+  deleteProject,
 }) => {
   return (
     <div className="mt-5 grid 4xl:grid-cols-4 showcase-xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10">
@@ -119,7 +120,11 @@ const ShowcaseGridProfile: React.FC<ShowcaseProjectProp> = ({
         showcaseProjects &&
         showcaseProjects.length > 0 &&
         showcaseProjects.map((project: ShowcaseData, index) => (
-          <ShowcaseCardProfile {...project} key={index} />
+          <ShowcaseCardProfile
+            project={project}
+            key={index}
+            deleteProject={deleteProject}
+          />
         ))}
     </div>
   );
