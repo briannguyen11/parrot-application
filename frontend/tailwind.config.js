@@ -137,6 +137,7 @@ export const theme = {
       "xl+": "1330px",
       "showcase-xl": "1280px",
       xs: "375px",
+      "2xs": "350px",
     },
 
     scale: {

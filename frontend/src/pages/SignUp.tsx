@@ -7,7 +7,6 @@ import {
   UserCredential,
 } from "firebase/auth";
 import { Button } from "@/components/ui/button";
-import api from "@/api";
 import GoogleSignIn from "@/auth/GoogleSignIn";
 
 const SignUp = () => {
@@ -65,13 +64,7 @@ const SignUp = () => {
             password
           );
 
-          const idToken = await cred.user.getIdToken();
-
           await sendEmailVerification(cred.user);
-
-          await api.post("/api/users/create/", {
-            id_token: idToken,
-          });
 
           setCredential(cred);
           setPopup(true);
@@ -141,14 +134,14 @@ const SignUp = () => {
 
   const renderEmailPopup = () => {
     return (
-      <div className="flex flex-col space-y-2 items-center bg-parrot-yellow px-4 py-2  rounded-sm mb-4">
+      <div className="flex flex-col space-y-2 items-center bg-parrot-blue px-4 py-2  rounded-sm mb-4">
         <p className="text-sm font-semibold text-white">Verify Your Email</p>
         <p className="text-xs font-normal text-white">
           A link has been sent to verify your email.
         </p>
         {credential && !resend ? (
           <button
-            className="text-xs text-white font-normal underline underline-offset-4 hover:text-black"
+            className="text-xs text-white font-normal underline underline-offset-4 hover:underline"
             onClick={resendLink}
           >
             Resend link
@@ -167,9 +160,9 @@ const SignUp = () => {
   };
 
   return (
-    <div className="w-full h-full flex items-center justify-center">
-      <div className="sm:w-[300px] w-full mt-16">
-        <div className="flex flex-col space-y-4 px-6 sm:px-0 w-full items-center">
+    <div className="w-full h-screen flex justify-center relative">
+      <div className="2xs:w-[350px] w-full absolute top-40">
+        <div className="flex flex-col space-y-4 p-6 w-full items-center">
           {popup && renderEmailPopup()}
           {error && renderError()}
           <img
@@ -218,10 +211,10 @@ const SignUp = () => {
               required
             />
             <Button
-              className="text-white bg-parrot-red w-full hover:bg-black"
+              className="text-white bg-parrot-red w-full hover:bg-red-600"
               type="submit"
             >
-              Sign In
+              Sign Up
             </Button>
             <div className="flex flex-col items-center xs:flex-row xs:gap-2">
               <p className="text-xs font-medium font-montserrat text-slate-400">

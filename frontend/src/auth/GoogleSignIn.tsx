@@ -3,7 +3,6 @@ import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
 import { UserAuth } from "@/auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import api from "@/api";
 import GoogleIcon from "@/assets/icons/google-color-svgrepo-com.svg";
 
 const GoogleSignIn = () => {
@@ -13,13 +12,7 @@ const GoogleSignIn = () => {
   const handleGoogleSignIn = async () => {
     try {
       const auth = getAuth();
-      const cred = await signInWithPopup(auth, new GoogleAuthProvider());
-      const idToken = await cred.user.getIdToken();
-
-      // will create user if user does not exit, othwerwise return nothing
-      await api.post("/api/users/create/", {
-        id_token: idToken,
-      });
+      await signInWithPopup(auth, new GoogleAuthProvider());
     } catch (error) {
       console.error("Google sign-in error:", error);
     }
@@ -33,6 +26,8 @@ const GoogleSignIn = () => {
         navigate("/");
       }
     }
+
+    // eslint-disable-next-line
   }, [user]);
 
   return (

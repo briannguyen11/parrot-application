@@ -14,7 +14,6 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(user);
     document.title = "Sign In | parrot";
     if (user !== null) {
       if (user === undefined) {
@@ -23,22 +22,21 @@ const SignIn = () => {
         navigate("/");
       }
     }
+    // eslint-disable-next-line
   }, [user]);
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const auth = getAuth();
-      const credentials = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      ).then((cred) => {
-        console.log(cred);
-        return cred;
-      });
+      const cred = await signInWithEmailAndPassword(auth, email, password).then(
+        (cred) => {
+          console.log(cred);
+          return cred;
+        }
+      );
 
-      if (!credentials.user.emailVerified) {
+      if (!cred.user.emailVerified) {
         setError("Please verify email before signing in.");
         return;
       }
@@ -69,16 +67,16 @@ const SignIn = () => {
   };
 
   return (
-    <div className="w-full h-full flex items-center justify-center">
-      <div className="sm:w-[300px] w-full mt-16">
-        <div className="flex flex-col space-y-4 px-6 sm:px-0 w-full items-center">
+    <div className="w-full h-screen flex justify-center relative">
+      <div className="2xs:w-[350px] w-full absolute top-40">
+        <div className="flex flex-col space-y-4 p-6 w-full items-center">
           {error && renderError()}
           <img
             src="../../icon.svg"
             alt="logo"
             className="w-10 h-10 object-cover select-none"
           />
-          <h1 className="text-2xl xs:text-3xl font-semibold font-montserrat mt-8 text-center">
+          <h1 className="text-2xl xs:text-3xl font-semibold font-montserrat text-center">
             Welcome to Parrot
           </h1>
           <form
@@ -104,10 +102,10 @@ const SignIn = () => {
               required
             />
             <Button
-              className="text-white bg-parrot-red w-full hover:bg-black"
+              className="text-white bg-parrot-red w-full hover:bg-red-600"
               type="submit"
             >
-              Sign In
+              Sign in
             </Button>
             <div className="flex flex-col items-center xs:flex-row xs:gap-2">
               <p className="text-xs font-medium font-montserrat text-slate-400">
@@ -117,7 +115,7 @@ const SignIn = () => {
                 className="text-xs font-medium font-montserrat text-parrot-red hover:cursor-pointer"
                 onClick={() => navigate("/sign-up")}
               >
-                Sign up
+                Sign Up
               </p>
             </div>
           </form>

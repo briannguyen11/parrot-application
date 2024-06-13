@@ -57,7 +57,6 @@ export function ProfileDropDown() {
       <DropdownMenuTrigger asChild>
         <img src={renderPfp()} alt="profile" className="h-9 w-9 rounded-full" />
       </DropdownMenuTrigger>
-
       {user !== null ? (
         <DropdownMenuContent className="md:mr-12 mr-5 mt-[14px] w-56">
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
@@ -67,14 +66,26 @@ export function ProfileDropDown() {
           <DropdownMenuGroup>
             <DropdownMenuItem
               className="hover:cursor-pointer"
-              onClick={() => navigate(`/${user.username}`)}
+              onClick={() => {
+                if (user !== undefined) {
+                  navigate(`/${user.username}`);
+                } else {
+                  navigate("/onboard");
+                }
+              }}
             >
               <User className="mr-2 h-4 w-4" />
               <span>Profile</span>
             </DropdownMenuItem>
             <DropdownMenuItem
               className="hover:cursor-pointer"
-              onClick={() => navigate("/messages")}
+              onClick={() => {
+                if (user !== undefined) {
+                  navigate("/messages");
+                } else {
+                  navigate("/onboard");
+                }
+              }}
             >
               <MessageSquare className="mr-2 h-4 w-4" />
               <span>Message</span>

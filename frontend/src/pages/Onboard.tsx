@@ -19,7 +19,6 @@ const Onboard = () => {
   const [banner, setBanner] = useState<File>();
   const [linkedin, setLinkedin] = useState<string>("");
   const [github, setGithub] = useState<string>("");
-  const [slide, setSlide] = useState(1);
   const { setUserPfp } = UserAuth();
   const navigate = useNavigate();
 
@@ -46,7 +45,6 @@ const Onboard = () => {
 
     try {
       const res = await api.post("/api/profiles/private/", profileData);
-      console.log(res);
       setUserPfp(res.data.profile_picture);
       navigate("/");
     } catch (error: unknown) {
@@ -56,49 +54,31 @@ const Onboard = () => {
     }
   };
 
-  const statusIndicator = () => {
-    const steps = [1, 2];
+  const introCard = () => {
     return (
-      <div className="flex items-center justify-center space-x-4">
-        {steps.map((step) => (
-          <div
-            key={step}
-            className={`w-12 h-12 rounded-full flex items-center justify-center font-bold transition-colors duration-300 ${
-              step <= slide
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-900"
-            }`}
-          >
-            {step}
-          </div>
-        ))}
-      </div>
-    );
-  };
-
-  const firstStage = () => {
-    return (
-      <div className="w-full flex flex-col space-y-2">
+      <div
+        className="bg-white p-6 rounded-2xl shadow-light hover:cursor-pointer hover:shadow-light-hover hover:border-gray-400 
+        transition duration-300 ease-in-outspace-y-2 space-y-2 w-full"
+      >
         <div className="w-full">
           <div className="h-60 w-full object-cover rounded-2xl relative">
             <div className="h-48 w-full">
               <BannerInput banner={null} setBanner={setBanner} />
             </div>
-            <div className="h-40 w-40 rounded-full bg-white  absolute bottom-0 left-12">
+            <div className="sm:h-40 sm:w-40 h-24 w-24 rounded-full bg-white absolute bottom-0 left-1/2 transform -translate-x-1/2">
               <ProfilePictureInput pfp={null} setPfp={setPfp} />
             </div>
           </div>
         </div>
-
         <div className="flex-col">
-          <h3 className="text-sm font-semibold">Your Name *</h3>
-          <div className="flex gap-2 my-1">
+          <h3 className="text-sm font-semibold font-montserrat">Name *</h3>
+          <div className="flex sm:flex-row sm:space-y-0 sm:gap-2 flex-col space-y-2">
             <input
               type="text"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               placeholder="First Name"
-              className="border border-border rounded-lg p-2 text-sm outline-black w-full"
+              className="border border-border rounded-sm p-2 text-xs font-montserrat outline-black w-full"
               required
             />
             <input
@@ -106,88 +86,96 @@ const Onboard = () => {
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               placeholder="Last Name"
-              className="border border-border rounded-lg p-2 text-sm outline-black w-full"
+              className="border border-border rounded-sm p-2 text-xs font-montserrat outline-black w-full"
               required
             />
           </div>
         </div>
         <div className="flex-col">
-          <h3 className="text-sm font-semibold">Username *</h3>
+          <h3 className="text-sm font-semibold font-montserrat">Username *</h3>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="@usernmae"
-            className="border border-border rounded-lg p-2 text-sm outline-black w-full"
+            className="border border-border rounded-sm p-2 text-xs font-montserrat outline-black w-full"
           />
         </div>
+      </div>
+    );
+  };
+
+  const bioCard = () => {
+    return (
+      <div
+        className="bg-white p-6 rounded-2xl shadow-light hover:cursor-pointer hover:shadow-light-hover hover:border-gray-400 
+        transition duration-300 ease-in-outspace-y-2 space-y-2 w-full"
+      >
+        <h2 className="text-xl font-bold font-montserrat">About You</h2>
         <div className="flex-col">
-          <h3 className="text-sm font-semibold">Header</h3>
+          <h3 className="text-sm font-semibold font-montserrat">Header</h3>
           <input
             type="text"
             value={header}
             onChange={(e) => setHeader(e.target.value)}
             placeholder="Computer Science Student @University"
-            className="border border-border rounded-lg p-2 text-sm outline-black w-full"
+            className="border border-border rounded-sm p-2 text-xs font-montserrat outline-black w-full"
           />
         </div>
         <div className="flex-col">
           <h3 className="text-sm font-semibold">Bio</h3>
           <textarea
             value={bio}
+            rows={3}
             onChange={(e) => setBio(e.target.value)}
-            placeholder="Something About Yourself (Optional)"
-            className="border border-border rounded-lg p-2 text-sm outline-black w-full resize-none"
+            placeholder="Let others know about your interests"
+            className="border border-border rounded-sm p-2 text-xs font-montserrat outline-black w-full resize-none"
           />
         </div>
-        <Button
-          className="w-full bg-parrot-red text-white hover:bg-black"
-          onClick={() => {
-            if (firstName !== "" && lastName !== "" && username !== "") {
-              setSlide(slide + 1);
-            } else {
-              alert("Please enter first, last name, and username");
-            }
-          }}
-        >
-          Next
-        </Button>
       </div>
     );
   };
 
-  const secondStage = () => {
+  const educationCard = () => {
     return (
-      <div className="w-full">
-        <Button
-          className="bg-transparent text-black text-md hover:underline p-0"
-          onClick={() => setSlide(slide - 1)}
-        >
-          Back
-        </Button>
-
+      <div
+        className="bg-white p-6 rounded-2xl shadow-light hover:cursor-pointer hover:shadow-light-hover hover:border-gray-400 
+        transition duration-300 ease-in-outspace-y-2 space-y-2 w-full"
+      >
+        <h2 className="text-xl font-bold font-montserrat">Education</h2>
         <div className="flex-col mt-4">
-          <h3 className="txext-md font-semibold"> School</h3>
+          <h3 className="text-sm font-semibold font-montserrat">School</h3>
           <input
             type="text"
             value={school}
             onChange={(e) => setSchool(e.target.value)}
-            placeholder="(Optional)"
-            className="border border-border rounded-lg p-2 text-sm outline-black w-full"
+            placeholder="Parrot University"
+            className="border border-border rounded-sm p-2 text-xs font-montserrat outline-black w-full"
           />
         </div>
         <div className="flex-col mt-4">
-          <h3 className="txext-md font-semibold"> Major</h3>
+          <h3 className="text-sm font-semibold">Major</h3>
           <input
             type="text"
             value={major}
             onChange={(e) => setMajor(e.target.value)}
-            placeholder="(Optional)"
-            className="border border-border rounded-lg p-2 text-sm outline-black w-full"
+            placeholder="Computer Science"
+            className="border border-border rounded-sm p-2 text-xs font-montserrat outline-black w-full"
           />
         </div>
+      </div>
+    );
+  };
+
+  const linksCard = () => {
+    return (
+      <div
+        className="bg-white p-6 rounded-2xl shadow-light hover:cursor-pointer hover:shadow-light-hover hover:border-gray-400 
+        transition duration-300 ease-in-outspace-y-2 space-y-2 w-full"
+      >
+        <h2 className="text-xl font-bold font-montserrat">Additional Links</h2>
         <div className="flex-col mt-4">
-          <h3 className="text-md font-semibold">Resume</h3>
+          <h3 className="text-sm font-semibold font-montserrat">Resume</h3>
           <input
             type="file"
             onChange={(e) => {
@@ -196,46 +184,55 @@ const Onboard = () => {
               }
             }}
             accept=".pdf"
-            className="border border-border rounded-lg p-2 text-sm  w-full"
+            className="border border-border rounded-sm p-2 text-xs w-full"
           />
         </div>
         <div className="flex-col mt-4">
-          <h3 className="text-md font-semibold">LinkedIn</h3>
+          <h3 className="text-sm font-semibold font-montserrat">LinkedIn</h3>
           <input
             type="text"
             value={linkedin}
             onChange={(e) => setLinkedin(e.target.value)}
             placeholder="Enter link here (Optional)"
-            className="border border-border rounded-lg p-2 text-sm outline-black w-full"
+            className="border border-border rounded-sm p-2 text-xs font-montserrat outline-black w-full"
           />
         </div>
         <div className="flex-col mt-4">
-          <h3 className="text-md font-semibold">Github</h3>
+          <h3 className="text-sm font-semibold font-montserrat">Github</h3>
           <input
             type="text"
             value={github}
             onChange={(e) => setGithub(e.target.value)}
             placeholder="Enter link here (Optional)"
-            className="border border-border rounded-lg p-2 text-sm outline-black w-full"
+            className="border border-border rounded-sm p-2 text-xs font-montserrat outline-black w-full"
           />
         </div>
-        <Button className="w-full mt-4" onClick={() => handleSubmit()}>
-          Finish
-        </Button>
       </div>
     );
   };
 
   return (
-    <div className="h-full w-full p-10">
-      <div className="flex items-center justify-center">
-        <div className="w-[600px]">
-          <h2 className="text-2xl font-semibold text-center">
-            Let's Create Your Parrot Profile
+    <div className=" w-full h-full p-10 flex justify-center overflow-y-scroll ">
+      <div className="sm:w-[600px] w-full">
+        <div className="flex flex-col space-y-6 items-center">
+          <img
+            src="../../icon.svg"
+            alt="logo"
+            className="w-10 h-10 object-cover select-none"
+          />
+          <h2 className="text-2xl font-bold text-center font-montserrat mt-8">
+            Create Your Parrot Profile
           </h2>
-          {statusIndicator()}
-          {slide === 1 && firstStage()}
-          {slide === 2 && secondStage()}
+          {introCard()}
+          {bioCard()}
+          {educationCard()}
+          {linksCard()}
+          <Button
+            className="w-full text-white bg-parrot-red hover:bg-red-600"
+            onClick={() => handleSubmit()}
+          >
+            Finish
+          </Button>
         </div>
       </div>
     </div>

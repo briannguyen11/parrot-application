@@ -41,6 +41,10 @@ const AuthProvider = ({ children }: Props) => {
           const token = await cred.getIdToken();
           localStorage.setItem(ACCESS_TOKEN, token);
 
+          await api.post("/api/users/create/", {
+            id_token: token,
+          });
+
           const res = await api.get("/api/profiles/mini/");
           setUser(res.data[0]);
         } catch (error: unknown) {
@@ -55,6 +59,7 @@ const AuthProvider = ({ children }: Props) => {
     return () => {
       unsubscribe();
     };
+    // eslint-disable-next-line
   }, []);
 
   const setUserPfp = (newPfp: string | null) => {
