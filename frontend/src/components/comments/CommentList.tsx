@@ -84,7 +84,7 @@ const CommentList: React.FC<CommentListProps> = ({ comments, setComments }) => {
         )
         .map((comment: CommentData, index: number) => (
           <div key={index}>
-            <div className="mt-7 flex flex-row gap-4 items-center">
+            <div className="mt-7 flex flex-row gap-4 items-start">
               <img
                 onClick={() => navigate(`/${comment.profile.username}`)}
                 src={comment.profile.profile_picture}

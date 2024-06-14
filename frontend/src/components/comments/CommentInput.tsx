@@ -28,6 +28,20 @@ const CommentInput: React.FC<CommentInputProps> = ({
     } catch (error: unknown) {
       console.error(error);
     }
+
+    // reset the height of the textarea
+    const textarea = document.querySelector("textarea");
+    if (textarea) {
+      textarea.style.height = "auto";
+    }
+
+  };
+
+  const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const textarea = e.target;
+    textarea.style.height = 'auto'; // Reset the height
+    textarea.style.height = `${textarea.scrollHeight}px`; // Set the height to match the content
+    setComment(e.target.value);
   };
 
   return (
@@ -43,11 +57,13 @@ const CommentInput: React.FC<CommentInputProps> = ({
           <img src={PersonIcon} alt="Profile Picture" className="w-10 h-10" />
         )}
         <textarea
-          className={`flex items-center mt-2 text-sm w-full outline-none bg-transparent border-b-2 border-slate-200 focus:border-b-2 focus:border-black resize-none`}
+          className={`h-auto flex items-center mt-2 text-sm w-full outline-none bg-transparent border-b-2 border-slate-200 focus:border-b-2 focus:border-black resize-none break-words`}
           placeholder="Add a comment..."
           value={comment}
+          rows={1}
+          onInput={handleInput}
           onChange={(e) => setComment(e.target.value)}
-          rows={2} //TODO: make dynamic
+       
         />
       </div>
       {comment.length > 0 && (
