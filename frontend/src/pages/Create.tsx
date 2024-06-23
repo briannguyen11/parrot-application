@@ -4,9 +4,13 @@ import { Label } from "@/components/ui/label";
 
 import OpenForm from "@/components/create/OpenForm";
 import ShowcaseForm from "@/components/create/ShowcaseForm";
+import { UserAuth } from "@/auth/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Create = () => {
   const [form, setForm] = useState<string>("open");
+  const { user } = UserAuth();
+  const navigate = useNavigate();
 
   const handleRadioChange = (value: string) => {
     setForm(value);
@@ -41,6 +45,9 @@ const Create = () => {
 
   useEffect(() => {
     document.title = "Create Project";
+    if (user === null) {
+      navigate("/sign-in", { replace: true });
+    }
   }, []);
 
   return (

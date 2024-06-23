@@ -22,7 +22,6 @@ interface ShowcaseCardProfileProp {
 
 const ShowcaseCardProfile: React.FC<ShowcaseCardProfileProp> = ({
   project,
-  key,
   deleteProject,
 }) => {
   const navigate = useNavigate();
@@ -80,7 +79,7 @@ const ShowcaseCardProfile: React.FC<ShowcaseCardProfileProp> = ({
   };
 
   return (
-    <div className="relative" key={key}>
+    <div className="relative" >
       <div className="group aspect-video relative hover:cursor-pointer transition duration-300 ease-in-out select-none">
         {project.photos.length > 0 ? (
           isPreloaded ? (

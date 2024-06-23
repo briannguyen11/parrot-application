@@ -192,8 +192,14 @@ const ShowcaseProject = () => {
                 {profile?.first_name} {profile?.last_name}
               </p>
             </div>
-            <button className="text-sm font-raleway font-semibold text-parrot-green border-2 border-parrot-green py-1 px-4 rounded-xl hover:bg-parrot-green hover:text-white">
-              Follow
+            <button
+              className={`text-sm font-raleway font-semibold  border-2 py-1 px-4 rounded-xl ${
+                user?.user === profile?.user_id
+                  ? "hover:bg-parrot-blue text-parrot-blue border-parrot-blue"
+                  : "hover:bg-parrot-green text-parrot-green border-parrot-green"
+              } hover:text-white`}
+            >
+              {user?.user === profile?.user_id ? "Edit" : "Follow"}
             </button>
           </div>
         ) : (

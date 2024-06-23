@@ -64,12 +64,10 @@ class ShowcaseProjectViewSet(MixedPermissionsViewSet):
         serializer.save(user=self.request.user)
 
     def get_queryset(self):
-        queryset = ShowcaseProject.objects.prefetch_related(
-            Prefetch("tags"),
-            Prefetch("photos"),
-            Prefetch("likes"),
-            Prefetch("comments"),
-        )
+    
+
+        queryset = ShowcaseProject.objects.select_related('user__profile').prefetch_related('photos').prefetch_related('tags').prefetch_related('likes').prefetch_related('comments')
+
         user_id = self.request.query_params.get("user_id")
         if user_id:
             queryset = queryset.filter(user_id=user_id)

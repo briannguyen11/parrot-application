@@ -55,9 +55,9 @@ const router = createBrowserRouter(
         <Route
           path="/create"
           element={
-            <ProtectedRoute>
+          
               <Create />
-            </ProtectedRoute>
+         
           }
         />
         <Route

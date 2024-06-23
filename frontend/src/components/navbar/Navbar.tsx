@@ -49,8 +49,8 @@ const Navbar = () => {
           <div className="flex justify-center items-center gap-5">
             <SidebarPopup />
 
-            <div
-              onClick={() => navigate("/")}
+            <a
+              href="/"
               className="flex items-center justify-center gap-4 hover:cursor-pointer"
             >
               <img
@@ -61,7 +61,7 @@ const Navbar = () => {
               <h1 className="text-xl font-semibold font-raleway text-primary lg:block hidden select-none">
                 PARROT
               </h1>
-            </div>
+            </a>
           </div>
 
           <div className="bg-gray-200 rounded-2xl w-96 lg:w-72 items-center md:flex hidden">
@@ -80,18 +80,18 @@ const Navbar = () => {
             />
           </div>
           <div className="lg:flex xl:gap-20 gap-14 items-center hidden select-none">
-            <h2
+            <a
               onClick={() => navigate("/")}
               className="font-semibold font-raleway text-sm hover:cursor-pointer hover:text-primary-foreground whitespace-nowrap"
             >
               Explore
-            </h2>
-            <h2
+            </a>
+            <a
               onClick={() => navigate("/open-projects")}
               className="font-semibold font-raleway text-sm hover:cursor-pointer hover:text-primary-foreground whitespace-nowrap"
             >
               Find Teams
-            </h2>
+            </a>
 
             <CreateDropdown />
           </div>
@@ -118,7 +118,7 @@ const Navbar = () => {
     >
       {loading && (
         <div
-          className={`absolute top-0 left-0 h-[3px] bg-navbar-gradient  animate-loading-bar`}
+          className={`absolute top-0 left-0 h-[3px] bg-parrot-red animate-loading-bar`}
         ></div>
       )}
       {!showSearch && renderNavbar()}

@@ -107,7 +107,7 @@ const Showcase = () => {
             <SearchIcon size={25} className="mr-[6px] translate-x-1" />
           ) : (
             !initialLoad && (
-              <div className="animate-spin rounded-full w-8 h-8 overflow-hidden bg-red-500">
+              <div className="animate-spin rounded-full w-8 h-8 overflow-hidden">
                 <img
                   src={LoadingIcon}
                   alt="logo"

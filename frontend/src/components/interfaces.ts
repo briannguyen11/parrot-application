@@ -23,6 +23,7 @@ export interface MinProfileData {
   profile_picture: string;
   username: string;
   header: string;
+  user_id: string;
 }
 
 export interface PhotoData {

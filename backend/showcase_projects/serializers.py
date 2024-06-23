@@ -18,7 +18,7 @@ class ProjectDetailsMixin:
 class ProfileInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profiles
-        fields = ["first_name", "last_name", "profile_picture", "id", "username"]
+        fields = ["first_name", "last_name", "profile_picture", "id", "username", "user_id"]
 
 
 class ShowcaseProjectTagSerializer(serializers.ModelSerializer):
