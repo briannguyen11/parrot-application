@@ -15,6 +15,7 @@ import Settings from "./pages/Settings";
 import Messages from "./pages/Messages";
 import SearchResults from "./pages/SearchResults";
 import { AuthProvider } from "./auth/AuthContext";
+import init_globals from "./lib/globals";
 
 import {
   Route,
@@ -24,6 +25,7 @@ import {
 } from "react-router-dom";
 import Admin from "./pages/Admin";
 import PublicProfile from "./pages/PublicProfile";
+import ChatModal from "./components/messages/ChatModal";
 
 // clear local storage before registering
 function RegisterAndLogout() {
@@ -52,14 +54,7 @@ const router = createBrowserRouter(
         <Route path="saved" element={<div>saved</div>} />
         <Route path=":username" element={<PublicProfile />} />
 
-        <Route
-          path="/create"
-          element={
-          
-              <Create />
-         
-          }
-        />
+        <Route path="/create" element={<Create />} />
         <Route
           path="/profile"
           element={
@@ -79,14 +74,7 @@ const router = createBrowserRouter(
         }
       />
 
-      <Route
-        path="messages"
-        element={
-          <ProtectedRoute>
-            <Messages />
-          </ProtectedRoute>
-        }
-      />
+      <Route path="messages" element={<Messages />} />
 
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/sign-up" element={<RegisterAndLogout />} />
@@ -105,10 +93,13 @@ const router = createBrowserRouter(
 );
 
 function App() {
+  init_globals();
+
   return (
     <>
       <AuthProvider>
         <RouterProvider router={router} />
+        <ChatModal />
       </AuthProvider>
     </>
   );

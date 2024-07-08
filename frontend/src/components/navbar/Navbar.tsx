@@ -6,6 +6,7 @@ import { SearchIcon } from "lucide-react";
 import { ArrowLeft } from "lucide-react";
 import SearchIcon2 from "../../assets/icons/search-alt.svg";
 import CreateDropdown from "./CreateDropdown";
+import ChatEmitter from "@/emitters/ChatEmitter";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -14,6 +15,8 @@ const Navbar = () => {
   const [loading, setLoading] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [search, setSearch] = useState("");
+
+  const chatEmitter = ChatEmitter.default();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -92,6 +95,13 @@ const Navbar = () => {
             >
               Find Teams
             </a>
+
+            <p
+              className="font-semibold font-raleway text-sm hover:cursor-pointer hover:text-primary-foreground whitespace-nowrap"
+              onClick={() => chatEmitter.show()}
+            >
+              Messages
+            </p>
 
             <CreateDropdown />
           </div>

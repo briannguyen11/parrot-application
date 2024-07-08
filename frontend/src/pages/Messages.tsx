@@ -135,7 +135,7 @@ const Messages = () => {
       <Navbar />
       <div className="mt-16">
         <div className="flex flex-col items-center bg-slate-50">
-          <div className="w-full max-w-[1000px] lg:p-7 p-5">
+          <div className="w-full px-12 py-5">
             <div className="bg-white h-messages rounded-xl shadow-light p-5">
               <h1 className="text-lg text-primary font-medium border-b pb-3">
                 Messages

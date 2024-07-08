@@ -60,7 +60,7 @@ export function SidebarPopup() {
           <path d="M19 10.625H1v-1.25h18v1.25Zm0-7.875H1V4h18V2.75ZM19 16H1v1.25h18V16Z"></path>
         </svg>
       </SheetTrigger>
-      <SheetContent className="z-50 w-72 bg-white mt-[68px] border-0 border-t border-border" side={"left"}>
+      <SheetContent className="z-50 w-72 bg-white mt-[68px] border-0 border-t border-border focus:outline-none focus:ring-0" side={"left"}>
         <SheetClose asChild>
           <div className="fixed w-60 h-sidebar lg:border-r border-gray-200 pt-0 overflow-auto flex flex-col justify-between ">
             <div className="flex flex-col gap-y-2">
